@@ -1,0 +1,47 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Jan 1, 2023, 3:01:01 AM
+    Author     : CST
+*/
+/*loading font first then use it*/
+@font-face {
+    font-family: Action Jackson;
+    src: url('actionj.ttf');
+}
+
+#button{
+    -fx-effect: dropshadow( gaussian , rgba(255,177,0,0.5) , 0,0,5,5 );
+
+
+    }
+#button:pressed{
+         -fx-effect: dropshadow( gaussian , rgba(255,177,0,0.5) , 0,0,5,5 );
+         -fx-effect: innershadow( gaussian , rgba(240,160,0,0.5) , 20,0,0,0 );
+    }
+
+.backgroundClass {
+    -fx-background-image:url('file:/D:/ITI/Java-SE/fxProjects/TicTacToe/src/assets/whiteBG.png');
+}
+
+.textAreaStyleClass {
+  -fx-border-radius: 35 35 35 35;
+  -fx-background-radius: 35 35 35 35;
+ }
+
+ .buttonColorClass{
+     -fx-background-color: #ffb100 ;
+ }
+ 
+ .mainFontClass{
+     -fx-font-family: 'Action Jackson';
+     -fx-font-size: 52;
+ }
+ 
+ .mainFontButtonClass{
+     -fx-font-family: 'Action Jackson';
+     -fx-font-size: 38;
+ }
