@@ -60,7 +60,7 @@ public class WelcomeScreenController implements Initializable {
  @FXML
    private  void login(ActionEvent event) throws IOException{
        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/loginScreen/Login.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("/loginscreen/Login.fxml"));
 
  
             Scene scene=new Scene(root);
