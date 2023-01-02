@@ -14,7 +14,8 @@ public class WelcomeScreen extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
         
         Scene scene = new Scene(root);
-        
+        stage.sizeToScene();
+        stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
     }
