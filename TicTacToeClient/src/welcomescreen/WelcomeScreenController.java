@@ -48,15 +48,27 @@ public class WelcomeScreenController implements Initializable {
 
    }
    @FXML
-   private void goToGame(ActionEvent event) throws IOException{
-       Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource(".fxml"));
-
- 
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+   private void goToGameSingle(ActionEvent event) throws IOException{
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        boradscreen.BoradController.TYPE=helper.GameType.SINGLE_PLAYER_GAME;
+        Parent root = FXMLLoader.load(getClass().getResource("/boradscreen/borad.fxml"));
+        Scene scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
    }
+   @FXML
+   private void goToGameLocal(ActionEvent event) throws IOException{
+
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        boradscreen.BoradController.TYPE=helper.GameType.TWO_PLAYER_GAME;
+        Parent root = FXMLLoader.load(getClass().getResource("/boradscreen/borad.fxml"));
+        
+        Scene scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        
+   }
+   
  @FXML
    private  void login(ActionEvent event) throws IOException{
        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();

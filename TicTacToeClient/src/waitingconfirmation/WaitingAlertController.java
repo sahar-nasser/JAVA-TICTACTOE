@@ -40,7 +40,8 @@ public class WaitingAlertController implements Initializable {
        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
         try {
-            root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
+            boradscreen.BoradController.TYPE=helper.GameType.ONLINE_GAME;
+            root = FXMLLoader.load(getClass().getResource("/boradscreen/borad.fxml"));
             Scene scene=new Scene(root);
             stage.setScene(scene);
             stage.show();
