@@ -73,7 +73,7 @@
                   <Insets left="230.0" top="30.0" />
                </VBox.margin>
             </Label>
-            <Button id="button" mnemonicParsing="false" prefHeight="74.0" prefWidth="276.0" stylesheets="@../resource/styleSheet.css" text="LOGIN" textFill="#2c0153">
+            <Button id="button" fx:id="loginBtn" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="74.0" prefWidth="276.0" stylesheets="@../resource/styleSheet.css" text="LOGIN" textFill="#2c0153">
                <VBox.margin>
                   <Insets left="110.0" top="30.0" />
                </VBox.margin>
