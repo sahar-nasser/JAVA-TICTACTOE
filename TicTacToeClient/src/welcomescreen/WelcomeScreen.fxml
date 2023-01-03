@@ -24,7 +24,7 @@
             <HBox spacing="16.0" />
          </children>
       </HBox>
-      <Button id="button" fx:id="twoButton" layoutX="341.0" layoutY="382.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="350.0" stylesheets="@../resource/styleSheet.css" text="Two Player" textFill="#2c0153" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="341.0" AnchorPane.topAnchor="382.0">
+      <Button id="button" fx:id="twoButton" layoutX="341.0" layoutY="382.0" mnemonicParsing="false" onAction="#goToGameLocal" prefHeight="80.0" prefWidth="350.0" stylesheets="@../resource/styleSheet.css" text="Two Player" textFill="#2c0153" textOverrun="CENTER_ELLIPSIS" AnchorPane.leftAnchor="341.0" AnchorPane.topAnchor="382.0">
          <font>
             <Font name="Action Jackson" size="26.0" />
          </font>
@@ -51,7 +51,7 @@
             <String fx:value="mainFontButtonWelcomeScreen" />
          </styleClass>
       </Button>
-      <Button id="button" fx:id="medium" layoutX="733.0" layoutY="250.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="MEDIUM" textOverrun="CENTER_WORD_ELLIPSIS" visible="false">
+      <Button id="button" fx:id="medium" layoutX="733.0" layoutY="250.0" mnemonicParsing="false" onAction="#goToGameSingle" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="MEDIUM" textOverrun="CENTER_WORD_ELLIPSIS" visible="false">
          <font>
             <Font name="Action Jackson" size="26.0" />
          </font>
@@ -60,7 +60,7 @@
             <String fx:value="mainFontButtonWelcomeScreen" />
          </styleClass>
       </Button>
-      <Button id="button" fx:id="easy" layoutX="518.0" layoutY="250.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="Easy" textOverrun="CENTER_ELLIPSIS" visible="false">
+      <Button id="button" fx:id="easy" layoutX="518.0" layoutY="250.0" mnemonicParsing="false" onAction="#goToGameSingle" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="Easy" textOverrun="CENTER_ELLIPSIS" visible="false">
          <font>
             <Font name="Action Jackson" size="26.0" />
          </font>
@@ -69,7 +69,7 @@
             <String fx:value="mainFontButtonWelcomeScreen" />
          </styleClass>
       </Button>
-      <Button id="button" fx:id="hard" layoutX="948.0" layoutY="250.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="HARD" textOverrun="CENTER_ELLIPSIS" visible="false">
+      <Button id="button" fx:id="hard" layoutX="948.0" layoutY="250.0" mnemonicParsing="false" onAction="#goToGameSingle" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="HARD" textOverrun="CENTER_ELLIPSIS" visible="false">
          <font>
             <Font name="Action Jackson" size="26.0" />
          </font>
