@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="alert" prefHeight="200.0" prefWidth="350.0" stylesheets="@../resource/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="waitingconfirmation.WaitingAlertController">
+   <children>
+      <ImageView fitHeight="221.0" fitWidth="438.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/waiting.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="33.0" fitWidth="36.0" layoutX="14.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/waitingIcon.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="cancelBtn" layoutX="146.0" layoutY="154.0" mnemonicParsing="false" onAction="#handleCancelAction" prefHeight="47.0" prefWidth="141.0" style="-fx-background-color: #2c0153;" styleClass="reqButton" stylesheets="@../resource/styleSheet.css" text="Cancel" textFill="#ffb100">
+         <font>
+            <Font name="System Bold" size="15.0" />
+         </font>
+      </Button>
+      <Text fill="#2c0153" layoutX="43.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="subTxtNumber" text="waiting for responce...">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>
