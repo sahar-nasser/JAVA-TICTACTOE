@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane id="AnchorPane" maxWidth="1280.0" minWidth="1200.0" prefHeight="832.0" prefWidth="1280.0" stylesheets="@../resource/styleSheet.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="recordscreen.RecordScreenController">
+   <children>
+      <ImageView fitHeight="832.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/whiteBG.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="58.0" fitWidth="58.0" layoutX="1200.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/historyIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="53.0" layoutX="1208.0" layoutY="93.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/homeIcon.png" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="56.0" fitWidth="53.0" layoutX="1213.0" layoutY="166.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../resource/logout.png" />
+         </image>
+      </ImageView>
+      <Text fill="#2c0153" layoutX="304.0" layoutY="236.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="mainTxtArea" text="Your Records List">
+         <font>
+            <Font name="Arial Nova Cond" size="50.0" />
+         </font>
+      </Text>
+      <FlowPane layoutX="857.0" layoutY="146.0" prefHeight="56.0" prefWidth="152.0" />
+      <GridPane layoutX="497.0" layoutY="241.0" prefHeight="488.0" prefWidth="404.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="record" mnemonicParsing="false" onAction="#handleRecordAction" prefHeight="85.0" prefWidth="400.0" style="-fx-background-color: ffb100;" styleClass="listButton" text="Record 1" textFill="#2c0153">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleRecordAction" prefHeight="85.0" prefWidth="400.0" style="-fx-background-color: ffb100;" styleClass="listButton" text="Record 2" textFill="#2c0153" GridPane.rowIndex="1">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#handleRecordAction" prefHeight="85.0" prefWidth="400.0" style="-fx-background-color: ffb100;" styleClass="listButton" text="Record 3" textFill="#2c0153" GridPane.rowIndex="2">
+               <font>
+                  <Font size="25.0" />
+               </font>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Button>
+         </children>
+      </GridPane>
+      <Button fx:id="historyBtn" layoutX="1193.0" layoutY="19.0" mnemonicParsing="false" onAction="#handleHistoryAction" prefHeight="65.0" prefWidth="66.0" text="Button" visible="false" />
+      <Button fx:id="homeBtn" layoutX="1209.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleHomeAction" opacity="0.0" prefHeight="52.0" prefWidth="52.0" text="Button" />
+      <Button fx:id="logoutBtn" layoutX="1209.0" layoutY="166.0" mnemonicParsing="false" onAction="#handleLogoutAction" opacity="0.0" prefHeight="56.0" prefWidth="52.0" text="Button" />
+   </children>
+</AnchorPane>
