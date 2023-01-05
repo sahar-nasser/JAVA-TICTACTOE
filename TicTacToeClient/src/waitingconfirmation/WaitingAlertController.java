@@ -6,12 +6,14 @@
 package waitingconfirmation;
 
 import java.io.IOException;
+
+import boardscreen.BoardController;
 import onlineplayerscreen.*;
 import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.application.Platform;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -40,10 +42,12 @@ public class WaitingAlertController implements Initializable {
        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
         try {
-            boradscreen.BoradController.TYPE=helper.GameType.ONLINE_GAME;
-            root = FXMLLoader.load(getClass().getResource("/boradscreen/borad.fxml"));
+            BoardController.TYPE=helper.GameType.ONLINE_GAME;
+            BoardController.STAGE_OF_BORAD=stage;
+            root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
             Scene scene=new Scene(root);
             stage.setScene(scene);
+
             stage.show();
         } catch (IOException ex) {
             Logger.getLogger(ListScreenController.class.getName()).log(Level.SEVERE, null, ex);
