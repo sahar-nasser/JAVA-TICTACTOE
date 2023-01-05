@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import helper.GameType;
 import helper.StatusGame;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -35,8 +36,8 @@ import javafx.stage.Stage;
 public class BoardController implements Initializable {
     private static MediaPlayer MEDIA_PLAYER;
    public static int TYPE;
-
     private static int STATUS_OF_GAME;
+    private static int LEVEL_OF_GAME;
    private  static Stage STAGE_OF_VIEW_VIDEO;
     public static Stage STAGE_OF_BORAD;
    private  static boolean IS_VIEW_VIDEO;
@@ -125,62 +126,51 @@ public class BoardController implements Initializable {
     
     @FXML
     public void clickPostionOne(ActionEvent event){
-
-        postionOne.setText("O");
-        postionOne.setDisable(true);
-        postionOne.setOpacity(1);
+        upgradeUi(1,'X');
+        calcNextMove(0,0);
     }
     @FXML
     public void clickPostionTwo(ActionEvent event){
-        postionTwo.setText("O");
-        postionTwo.setDisable(true);
-        postionTwo.setOpacity(1);
-
-        
+        upgradeUi(2,'X');
+        calcNextMove(0,1);
     }
     @FXML
     public void clickPostionThree(ActionEvent event){
-        postionThree.setText("O");
-        postionThree.setDisable(true);
-        postionThree.setOpacity(1);
-        
+        upgradeUi(3,'X');
+        calcNextMove(0,2);
     }
     @FXML
     public void clickPostionFour(ActionEvent event){
-        postionFour.setText("O");
-        postionFour.setDisable(true);
-        postionFour.setOpacity(1);
-        
+        upgradeUi(4,'X');
+        calcNextMove(1,0);
     }
     @FXML
     public void clickPostionFive(ActionEvent event){
-        postionFive.setText("O");
-        postionFive.setDisable(true);
-        postionFive.setOpacity(1);
+        upgradeUi(5,'X');
+        calcNextMove(1,1);
+
     }
     @FXML
     public void clickPostionSix(ActionEvent event){
-        postionSix.setText("O");
-        postionSix.setDisable(true);
-        postionSix.setOpacity(1);
+        upgradeUi(6,'X');
+        calcNextMove(1,2);
+
     }
     @FXML
     public void clickPostionSeven(ActionEvent event){
-        postionSeven.setText("O");
-        postionSeven.setDisable(true);
-        postionSeven.setOpacity(1);
+        upgradeUi(7,'X');
+        calcNextMove(2,0);
     }
     @FXML
     public void clickPostionEight(ActionEvent event){
-        postionEight.setText("O");
-        postionEight.setDisable(true);
-        postionEight.setOpacity(1);
+        upgradeUi(8,'X');
+        calcNextMove(2,1);
+
     }
     @FXML
     public void clickPostionNine(ActionEvent event){
-        postionNine.setText("O");
-        postionNine.setDisable(true);
-        postionNine.setOpacity(1);
+        upgradeUi(9,'X');
+        calcNextMove(2,2);
     }
     
     /**
@@ -212,10 +202,19 @@ public class BoardController implements Initializable {
             case helper.GameType.ONLINE_GAME:
                 
             break;
-            case helper.GameType.SINGLE_PLAYER_GAME:
+
+
+            case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
+            case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
+                nameOfPlayerTwo.setText("COMPUTER");
+                nameOfPlayerOne.setText("ME");
+
+            case GameType.SINGLE_PLAYER_HARD_LEVEL:
+                nameOfPlayerTwo.setText("COMPUTER");
+                nameOfPlayerOne.setText("ME");
                 
             default:
                 scoreOfPlayerOne.setVisible(false);
@@ -249,5 +248,69 @@ public class BoardController implements Initializable {
     }
     }
 
-    
+    //call this function to send indices to (easy-medium-hard - etc...) class
+    public void calcNextMove(int row , int col){
+        switch (TYPE){// The return type for any method should be the new position and
+            case GameType.SINGLE_PLAYER_EASY_LEVEL:
+                //call easy method and pass row and column
+
+                //example: upgradeUi(MediumLevel.calcNextMove() , MediumLevel.playerSymbol());
+                //calcMove() should return the position (1 - 9)
+                //playerSymbol() should return the 'X' or 'O'
+                break;
+            case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
+                //call medium method and pass row and column
+                break;
+            case GameType.SINGLE_PLAYER_HARD_LEVEL:
+                //call hard method and pass row and column
+                break;
+            case GameType.TWO_PLAYER_GAME:
+                //local game
+                break;
+            case GameType.ONLINE_GAME:
+                //for online game
+                break;
+        }
+    }
+
+
+    //setNextMove() will be called when we need to update UI after calculating the next move in (easy-medium-hard)level
+    // in its own classes
+
+    //buttonNumber = (row+1)*(col+1)
+    private void upgradeUi(int buttonNumber, char playerChar){
+        Button tempButton;
+        switch (buttonNumber){
+            case 1:
+                tempButton= postionOne;
+                break;
+            case 2:
+                tempButton= postionTwo;
+                break;
+            case 3:
+                tempButton= postionThree;
+                break;
+            case 4:
+                tempButton= postionFour;
+                break;
+            case 5:
+                tempButton= postionFive;
+                break;
+            case 6:
+                tempButton= postionSix;
+                break;
+            case 7:
+                tempButton= postionSeven;
+                break;
+            case 8:
+                tempButton= postionEight;
+                break;
+            default:
+                tempButton= postionNine;
+
+        }
+        tempButton.setText(playerChar+"");
+        tempButton.setDisable(true);
+        tempButton.setOpacity(1);
+    }
 }

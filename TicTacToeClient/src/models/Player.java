@@ -1,40 +1,40 @@
 package models;
 
 public class Player {
-    static private String username , password;
-    static private int score;
-    static private char playingSymbol;
+    private String username , password;
+    private int score;
+    private char playingSymbol;
 
     //setters and getters
 
-    public static void setUsername(String username){
-        Player.username = username;
+    public void setUsername(String username){
+        this.username = username;
     }
 
-    public static void setPassword(String password){
-        Player.password = password;
+    public void setPassword(String password){
+        this.password = password;
     }
 
-    public static void setScore(int score){
-        Player.score = score;
+    public void setScore(int score){
+        this.score = score;
     }
 
-    public static void setPlayingSymbol(char playingSymbol){
-        Player.playingSymbol = playingSymbol;
+    public void setPlayingSymbol(char playingSymbol){
+        this.playingSymbol = playingSymbol;
     }
-    public static String getUsername(){
+    public String getUsername(){
         return username;
     }
 
-    public static String getPassword(){
+    public String getPassword(){
         return password;
     }
 
-    public static int getScore(){
+    public int getScore(){
         return score;
     }
 
-    public static char getPlayingSymbol(){
+    public char getPlayingSymbol(){
         return playingSymbol;
     }
 }
