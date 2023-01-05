@@ -1,16 +1,28 @@
 package hardlevel;
 
+import javafx.application.Platform;
 import models.GameLogic;
 
 public class HardLevel extends GameLogic implements  Runnable{
 
     Thread th = new Thread();
-    void setupgame() {
-        setup();
+    char won;
+    @Override
+    public void setup() {
+        super.setup();
         AiTurn();
     }
 
-       public  void userTurn() {
+    //play called to start game logic
+    public void play(){
+        for(int i=0; i<8; i++){
+            userTurn();
+        }
+        //array is full you can now check winner
+        won = checkWinner();
+        playvid();
+    }
+       void userTurn() {
             if (currentPlayerIsHuman) {
                 // Human make turn
                 //know btn
@@ -20,7 +32,7 @@ public class HardLevel extends GameLogic implements  Runnable{
             }
         }
 
-       public void AiTurn() {
+      void AiTurn() {
             // AI to make its turn
             int bestScore = Integer.MIN_VALUE;
             int[] move = {0, 0};
@@ -42,22 +54,6 @@ public class HardLevel extends GameLogic implements  Runnable{
             board[move[0]][move[1]] = ai;
             currentPlayerIsHuman = true;
         }
-
-    public void run(){
-        while(true){
-            try {
-                userTurn();
-                th.sleep(1500);
-                AiTurn();
-                if (availableCells()==0){
-                    th.sleep(1000);
-                }
-            }
-            catch(InterruptedException ie){
-                ie.printStackTrace();
-            }
-        }
-    }
 
     int minimax(char[][] board, int depth, boolean isMaximizing) {
         char result = checkWinner();
@@ -99,6 +95,38 @@ public class HardLevel extends GameLogic implements  Runnable{
                 }
             }
             return bestScore;
+        }
+    }
+    public void run(){
+        th.start();
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                while(availableCells()!=0){
+                    try {
+                        userTurn();
+                        th.sleep(1500);
+                        AiTurn();
+                    }
+                    catch(InterruptedException ie){
+                        ie.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+    public void gameEnded(){
+
+    }
+    void playvid(){
+        if (won =='t'){
+            //load tie video
+        }
+        if(won == 'X'){
+            //play x won stuff
+        }
+        if(won  == 'O'){
+            //play x won stuff
         }
     }
 }
