@@ -8,15 +8,15 @@ public class GameLogic {
     * AI will start will be given O and user will be given x, we need a boolean to check
     * if the current player is the user or the machine + a map of scores for checking
     * */
-    char[][] board = {
+    public char[][] board = {
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0}
     };
-    char ai = 'O';
-    char human = 'X';
-    boolean currentPlayerIsHuman = true;
-    HashMap<Character, Integer> scores = new HashMap<>();
+    public char ai = 'O';
+    public char human = 'X';
+    public boolean currentPlayerIsHuman = true;
+    public HashMap<Character, Integer> scores = new HashMap<>();
     public void setup(){
         scores.put('X',0);
         scores.put('O',1);
@@ -29,7 +29,7 @@ public class GameLogic {
     }
 
     //looks for available cells, the value of the var available is 0 on case the board is full
-    int availableCells(){
+   public int availableCells(){
         int available = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
