@@ -9,6 +9,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import boardscreen.BoardController;
+import helper.GameType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +53,18 @@ public class WelcomeScreenController implements Initializable {
    @FXML
    private void goToGameSingle(ActionEvent event) throws IOException{
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        BoardController.TYPE=helper.GameType.SINGLE_PLAYER_GAME;
+        BoardController.STAGE_OF_BORAD= stage;
+
+        //to upgrade type in gameType
+       if(((Button) event.getSource()).getText().equals("EASY")){
+           BoardController.TYPE = GameType.SINGLE_PLAYER_EASY_LEVEL;
+       }else if(((Button) event.getSource()).getText().equals("MEDIUM")){
+           BoardController.TYPE = GameType.SINGLE_PLAYER_MEDIUM_LEVEL;
+       }else{
+           BoardController.TYPE = GameType.SINGLE_PLAYER_HARD_LEVEL;
+       }
+
+
         Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
         Scene scene=new Scene(root);
         stage.setScene(scene);
@@ -62,9 +74,10 @@ public class WelcomeScreenController implements Initializable {
    private void goToGameLocal(ActionEvent event) throws IOException{
 
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        BoardController.STAGE_OF_BORAD= stage;
         BoardController.TYPE=helper.GameType.TWO_PLAYER_GAME;
         Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
-        
+
         Scene scene=new Scene(root);
         stage.setScene(scene);
         stage.show();

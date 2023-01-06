@@ -60,7 +60,7 @@
             <String fx:value="mainFontButtonWelcomeScreen" />
          </styleClass>
       </Button>
-      <Button id="button" fx:id="easy" layoutX="518.0" layoutY="250.0" mnemonicParsing="false" onAction="#goToGameSingle" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="Easy" textOverrun="CENTER_ELLIPSIS" visible="false">
+      <Button id="button" fx:id="easy" layoutX="518.0" layoutY="250.0" mnemonicParsing="false" onAction="#goToGameSingle" prefHeight="80.0" prefWidth="150.0" stylesheets="@../resource/styleSheet.css" text="EASY" textOverrun="CENTER_ELLIPSIS" visible="false">
          <font>
             <Font name="Action Jackson" size="26.0" />
          </font>
