@@ -8,8 +8,12 @@ public class EasyLogic extends GameLogic{
     4- if empty -> mark "o".
     5- change round.
     6- repeat from number 1.
+    7- record human move.
+    8-
  */
 private Random mRand;
+
+/*
 private char turn;
     public void changeTurns() {
          if (turn == human )
@@ -17,17 +21,14 @@ private char turn;
         else
             turn = human;
 
-    }
+    }*/
 
- @Override
- public void setup(){
-     super.setup();
 
- }
- public  void addInRandomPosition(){
+ public  int addInRandomPosition(){
      int  column;
      int row;
      int move;
+     mRand = new Random();
      do
      {
          move = mRand.nextInt(9);
@@ -41,15 +42,11 @@ private char turn;
         }
      } while (board[row][column] == human || board[row][column] == ai);
      board[row][column] = ai;
+     return move;
  }
 
- public void buttonClicked(int  index){
-     char winner = checkWinner();
-     if (winner == 'n' && turn == ai  ){
-          addInRandomPosition();
-         changeTurns();
-         checkWinner();
-     }
- }
+    public void setPlayerMove(int row, int col) {
+        board[row][col] = 'X';
 
+    }
 }

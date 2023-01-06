@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import easylevel.EasyLogic;
 import helper.GameType;
 import helper.StatusGame;
 import javafx.event.ActionEvent;
@@ -41,6 +42,9 @@ public class BoardController implements Initializable {
    private  static Stage STAGE_OF_VIEW_VIDEO;
     public static Stage STAGE_OF_BORAD;
    private  static boolean IS_VIEW_VIDEO;
+
+   EasyLogic easy;
+
    @FXML
    private Button record;
    @FXML
@@ -197,6 +201,7 @@ public class BoardController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        easy = new EasyLogic();
         if (!IS_VIEW_VIDEO){
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
@@ -253,7 +258,27 @@ public class BoardController implements Initializable {
         switch (TYPE){// The return type for any method should be the new position and
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 //call easy method and pass row and column
+                System.out.println(easy.checkWinner());
 
+             easy.setPlayerMove(row , col);
+                System.out.println(easy.checkWinner());
+
+                if (easy.checkWinner()== 'X'){
+
+                   viewVideo();
+
+               }else {
+
+                   int move = easy.addInRandomPosition();
+                   System.out.println(easy.checkWinner());
+                   if (easy.checkWinner() == 'O') {
+                       viewVideo();
+                   }else {
+                       upgradeUi(move,'O');
+                   }
+
+
+               }
                 //example: upgradeUi(MediumLevel.calcNextMove() , MediumLevel.playerSymbol());
                 //calcMove() should return the position (1 - 9)
                 //playerSymbol() should return the 'X' or 'O'
