@@ -6,12 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/recordscreen/FXMLRecordList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/recordscreen/FXMLRecordList.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/GameType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/GameType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/GameLogic.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/GameLogic.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -83,6 +79,71 @@
       <updated>1672765357064</updated>
     </task>
     <servers />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>293</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>265</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>268</line>
+          <option name="timeStamp" value="6" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>272</line>
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>275</line>
+          <option name="timeStamp" value="8" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>278</line>
+          <option name="timeStamp" value="9" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>281</line>
+          <option name="timeStamp" value="10" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>284</line>
+          <option name="timeStamp" value="11" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/mediumlevel/MediumLevel.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>274</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
+          <line>256</line>
+          <properties class="boardscreen.BoardController" method="calcNextMove">
+            <option name="EMULATED" value="true" />
+            <option name="WATCH_EXIT" value="false" />
+          </properties>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

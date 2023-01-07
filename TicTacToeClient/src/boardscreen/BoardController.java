@@ -27,6 +27,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mediumlevel.MediumLevel;
 
 /**
  * FXML Controller class
@@ -34,6 +35,7 @@ import javafx.stage.Stage;
  * @author ammar
  */
 public class BoardController implements Initializable {
+    private MediumLevel mediumLevel;
     private static MediaPlayer MEDIA_PLAYER;
    public static int TYPE;
     private static int STATUS_OF_GAME;
@@ -41,6 +43,7 @@ public class BoardController implements Initializable {
    private  static Stage STAGE_OF_VIEW_VIDEO;
     public static Stage STAGE_OF_BORAD;
    private  static boolean IS_VIEW_VIDEO;
+   private boolean isFirstMove = false;
    @FXML
    private Button record;
    @FXML
@@ -197,6 +200,8 @@ public class BoardController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        mediumLevel = new MediumLevel();
         if (!IS_VIEW_VIDEO){
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
@@ -259,7 +264,35 @@ public class BoardController implements Initializable {
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                //call medium method and pass row and column
+                mediumLevel.addPlayerMove(row,col, mediumLevel.human);//initial move is X
+                //check if X could win
+                if(mediumLevel.checkWinner() == 'n'){
+                    if(!isFirstMove){
+                        upgradeUi(mediumLevel.decideFirstMove(row,col), mediumLevel.ai);
+                        isFirstMove = true;//I want to enter here only once
+                    }else{
+                        // i want computer to win so i passed ai first then human at losing parameter
+                        int computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.human);
+                        if(computerMove != -1){//-1 means I can't win
+                            //I can win
+                            upgradeUi(computerMove, mediumLevel.ai);
+                        }else{//I can't win
+                            computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.human, mediumLevel.ai);
+
+                            if(computerMove != -1){//if true then I could block the player winning
+                                upgradeUi(computerMove, mediumLevel.ai);
+
+                            }else{//then I will generate random number to my move
+                                upgradeUi(mediumLevel.generateRandomMove(mediumLevel.ai), mediumLevel.ai);
+                            }
+                        }
+                        //1.check if I could win
+                        //2.if not then check if x could win and don't let him
+                        //3.if not then decide my next move which will be random I guess or not
+                    }
+                }else{
+                    //means X has won what should we do...
+                }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
