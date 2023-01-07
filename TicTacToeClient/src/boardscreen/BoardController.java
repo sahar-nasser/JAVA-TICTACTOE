@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -38,8 +37,10 @@ public class BoardController implements Initializable {
     private static MediaPlayer MEDIA_PLAYER;
    public static int TYPE;
     private static int STATUS_OF_GAME;
-    private static int LEVEL_OF_GAME;
+
+
    private  static Stage STAGE_OF_VIEW_VIDEO;
+
     public static Stage STAGE_OF_BORAD;
    private  static boolean IS_VIEW_VIDEO;
 
@@ -133,6 +134,9 @@ public class BoardController implements Initializable {
         upgradeUi(1,'X');
         calcNextMove(0,0);
     }
+
+
+
     @FXML
     public void clickPostionTwo(ActionEvent event){
         upgradeUi(2,'X');
