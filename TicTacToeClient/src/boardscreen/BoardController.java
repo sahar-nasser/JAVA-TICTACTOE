@@ -129,50 +129,50 @@ public class BoardController implements Initializable {
     
     @FXML
     public void clickPostionOne(ActionEvent event){
-        upgradeUi(1,'X');
+        upgradeUi(1, mediumLevel.human);
         calcNextMove(0,0);
     }
     @FXML
     public void clickPostionTwo(ActionEvent event){
-        upgradeUi(2,'X');
+        upgradeUi(2, mediumLevel.human);
         calcNextMove(0,1);
     }
     @FXML
     public void clickPostionThree(ActionEvent event){
-        upgradeUi(3,'X');
+        upgradeUi(3, mediumLevel.human);
         calcNextMove(0,2);
     }
     @FXML
     public void clickPostionFour(ActionEvent event){
-        upgradeUi(4,'X');
+        upgradeUi(4, mediumLevel.human);
         calcNextMove(1,0);
     }
     @FXML
     public void clickPostionFive(ActionEvent event){
-        upgradeUi(5,'X');
+        upgradeUi(5, mediumLevel.human);
         calcNextMove(1,1);
 
     }
     @FXML
     public void clickPostionSix(ActionEvent event){
-        upgradeUi(6,'X');
+        upgradeUi(6, mediumLevel.human);
         calcNextMove(1,2);
 
     }
     @FXML
     public void clickPostionSeven(ActionEvent event){
-        upgradeUi(7,'X');
+        upgradeUi(7, mediumLevel.human);
         calcNextMove(2,0);
     }
     @FXML
     public void clickPostionEight(ActionEvent event){
-        upgradeUi(8,'X');
+        upgradeUi(8, mediumLevel.human);
         calcNextMove(2,1);
 
     }
     @FXML
     public void clickPostionNine(ActionEvent event){
-        upgradeUi(9,'X');
+        upgradeUi(9, mediumLevel.human);
         calcNextMove(2,2);
     }
     
@@ -266,13 +266,17 @@ public class BoardController implements Initializable {
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
                 mediumLevel.addPlayerMove(row,col, mediumLevel.human);//initial move is X
                 //check if X could win
-                if(mediumLevel.checkWinner() == 'n'){
+                char checkWinnerChar = mediumLevel.checkWinner();
+                if(checkWinnerChar== 'n'){
                     if(!isFirstMove){
-                        upgradeUi(mediumLevel.decideFirstMove(row,col), mediumLevel.ai);
+                        upgradeUi(mediumLevel.decideFirstMove(mediumLevel.ai), mediumLevel.ai);
                         isFirstMove = true;//I want to enter here only once
                     }else{
-                        // i want computer to win so i passed ai first then human at losing parameter
-                        int computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.human);
+                        /*
+                        * i want computer to win so I'm the winning side 'O' and i want to check if could win
+                        * and if i can , i don't wwant the losingSymbol to be 'X' i want it to be me '0'
+                         * */
+                        int computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.ai);
                         if(computerMove != -1){//-1 means I can't win
                             //I can win
                             upgradeUi(computerMove, mediumLevel.ai);
@@ -291,7 +295,7 @@ public class BoardController implements Initializable {
                         //3.if not then decide my next move which will be random I guess or not
                     }
                 }else{
-                    //means X has won what should we do...
+                    //calling viewVideo method but should check it it's a lose or tie or win
                 }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
