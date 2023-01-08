@@ -63,8 +63,6 @@ public class WelcomeScreenController implements Initializable {
        }else{
            BoardController.TYPE = GameType.SINGLE_PLAYER_HARD_LEVEL;
        }
-
-
         Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
         Scene scene=new Scene(root);
         stage.setScene(scene);
