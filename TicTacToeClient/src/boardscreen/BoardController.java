@@ -260,9 +260,9 @@ public class BoardController implements Initializable {
                 //call easy method and pass row and column
                 System.out.println(easy.checkWinner());
 
-             easy.setPlayerMove(row , col);
-                System.out.println(easy.checkWinner());
 
+                System.out.println(easy.checkWinner());
+                upgradeUi( easy.setPlayerMove(row , col),'X');
                 if (easy.checkWinner()== 'X'){
 
                    viewVideo();
@@ -271,10 +271,10 @@ public class BoardController implements Initializable {
 
                    int move = easy.addInRandomPosition();
                    System.out.println(easy.checkWinner());
+                    upgradeUi(move,'O');
                    if (easy.checkWinner() == 'O') {
+
                        viewVideo();
-                   }else {
-                       upgradeUi(move,'O');
                    }
 
 
