@@ -4,15 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/recordscreen/FXMLRecordList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/recordscreen/FXMLRecordList.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/helper/GameType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/GameType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreen.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreen.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/welcomescreen/WelcomeScreenController.java" afterDir="false" />
-    </list>
+    <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -42,12 +34,17 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;D:/ITI/Java-SE/SceneBuilder-8.5.0.exe&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "C:/Users/Laptop Shop/Desktop/JAVA-TICTACTOE/TicTacToeServer",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="models" />
