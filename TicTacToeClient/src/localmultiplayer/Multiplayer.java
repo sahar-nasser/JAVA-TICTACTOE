@@ -1,14 +1,10 @@
 package localmultiplayer;
 
-import javafx.application.Platform;
 import models.GameLogic;
-import boardscreen.BoardController;
 
 public class Multiplayer extends GameLogic  {
-    //int btnNum;
     int curr_r;
     int curr_c;
-    public int counter=0;
     public boolean onePlayed;
     public boolean twoPlayed;
     static char won;
@@ -16,28 +12,11 @@ public class Multiplayer extends GameLogic  {
     public  Multiplayer(){
         curr_c=0;
         curr_r=0;
-        counter=0;
         won='n';
         onePlayed=false;
         twoPlayed=true;
     }
 
-    //to be called to start game logic
-    /** public void play(){
-     for(int i=0; i<8; i++){
-     playerOneTurn();
-     }
-     //array is full
-     }**/
-
-
-    /** public int setBtn(int r, int c){
-     btnNum= (r+1)*(c+1);
-     return btnNum;
-     }
-     public char sendChar(){
-     return curr;
-     }**/
     public void getIndex(int r, int c){
         curr_r=r;
         curr_c=c;
@@ -57,7 +36,6 @@ public class Multiplayer extends GameLogic  {
         } else {
             System.out.println("not yet");
         }
-        counter++;
         onePlayed=true;
         twoPlayed=false;
 
@@ -78,7 +56,6 @@ public class Multiplayer extends GameLogic  {
         else {
             System.out.println("not yet");
         }
-        counter++;
         onePlayed=false;
         twoPlayed=true;
 
