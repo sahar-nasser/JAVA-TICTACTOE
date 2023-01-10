@@ -4,14 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/splashscreen/FXMLDocument.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/splashscreen/FXMLDocumentController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/splashscreen/TicTacToeClient.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/TicTacToeClient/splashscreen/FXMLDocument.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/TicTacToeClient/splashscreen/FXMLDocumentController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../out/production/TicTacToeClient/splashscreen/TicTacToeClient.class" beforeDir="false" />
-    </list>
+    <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -45,7 +38,10 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "last_opened_file_path": "D:/ITI/Java-SE/SceneBuilder-8.5.0.exe",
+    "last_opened_file_path": "C:/Users/Laptop Shop/Desktop/JAVA-TICTACTOE/TicTacToeServer",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
     "settings.editor.selected.configurable": "preferences.JavaFX"
   }
 }]]></component>
