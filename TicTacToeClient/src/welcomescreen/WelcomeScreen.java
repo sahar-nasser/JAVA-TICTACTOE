@@ -27,8 +27,8 @@ public class WelcomeScreen extends Application {
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
-        ClientConnection.establishConnection();
-        ClientConnection.forwardMsg("hello");
+//        ClientConnection.establishConnection();
+//        ClientConnection.forwardMsg("hello");
         } catch (IOException e) {
             Logger.getLogger(WelcomeScreen.class.getName()).log(Level.SEVERE, null, e);
         }
