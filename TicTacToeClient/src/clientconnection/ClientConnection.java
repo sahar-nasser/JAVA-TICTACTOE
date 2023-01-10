@@ -11,9 +11,11 @@ public class ClientConnection {
     static private Socket mySocket;
     static private DataInputStream dis;
     static private PrintStream ps;
+
     public static int establishConnection() throws IOException {
         int res=0;
-            mySocket= new Socket("127.0.0.1", 5005);
+            mySocket= new Socket("127.0.0.1", 5000);
+
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
             res=1;
