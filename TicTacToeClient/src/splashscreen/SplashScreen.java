@@ -12,12 +12,13 @@ public class SplashScreen extends Application {
     public static boolean  isSplashedLoaded = false;
     @Override
     public void start(Stage stage) throws Exception {
+        SplashScreenController.isLoaded=false;
         Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
-        
+
         Scene scene = new Scene(root);
-        
+
         stage.setScene(scene);
-        stage.setTitle("Splas Screen");
+        stage.setTitle("Splash Screen");
         stage.show();
     }
 
