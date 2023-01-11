@@ -5,9 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/nbproject/jfx-impl_backup_3.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl_backup_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/UPDATED.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/UPDATED.TXT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/jfx-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/jfx-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/boardscreen/BoardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/boardscreen/BoardController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/mediumlevel/MediumLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/mediumlevel/MediumLevel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/UPDATED.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/UPDATED.TXT" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/private/private.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -79,17 +88,6 @@
       <updated>1672765357064</updated>
     </task>
     <servers />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/boardscreen/BoardController.java</url>
-          <line>297</line>
-          <option name="timeStamp" value="22" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
