@@ -20,7 +20,7 @@ public class ClientHandler extends Thread {
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException(e);///eroooooooooooooo
         }
         ClientHandler.clientsVector.add(this);
         start();

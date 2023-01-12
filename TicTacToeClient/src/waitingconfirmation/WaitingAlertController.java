@@ -43,7 +43,7 @@ public class WaitingAlertController implements Initializable {
             Parent root;
         try {
             BoardController.TYPE=helper.GameType.ONLINE_GAME;
-            BoardController.STAGE_OF_BORAD=stage;
+            BoardController.STAGE_OF_BOARD =stage;
             root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
             Scene scene=new Scene(root);
             stage.setScene(scene);
