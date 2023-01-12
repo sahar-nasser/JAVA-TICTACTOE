@@ -276,7 +276,7 @@ public class BoardController extends Thread implements Initializable {
                         isFirstMove = true;//I want to enter here only once
                     } else {
                         /*
-                         * I want computer to win so I'm the winning side 'O' and i want to check if could win
+                         * I want computer to win, so I'm the winning side 'O' and i want to check if could win
                          * and if i can , I don't want the losingSymbol to be 'X' i want it to be me 'O'
                          * */
                         computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.ai);
@@ -303,7 +303,7 @@ public class BoardController extends Thread implements Initializable {
                         }
                     });
                 } else {
-                    //calling viewVideo method but should check it it's a lose or tie or win
+                    viewVideo();
                 }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:

@@ -38,8 +38,7 @@ public class MediumLevel extends GameLogic {
                     emptyCellIndex = col;
             }
             if(computerCharCounter == 2 && emptyCellIndex!=-1){
-//                board[row][emptyCellIndex] = winningSymbol;
-                addPlayerMove(row,emptyCellIndex,losingSymbol);//winningSymbol because i want it to win
+                addPlayerMove(row,emptyCellIndex,losingSymbol);
                 retValue = 3*row + ++emptyCellIndex;
                 row = 3;
             }
