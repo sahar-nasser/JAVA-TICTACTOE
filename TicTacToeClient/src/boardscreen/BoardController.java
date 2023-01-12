@@ -11,7 +11,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import clientconnection.ClientConnection;
+
 import easylevel.EasyLogic;
 import helper.GameType;
 import helper.MsgType;
@@ -48,7 +48,7 @@ public class BoardController implements Initializable {
     public static Stage STAGE_OF_BOARD;
    private  static boolean IS_VIEW_VIDEO;
    private  static boolean IS_FIRST;
-
+    boolean isRecording;
    EasyLogic easy;
    OnlineGame online;
 
@@ -57,24 +57,24 @@ public class BoardController implements Initializable {
    @FXML
    private Button close;
    @FXML
-   private Button postionOne;
+   private Button positionOne;
    @FXML
-   private Button postionTwo;
+   private Button positionTwo;
    @FXML
-   private Button postionThree;
+   private Button positionThree;
    @FXML
-   private Button postionFour;
+   private Button positionFour;
    @FXML
-   private Button postionFive;
+   private Button positionFive;
    @FXML
-   private Button postionSix;
+   private Button positionSix;
    @FXML
-   private Button postionSeven;
+   private Button positionSeven;
    @FXML
-   private Button postionEight;
+   private Button positionEight;
    @FXML
-   private Button postionNine;
-   
+   private Button positionNine;
+
    @FXML
    private Text scoreOfPlayerOne;
    @FXML
@@ -88,53 +88,59 @@ public class BoardController implements Initializable {
    private Text nameOfPlayerOne;
    @FXML
    private Text nameOfPlayerTwo;
-  
+
     @FXML
     private MediaView mediaView;
-      
-    
+
+    private Button[] arr;
+
+
 
     @FXML
     public void recordGame(ActionEvent event){
-        record.setStyle("-fx-background-color:#ff0000");
-        record.setText("Recording");
-        viewVideo();
-//        record.setEffect(value);
-      
+        if(!isRecording){
+            record.setStyle("-fx-background-color:#ff0000");
+            record.setText("Recording");
+            isRecording=true;
+        }
     }
     @FXML
     public void closeGame(ActionEvent event){
+
         if (IS_VIEW_VIDEO){
             STAGE_OF_VIEW_VIDEO.close();
             MEDIA_PLAYER.stop();
-            IS_VIEW_VIDEO=false;
         }
          switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
                 try{
-                Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
-                Scene scene=new Scene(root);
-                STAGE_OF_BOARD.setScene(scene);
-                STAGE_OF_BOARD.show();
+                    if (!IS_VIEW_VIDEO)online.sendCloseGame(PLAYER_TWO);
+                    IS_VIEW_VIDEO=false;
+                    if (isRecording)online.sendRecording();
+                    online.closeConnection();
+                    Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
+                    Scene scene=new Scene(root);
+                    STAGE_OF_BOARD.setScene(scene);
+                    STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
                     Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
                  }
             break;
             default:
                 try{
-                Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
-                Scene scene=new Scene(root);
-                STAGE_OF_BOARD.setScene(scene);
-                STAGE_OF_BOARD.show();
+                    Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
+                    Scene scene=new Scene(root);
+                    STAGE_OF_BOARD.setScene(scene);
+                    STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
                     Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
                  }
                 break;
-                
+
         }
-      
+
     }
-    
+
     @FXML
     public void clickPostionOne(ActionEvent event){
         upgradeUi(1,'X');
@@ -186,22 +192,12 @@ public class BoardController implements Initializable {
         upgradeUi(9,'X');
         calcNextMove(2,2);
     }
-    
+
     /**
      * Initializes the controller class.
      */
 
     private void viewVideo(){
-        if (TYPE==GameType.ONLINE_GAME) {
-            try {
-                ClientConnection.closeConnection();
-            } catch (IOException e) {
-                Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, e);
-            }
-        }
-        else
-            STATUS_OF_GAME=StatusGame.WIN;
-
         IS_VIEW_VIDEO=true;
         STAGE_OF_VIEW_VIDEO= new Stage();
         Parent root = null;
@@ -218,9 +214,10 @@ public class BoardController implements Initializable {
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        easy = new EasyLogic();
 
+        isRecording=false;
         if (!IS_VIEW_VIDEO){
+            arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
                 online=new OnlineGame(IS_FIRST,PLAYER_TWO);
@@ -243,8 +240,8 @@ public class BoardController implements Initializable {
 
             break;
 
-
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
+                easy = new EasyLogic();
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
@@ -255,7 +252,7 @@ public class BoardController implements Initializable {
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
-                
+
             default:
                 scoreOfPlayerOne.setVisible(false);
                 scoreOfPlayerTwo.setVisible(false);
@@ -263,29 +260,31 @@ public class BoardController implements Initializable {
                 scoreTwo.setVisible(false);
                 record.setVisible(false);
                 break;
-                
+
         }
     }
         else{
-        Media media;
-        switch (STATUS_OF_GAME) {
-            case StatusGame.WIN:
-                STAGE_OF_VIEW_VIDEO.setTitle("WIN");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-                break;
-            case StatusGame.DRAW:
-                STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-                break;
-            default:
-                STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-        }
+            Media media;
+            switch (STATUS_OF_GAME) {
+                case StatusGame.WIN:
+                    STAGE_OF_VIEW_VIDEO.setTitle("WIN");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(10);
+                    break;
+                case StatusGame.DRAW:
+                    STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    break;
+                default:
+                    STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(-5);
+            }
         MEDIA_PLAYER =new MediaPlayer(media);
         MEDIA_PLAYER.setAutoPlay(true);
         MEDIA_PLAYER.setOnReady(()->STAGE_OF_VIEW_VIDEO.sizeToScene());
         mediaView.setMediaPlayer(MEDIA_PLAYER);
-    }
+        }
     }
 
 
@@ -329,20 +328,16 @@ public class BoardController implements Initializable {
                 //local game
                 break;
             case GameType.ONLINE_GAME:
-                if(online.isTurn){
+
                     int x=online.setMove(row,col);
                     char c= online.checkWinner();
                     if(c==online.getChar()){viewVideo();STATUS_OF_GAME=StatusGame.WIN;}
                     else if(c=='t'){viewVideo();STATUS_OF_GAME=StatusGame.DRAW;}
                     else if(c=='n')
                         upgradeUi(x,online.getChar());
-                    online.sendMsg(x, MsgType.SEND_MOVE);
-
-                }
-                else {
+                    online.sendMoveMsg(x);
 
 
-                }
         }
     }
 
@@ -355,31 +350,31 @@ public class BoardController implements Initializable {
         Button tempButton;
         switch (buttonNumber){
             case 1:
-                tempButton= postionOne;
+                tempButton= positionOne;
                 break;
             case 2:
-                tempButton= postionTwo;
+                tempButton= positionTwo;
                 break;
             case 3:
-                tempButton= postionThree;
+                tempButton= positionThree;
                 break;
             case 4:
-                tempButton= postionFour;
+                tempButton= positionFour;
                 break;
             case 5:
-                tempButton= postionFive;
+                tempButton= positionFive;
                 break;
             case 6:
-                tempButton= postionSix;
+                tempButton= positionSix;
                 break;
             case 7:
-                tempButton= postionSeven;
+                tempButton= positionSeven;
                 break;
             case 8:
-                tempButton= postionEight;
+                tempButton= positionEight;
                 break;
             default:
-                tempButton= postionNine;
+                tempButton= positionNine;
 
         }
         tempButton.setText(playerChar+"");
@@ -391,7 +386,7 @@ public class BoardController implements Initializable {
         String msg=online.getMsg();
         switch (MsgType.getMsgType(msg)){
             case MsgType.SEND_MOVE:
-                int move= MsgType.getmove(msg);
+                int move= MsgType.getMove(msg);
                 online.setMove((move/3)-1,move%3);
                 char c=online.checkWinner();
                 if(c==online.getCharOfPlayerTwo()){viewVideo();STATUS_OF_GAME=StatusGame.LOSE;}
@@ -400,8 +395,15 @@ public class BoardController implements Initializable {
                     upgradeUi(move,online.getCharOfPlayerTwo());
                     enableButton();
                 }
-
-
+                break;
+            case MsgType.QUIT_GAME:
+                viewVideo();
+                STATUS_OF_GAME=StatusGame.WIN;
+                break;
+            case MsgType.SERVER_CLOSE:
+                online.closeConnection();
+                TYPE=GameType.SINGLE_PLAYER_EASY_LEVEL;
+                closeGame(new ActionEvent());
         }
     }
 
@@ -410,11 +412,20 @@ public class BoardController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 if (online.board[i][j] == (char)0) {
                     int x=(3*i)+(j+1);
+                    arr[x].setDisable(false);
                 }
             }
         }
     }
     private void disableALL() {
+           for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (online.board[i][j] == (char)0) {
+                    int x=(3*i)+(j+1);
+                    arr[x].setDisable(true);
+                }
+            }
+        }
     }
 
 }
