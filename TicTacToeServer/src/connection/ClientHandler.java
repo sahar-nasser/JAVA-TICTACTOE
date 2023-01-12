@@ -1,6 +1,8 @@
 package connection;
 
 
+import helper.MsgType;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;

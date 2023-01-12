@@ -9,6 +9,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import clientconnection.ClientConnection;
+import helper.MsgType;
+import helper.PlayerData;
+import helper.QueryType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -63,10 +67,18 @@ public class LoginController implements Initializable {
       @FXML
     public void handleLoginButtonAction(ActionEvent event) throws IOException{
              //start connection + send data for authentication through client handler
-
-            if(true){//checkuserData will be here
+          PlayerData.USERNAME = usernameTextField.getText();
+            if(checkUserData(passwordTextField.getText())){
                 //load the nextScreen and return the label visibility to false and setVisibile(false)
 
+                if(labelVisibility){//if user return back to login, error label should be invisible
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            errorMsgLabel.setVisible(labelVisibility = false);
+                        }
+                    });
+                }
                 Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
                 Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
                 Scene scene=new Scene(root);
@@ -77,17 +89,32 @@ public class LoginController implements Initializable {
                    Platform.runLater(new Runnable() {
                        @Override
                        public void run() {
-                           errorMsgLabel.setVisible(true);
+                           errorMsgLabel.setVisible(labelVisibility = true);
                        }
                    });
-                   labelVisibility =  true;
-               }else{
                }
             }
     }
 
-    public void checkUserData(String username , String password){
-        //go to database and then fill player object
+    public boolean checkUserData(String password){
+        boolean returnValue;
+        try {
+            ClientConnection.establishConnection();
+            int msgStatus = ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+PlayerData.USERNAME+","+password);
+            if(msgStatus == 1){
+                if(ClientConnection.getServerResponsible().equals("yes")){
+
+                    returnValue = true;
+                }else{
+                    returnValue = false;
+                }
+            }else{
+                returnValue = true;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        return returnValue;
     }
     
     @Override
