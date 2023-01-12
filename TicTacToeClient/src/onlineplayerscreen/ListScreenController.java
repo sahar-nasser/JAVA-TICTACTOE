@@ -7,6 +7,7 @@ package onlineplayerscreen;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -20,6 +21,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import models.Player;
 
 /**
  *
@@ -27,11 +29,6 @@ import javafx.stage.Stage;
  */
 public class ListScreenController implements Initializable {
     @FXML
-    private AnchorPane anchorPane = new AnchorPane();
-    
-
-    private Button playerBtn = new Button("testetstets") , test = new Button ("hello") , test1= new Button ("hello") , test2= new Button ("hello") , test4 = new Button ("hello"),test5= new Button ("hello"),test7= new Button ("hello");
-     @FXML
     private Button homeBtn;
      @FXML
     private Button logoutBtn;
@@ -110,16 +107,18 @@ public class ListScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        playerBtn.setPrefHeight(74);
-        playerBtn.setPrefWidth(300);
-        playerBtn.setStyle("-fx-background-color: #ffb100;-fx-font-family: 'Action Jackson'; -fx-font-size: 32;");
-        playersList.getItems().add(playerBtn);
-        playersList.getItems().add(test);
-        playersList.getItems().add(test1);
-        playersList.getItems().add(test2);
-        playersList.getItems().add(test4);
-        playersList.getItems().add(test5);
-        playersList.getItems().add(test7);
+        //call method to talk to the server the pass the return which should be ArrayList<Player>
+        //to the fillPlayerList method then we will have 
     }
-    
+
+    //call the method to receive the list of players in initialize
+    private void fillPlayersList(ArrayList<Player> onlinePlayers){
+        for(Player player : onlinePlayers){
+            Button tempButton = new Button(player.getUsername());
+            tempButton.setPrefHeight(74);
+            tempButton.setPrefWidth(300);
+            tempButton.setStyle("-fx-background-color: #ffb100;-fx-font-family: 'Action Jackson'; -fx-font-size: 32;");
+            playersList.getItems().add(tempButton);
+        }
+    }
 }

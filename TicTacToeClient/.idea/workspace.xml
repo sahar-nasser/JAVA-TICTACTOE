@@ -6,13 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/FXMLPlayerList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/FXMLPlayerList.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/ListScreenController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/ListScreenController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/resource/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/resource/styleSheet.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/onlineplayerscreen/FXMLPlayerList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/onlineplayerscreen/FXMLPlayerList.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resource/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resource/styleSheet.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
