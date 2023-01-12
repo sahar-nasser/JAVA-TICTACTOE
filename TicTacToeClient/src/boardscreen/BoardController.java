@@ -294,6 +294,11 @@ public class BoardController extends Thread implements Initializable {
                     Platform.runLater(new Runnable() {
                         @Override
                         public void run() {
+                            try {
+                                Thread.sleep(400);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
                             upgradeUi(finalComputerMove, mediumLevel.ai);
                         }
                     });
