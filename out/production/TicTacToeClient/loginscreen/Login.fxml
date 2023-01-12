@@ -68,9 +68,9 @@
                   <Font size="31.0" />
                </font>
             </PasswordField>
-            <Label fx:id="errorMsg" alignment="CENTER">
+            <Label fx:id="errorMsgLabel" alignment="CENTER" text="Please check your username or password was incorrect!" textFill="#ff0707" visible="false">
                <VBox.margin>
-                  <Insets left="230.0" top="30.0" />
+                  <Insets left="65.0" top="30.0" />
                </VBox.margin>
             </Label>
             <Button id="button" fx:id="loginBtn" mnemonicParsing="false" onAction="#handleLoginButtonAction" prefHeight="74.0" prefWidth="276.0" stylesheets="@../resource/styleSheet.css" text="LOGIN" textFill="#2c0153">
