@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
                     returnValue = false;
                 }
             }else{
-                returnValue = true;
+                returnValue = false;
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
