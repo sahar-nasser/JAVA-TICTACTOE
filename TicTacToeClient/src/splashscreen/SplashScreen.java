@@ -1,22 +1,24 @@
-package welcomescreen;
+package splashscreen;
 
 import javafx.application.Application;
-import static javafx.application.Application.launch;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-public class WelcomeScreen extends Application {
+public class SplashScreen extends Application {
+
     
+    public static boolean  isSplashedLoaded = false;
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("WelcomeScreen.fxml"));
-        
+        SplashScreenController.isLoaded=false;
+        Parent root = FXMLLoader.load(getClass().getResource("SplashScreen.fxml"));
+
         Scene scene = new Scene(root);
-        stage.sizeToScene();
-        stage.setResizable(false);
+
         stage.setScene(scene);
+        stage.setTitle("Splash Screen");
         stage.show();
     }
 
