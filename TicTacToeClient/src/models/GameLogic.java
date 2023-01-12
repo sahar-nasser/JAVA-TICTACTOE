@@ -8,6 +8,7 @@ public class GameLogic {
     * AI will start will be given O and user will be given x, we need a boolean to check
     * if the current player is the user or the machine + a map of scores for checking
     * */
+
     public char[][] board = {
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0},
@@ -16,7 +17,8 @@ public class GameLogic {
     public char ai = 'O';
     public char human = 'X';
     public boolean currentPlayerIsHuman = true;
-     protected HashMap<Character, Integer> scores = new HashMap<>();
+    protected HashMap<Character, Integer> scores = new HashMap<>();
+
     public void setup(){
         scores.put('X',0);
         scores.put('O',1);
