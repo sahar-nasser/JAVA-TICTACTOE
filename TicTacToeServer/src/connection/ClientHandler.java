@@ -16,11 +16,12 @@ public class ClientHandler extends Thread {
 
     public ClientHandler(Socket cs, String username) {
         try {
+
             this.username=username;
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
         } catch (IOException e) {
-            throw new RuntimeException(e);///eroooooooooooooo
+            System.out.println(e.getMessage());
         }
         ClientHandler.clientsVector.add(this);
         start();
@@ -31,10 +32,10 @@ public class ClientHandler extends Thread {
             String str = null;
             try {
                 str = dis.readLine();
-
+                str.isEmpty();
                 checkMsgType(str);
             } catch (IOException e) {
-                System.out.println("Client disconnected!");
+                System.out.println("Client disconnected!"+username);
                 ClientHandler.clientsVector.remove(this);
                 this.stop();
             }
