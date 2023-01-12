@@ -8,7 +8,7 @@ public class GameLogic {
     * AI will start will be given O and user will be given x, we need a boolean to check
     * if the current player is the user or the machine + a map of scores for checking
     * */
-     protected char[][] board = {
+    public char[][] board = {
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0}
