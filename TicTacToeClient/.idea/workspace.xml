@@ -5,18 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/nbproject/jfx-impl_backup_3.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl_backup_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/UPDATED.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/UPDATED.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/jfx-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/jfx-impl.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/nbproject/private/private.xml" beforeDir="false" afterPath="$PROJECT_DIR$/nbproject/private/private.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/boardscreen/BoardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/boardscreen/BoardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/FXMLPlayerList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/FXMLPlayerList.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/ListScreenController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/onlineplayerscreen/ListScreenController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/TicTacToeClient/resource/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/TicTacToeClient/resource/styleSheet.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/UPDATED.TXT" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/UPDATED.TXT" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/jfx-impl.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../TicTacToeServer/nbproject/private/private.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TicTacToeServer/nbproject/private/private.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/onlineplayerscreen/FXMLPlayerList.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/onlineplayerscreen/FXMLPlayerList.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resource/styleSheet.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/resource/styleSheet.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +29,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="development" />
+        <entry key="$PROJECT_DIR$/.." value="medium-level" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -50,7 +46,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;last_opened_file_path&quot;: &quot;D:/ITI/Java-SE/SceneBuilder-8.5.0.exe&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.JavaFX&quot;
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;
   }
 }</component>
   <component name="RecentsManager">

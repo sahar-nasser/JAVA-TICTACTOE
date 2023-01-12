@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
@@ -25,18 +26,21 @@ import javafx.stage.Stage;
  * @author Sahar
  */
 public class ListScreenController implements Initializable {
-    
     @FXML
-    private Button playerBtn;
+    private AnchorPane anchorPane = new AnchorPane();
+    
+
+    private Button playerBtn = new Button("testetstets") , test = new Button ("hello") , test1= new Button ("hello") , test2= new Button ("hello") , test4 = new Button ("hello"),test5= new Button ("hello"),test7= new Button ("hello");
      @FXML
     private Button homeBtn;
      @FXML
     private Button logoutBtn;
       @FXML
     private Button historyBtn;
-     
-    
-    
+
+    @FXML
+    private ListView<Button> playersList;
+
     @FXML
     private void handleHistoryAction(ActionEvent event) {
         System.out.println("history clicked!");
@@ -106,7 +110,16 @@ public class ListScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
+        playerBtn.setPrefHeight(74);
+        playerBtn.setPrefWidth(300);
+        playerBtn.setStyle("-fx-background-color: #ffb100;-fx-font-family: 'Action Jackson'; -fx-font-size: 32;");
+        playersList.getItems().add(playerBtn);
+        playersList.getItems().add(test);
+        playersList.getItems().add(test1);
+        playersList.getItems().add(test2);
+        playersList.getItems().add(test4);
+        playersList.getItems().add(test5);
+        playersList.getItems().add(test7);
+    }
     
 }
