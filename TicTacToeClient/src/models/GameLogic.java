@@ -13,7 +13,7 @@ public class GameLogic {
             {(char)0, (char)0, (char)0},
             {(char)0, (char)0, (char)0}
     };
-     public char ai = 'O';
+    public char ai = 'O';
     public char human = 'X';
     public boolean currentPlayerIsHuman = true;
      protected HashMap<Character, Integer> scores = new HashMap<>();
