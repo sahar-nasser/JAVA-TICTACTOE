@@ -22,7 +22,7 @@ public class ServerConnection {
             Socket s;
                 try {
                     s = serverSocket.accept();
-                    DataInputStream dis = new DataInputStream(s.getInputStream());
+                    DataInputStream dis = new DataInputStream(s.getInputStream());//testing
                     new ClientHandler(s,dis.readLine());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
