@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 
 
 import easylevel.EasyLogic;
+import hardlevel.HardLevel;
 import helper.GameType;
 import helper.MsgType;
 import helper.PlayerData;
@@ -31,6 +32,8 @@ import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import level.OnlineGame;
+import localmultiplayer.Multiplayer;
+
 
 /**
  * FXML Controller class
@@ -50,7 +53,10 @@ public class BoardController implements Initializable {
    private  static boolean IS_FIRST;
     boolean isRecording;
    EasyLogic easy;
-   OnlineGame online;
+
+    OnlineGame online;
+    Multiplayer mp = new Multiplayer();
+    HardLevel hl = new HardLevel();
 
    @FXML
    private Button record;
@@ -93,8 +99,6 @@ public class BoardController implements Initializable {
     private MediaView mediaView;
 
     private Button[] arr;
-
-
 
     @FXML
     public void recordGame(ActionEvent event){
@@ -143,54 +147,45 @@ public class BoardController implements Initializable {
 
     @FXML
     public void clickPostionOne(ActionEvent event){
-        upgradeUi(1,'X');
-        calcNextMove(0,0);
+        calcNextMove(0,0,1);
     }
 
 
 
     @FXML
     public void clickPostionTwo(ActionEvent event){
-        upgradeUi(2,'X');
-        calcNextMove(0,1);
+        calcNextMove(0,1,2);
     }
     @FXML
     public void clickPostionThree(ActionEvent event){
-        upgradeUi(3,'X');
-        calcNextMove(0,2);
+        calcNextMove(0,2,3);
     }
     @FXML
     public void clickPostionFour(ActionEvent event){
-        upgradeUi(4,'X');
-        calcNextMove(1,0);
+        calcNextMove(1,0,4);
     }
     @FXML
     public void clickPostionFive(ActionEvent event){
-        upgradeUi(5,'X');
-        calcNextMove(1,1);
+        calcNextMove(1,1,5);
 
     }
     @FXML
     public void clickPostionSix(ActionEvent event){
-        upgradeUi(6,'X');
-        calcNextMove(1,2);
+        calcNextMove(1,2,6);
 
     }
     @FXML
     public void clickPostionSeven(ActionEvent event){
-        upgradeUi(7,'X');
-        calcNextMove(2,0);
+        calcNextMove(2,0,7);
     }
     @FXML
     public void clickPostionEight(ActionEvent event){
-        upgradeUi(8,'X');
-        calcNextMove(2,1);
+        calcNextMove(2,1,8);
 
     }
     @FXML
     public void clickPostionNine(ActionEvent event){
-        upgradeUi(9,'X');
-        calcNextMove(2,2);
+        calcNextMove(2,2,9);
     }
 
     /**
@@ -289,7 +284,7 @@ public class BoardController implements Initializable {
 
 
     //call this function to send indices to (easy-medium-hard - etc...) class
-    public void calcNextMove(int row , int col){
+    public void calcNextMove(int row , int col, int position){
         switch (TYPE){// The return type for any method should be the new position and
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 //call easy method and pass row and column
@@ -312,7 +307,6 @@ public class BoardController implements Initializable {
                        viewVideo();
                    }
 
-
                }
                 //example: upgradeUi(MediumLevel.calcNextMove() , MediumLevel.playerSymbol());
                 //calcMove() should return the position (1 - 9)
@@ -323,8 +317,27 @@ public class BoardController implements Initializable {
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
+                if(hl.humanPlayed){
+                    hl.AiTurn();
+                    upgradeUi(hl.forwardMove(),'O');
+                }
+                else if(hl.aiPlayed){
+                    hl.getIndex(row,col);
+                    hl.userTurn();
+                    upgradeUi(position, 'X');
+                }
+
                 break;
             case GameType.TWO_PLAYER_GAME:
+                 mp.getIndex(row,col);
+                if(mp.onePlayed){
+                    mp.playerTwoTurn();
+                    upgradeUi(position,'O');
+                }
+                else if(mp.twoPlayed){
+                    mp.playerOneTurn();
+                    upgradeUi(position,'X');
+                }
                 //local game
                 break;
             case GameType.ONLINE_GAME:
