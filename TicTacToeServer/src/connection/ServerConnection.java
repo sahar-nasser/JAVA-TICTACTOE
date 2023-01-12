@@ -12,21 +12,22 @@ public class ServerConnection {
 
     public ServerConnection() {
         try {
-            serverSocket = new ServerSocket(5000);
+            serverSocket = new ServerSocket(5005);
+            new Thread(() -> {
+                while (true) {
+                    Socket s;
+                    try {
+                        s = serverSocket.accept();
+
+                        new ClientHandler(s);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }}).start();
 
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
-        new Thread(() -> {
-            while (true) {
-            Socket s;
-                try {
-                    s = serverSocket.accept();
-                    DataInputStream dis = new DataInputStream(s.getInputStream());
-                    new ClientHandler(s,dis.readLine());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-        }}).start();
+
     }
 }

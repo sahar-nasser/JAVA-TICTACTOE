@@ -14,9 +14,8 @@ public class ClientHandler extends Thread {
     String username;
     static Vector<ClientHandler> clientsVector = new Vector<>();
 
-    public ClientHandler(Socket cs, String username) {
+    public ClientHandler(Socket cs) {
         try {
-            this.username=username;
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
         } catch (IOException e) {
@@ -28,10 +27,10 @@ public class ClientHandler extends Thread {
 
     public void run() {
         while (true) {
-            String str = null;
-            try {
-                str = dis.readLine();
 
+            try {
+                String str;
+                str = dis.readLine();
                 checkMsgType(str);
             } catch (IOException e) {
                 System.out.println("Client disconnected!");
@@ -43,7 +42,9 @@ public class ClientHandler extends Thread {
     }
 
     private void checkMsgType(String str) {
+
         //go with switch
+        System.out.println(str);
     }
     public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
 
