@@ -1,6 +1,8 @@
 package connection;
 
 
+import helper.MsgType;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -44,7 +46,13 @@ public class ClientHandler extends Thread {
     }
 
     private void checkMsgType(String str) {
-        //go with switch
+        switch (MsgType.getMsgType(str)){
+            case MsgType.SEND_MOVE:
+
+
+
+
+        }
     }
     public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
 
