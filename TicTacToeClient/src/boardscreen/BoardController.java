@@ -257,25 +257,21 @@ public class BoardController implements Initializable {
 
             case GameType.REPLAYED_GAME:
                 System.out.println("this is game");
-//                disableALL();
-
-                GameReplayer gameReplayer = new GameReplayer();
-
-                while (!gameReplayer.gameEnded()) {
-                    gameReplayer.createMove();
-
-                    Platform.runLater(() -> {
+                disableALL();
+                new Thread(()->{
+                    GameReplayer gameReplayer = new GameReplayer();
+                    while (!gameReplayer.gameEnded()) {
                         try {
                             sleep(500);
-                            upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                            gameReplayer.createMove();
+                            Platform.runLater(() -> {
+                                upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                            });
                         } catch (InterruptedException e) {
                             throw new RuntimeException(e);
                         }
-                    });
-
-                }
-
-                System.out.println("move created");
+                    }
+                }).start();
 
                break;
 
@@ -469,6 +465,7 @@ public class BoardController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 if (online.board[i][j] == (char)0) {
                     int x=(3*i)+(j+1);
+                    System.out.println(x);
                     arr[x].setDisable(true);
                 }
             }
