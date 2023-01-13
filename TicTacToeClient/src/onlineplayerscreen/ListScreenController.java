@@ -19,6 +19,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import request.FormRequest;
 
 /**
  *
@@ -93,6 +94,9 @@ public class ListScreenController implements Initializable {
         
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
+         FormRequest request = new FormRequest();
+         request.setName("sahar");
+         request.sendPlayerRequest();
         try {
             root = FXMLLoader.load(getClass().getResource("/waitingconfirmation/FXMLWaiting.fxml"));
             Scene scene=new Scene(root);
@@ -102,6 +106,7 @@ public class ListScreenController implements Initializable {
         } catch (IOException ex) {
             Logger.getLogger(ListScreenController.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
     
     @Override
