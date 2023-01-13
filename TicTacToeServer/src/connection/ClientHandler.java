@@ -2,6 +2,7 @@ package connection;
 
 
 import helper.MsgType;
+import helper.QueryType;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -33,7 +34,6 @@ public class ClientHandler extends Thread {
             try {
                 str = dis.readLine();
                 str.isEmpty();
-
                 checkMsgType(str);
             } catch (IOException e) {
                 System.out.println("Client disconnected!"+username);
@@ -48,16 +48,24 @@ public class ClientHandler extends Thread {
 
         switch (MsgType.getMsgType(str)){
             case MsgType.SEND_MOVE:
-
+                fowradMsgToClient(MsgType.getUsername(str),MsgType.SEND_MOVE+","+","+MsgType.getMove(str));
+                break;
+            case MsgType.DATABASECONNECTION:
+                checkQeryType(str);
 
 
 
         }
 
     }
+
+    private void checkQeryType(String str) {
+
+    }
+
     public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
 
-    public static int sendMsg(String username,String msg){
+    public static int fowradMsgToClient(String username, String msg){
         int res=0;
         for (ClientHandler clientHandler : clientsVector) {
             if (clientHandler.username!=null&&clientHandler.username.equals(username))
