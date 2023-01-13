@@ -1,5 +1,7 @@
 package dataaccesslayer;
 
+import helper.QueryType;
+
 import java.sql.*;
 
 public class DataAccessLayer {
@@ -18,9 +20,9 @@ public class DataAccessLayer {
             }
         }
     public  static void addPlayer(Player player) {
-        final String INSERT_CONTACT_SQL = "INSERT INTO record" +
+        final String INSERT_CONTACT_SQL = "INSERT INTO player" +
                 "  (username, password, score) VALUES " +
-                " (?, ?, ?, ?)";
+                " (?, ?, ?)";
 
         // Step 1: Establishing a Connection
         try (Connection connection = DriverManager

@@ -16,4 +16,5 @@ public  static int getMsgType(String str){
 public  static int getMove(String str){
         return Integer.valueOf(str.split(",")[2]);
     }
+
 }
