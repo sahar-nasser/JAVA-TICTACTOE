@@ -7,6 +7,7 @@ package signupscreen;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,8 +16,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  *
@@ -25,13 +30,39 @@ import javafx.stage.Stage;
 public class SignUpController implements Initializable {
     @FXML
     private Label errorMsg;
-    
+    private boolean msg = false;
+    @FXML
+    private TextField name;
+
+    @FXML
+    private TextField password;
+@FXML
+    private TextField checkpassword;
+
+    @FXML
+    private Button submitButton;
+
     @FXML
     public void navigateToLogin(ActionEvent event) throws IOException{
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/loginscreen/Login.fxml"));
+
+       System.out.println(name.getText());
+        System.out.println(password.getText());
+        System.out.println(checkpassword.getText());
+
+        if (name.getText().isEmpty()||password.getText().isEmpty()||checkpassword.getText().isEmpty()) {
+        if (msg == false){ errorMsg.setText("Please make sure to fill your data");
+          errorMsg.setTextFill(Color.RED);
+            errorMsg.setVisible(true);
+            msg = true;
+        }
+        }else {
+            errorMsg.setVisible(false);
+            msg = false;
+        }
+           Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+           Parent root = FXMLLoader.load(getClass().getResource("/loginscreen/Login.fxml"));
             Scene scene=new Scene(root);
-            stage.sizeToScene();
+           stage.sizeToScene();
             stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
