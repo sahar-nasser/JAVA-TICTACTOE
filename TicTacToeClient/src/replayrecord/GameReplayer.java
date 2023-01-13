@@ -11,7 +11,7 @@ public class GameReplayer extends Thread {
    Player player;
    boolean hasPlayed;
    boolean gameDone;
-   Thread playMoveOnScreen = new Thread();
+ //  Thread playMoveOnScreen = new Thread();
    int moves[];
    char playerChar;
    int index;
@@ -54,7 +54,7 @@ public class GameReplayer extends Thread {
 
       @Override
       public void run() {
-          playGame.start();
+        start();
         Platform.runLater(() -> {
             int gameMove[] = createArrayMove();
             //play move
@@ -63,12 +63,12 @@ public class GameReplayer extends Thread {
                     if (hasPlayed == false || i == 0) {
                         setCurrentChar('X');
                         setPosition(gameMove[i]);
-                        playMoveOnScreen.sleep(5000);
+                        sleep(5000);
                         hasPlayed = true;
                     } else {
                         setCurrentChar('O');
                         setPosition(gameMove[i]);
-                        playMoveOnScreen.sleep(5000);
+                        sleep(5000);
                         hasPlayed = false;
                     }
                 }

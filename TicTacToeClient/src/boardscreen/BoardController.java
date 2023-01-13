@@ -251,6 +251,11 @@ public class BoardController implements Initializable {
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
+            break;
+
+            case GameType.REPLAYED_GAME:
+                upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+
             default:
                 scoreOfPlayerOne.setVisible(false);
                 scoreOfPlayerTwo.setVisible(false);
@@ -355,10 +360,7 @@ public class BoardController implements Initializable {
                         upgradeUi(x,online.getChar());
                     online.sendMoveMsg(x);
 
-                 break;
 
-            case GameType.REPLAYED_GAME:
-               upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
         }
     }
 
