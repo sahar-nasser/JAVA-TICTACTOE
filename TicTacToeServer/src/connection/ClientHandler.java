@@ -16,13 +16,12 @@ public class ClientHandler extends Thread {
     String username;
     static Vector<ClientHandler> clientsVector = new Vector<>();
 
-    public ClientHandler(Socket cs, String username) {
+    public ClientHandler(Socket cs) {
         try {
-            this.username=username;
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
         } catch (IOException e) {
-            throw new RuntimeException(e);///eroooooooooooooo
+            System.out.println(e.getMessage());
         }
         ClientHandler.clientsVector.add(this);
         start();
@@ -33,10 +32,11 @@ public class ClientHandler extends Thread {
             String str = null;
             try {
                 str = dis.readLine();
+                str.isEmpty();
 
                 checkMsgType(str);
             } catch (IOException e) {
-                System.out.println("Client disconnected!");
+                System.out.println("Client disconnected!"+username);
                 ClientHandler.clientsVector.remove(this);
                 this.stop();
             }
@@ -45,7 +45,15 @@ public class ClientHandler extends Thread {
     }
 
     private void checkMsgType(String str) {
-        //go with switch
+
+        switch (MsgType.getMsgType(str)){
+            case MsgType.SEND_MOVE:
+
+
+
+
+        }
+
     }
     public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
 
