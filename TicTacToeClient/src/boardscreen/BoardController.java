@@ -33,6 +33,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
+import replayrecord.GameReplayer;
 
 
 /**
@@ -57,6 +58,8 @@ public class BoardController implements Initializable {
     OnlineGame online;
     Multiplayer mp = new Multiplayer();
     HardLevel hl = new HardLevel();
+
+    GameReplayer gameReplayer = new GameReplayer();
 
    @FXML
    private Button record;
@@ -339,7 +342,9 @@ public class BoardController implements Initializable {
                     upgradeUi(position,'X');
                 }
                 //local game
+
                 break;
+
             case GameType.ONLINE_GAME:
 
                     int x=online.setMove(row,col);
@@ -350,11 +355,16 @@ public class BoardController implements Initializable {
                         upgradeUi(x,online.getChar());
                     online.sendMoveMsg(x);
 
+                 break;
 
+            case GameType.REPLAYED_GAME:
+               upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
         }
     }
 
-
+   /** public void setDataFromRecord(int buttonNumber, char playerChar){
+            upgradeUi(buttonNumber, playerChar);
+    }**/
     //setNextMove() will be called when we need to update UI after calculating the next move in (easy-medium-hard)level
     // in its own classes
 

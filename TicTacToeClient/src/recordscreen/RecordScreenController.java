@@ -10,6 +10,9 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import boardscreen.BoardController;
+import helper.GameType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -39,6 +42,16 @@ public class RecordScreenController implements Initializable {
     private void handleRecordAction(ActionEvent event) {
         //ask server to fetch record data to recreation
         System.out.println("record!");
+        BoardController.TYPE = GameType.REPLAYED_GAME;
+        try {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
+        Scene scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
        
     }
     
