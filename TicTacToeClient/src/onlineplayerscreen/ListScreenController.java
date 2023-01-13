@@ -18,6 +18,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 
 /**
@@ -90,18 +91,13 @@ public class ListScreenController implements Initializable {
      @FXML
     private void handleClickOnPlayerAction(ActionEvent event) {
          System.out.println("player clicked!");
-        
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root;
-        try {
-            root = FXMLLoader.load(getClass().getResource("/waitingconfirmation/FXMLWaiting.fxml"));
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            stage.sizeToScene();
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         Alert alert = new Alert(Alert.AlertType.INFORMATION, "WAITING FOR RESPONSE...", ButtonType.CANCEL);
+         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+         alert.show();
+         DialogPane dialogPane = alert.getDialogPane();
+         dialogPane.getStylesheets().add(
+                 getClass().getResource("Dialog.css").toExternalForm());
+         dialogPane.getStyleClass().add("Dialog");
     }
     
     @Override
