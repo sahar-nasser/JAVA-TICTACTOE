@@ -31,7 +31,7 @@
                   <Insets left="25.0" />
                </VBox.margin>
             </Label>
-            <TextField prefHeight="65.0" prefWidth="503.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
+            <TextField fx:id="name" prefHeight="65.0" prefWidth="503.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
                <font>
                   <Font size="31.0" />
                </font>
@@ -50,7 +50,7 @@
                   <Insets left="25.0" />
                </VBox.margin>
             </Label>
-            <PasswordField fx:id="passwordTextField" prefHeight="68.0" prefWidth="605.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
+            <PasswordField fx:id="password" prefHeight="68.0" prefWidth="605.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
                <padding>
                   <Insets left="20.0" />
                </padding>
@@ -69,7 +69,7 @@
                   <Insets left="25.0" />
                </VBox.margin>
             </Label>
-            <PasswordField fx:id="passwordTextField1" prefHeight="68.0" prefWidth="605.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
+            <PasswordField fx:id="checkpassword" prefHeight="68.0" prefWidth="605.0" styleClass="textAreaStyleClass" stylesheets="@../resource/styleSheet.css">
                <padding>
                   <Insets left="20.0" />
                </padding>
@@ -77,12 +77,12 @@
                   <Font size="31.0" />
                </font>
             </PasswordField>
-            <Label fx:id="errorMsg">
+            <Label fx:id="errorMsg" >
                <VBox.margin>
-                  <Insets left="250.0" top="20.0" />
+                  <Insets left="185.0" top="20.0" />
                </VBox.margin>
             </Label>
-            <Button id="button" mnemonicParsing="false" onAction="#navigateToLogin" prefHeight="74.0" prefWidth="276.0" text="REGISTER" textFill="#2c0153">
+            <Button id="button" mnemonicParsing="false" onAction="#register" prefHeight="74.0" prefWidth="276.0" text="REGISTER" textFill="#2c0153">
                <VBox.margin>
                   <Insets left="130.0" top="20.0" />
                </VBox.margin>
@@ -100,7 +100,7 @@
                   <Image url="@../resource/backIcon.png" />
                </image>
             </ImageView>
-            <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#navigateToLogin" opacity="0.0" prefHeight="79.0" prefWidth="51.0" />
+            <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#register" opacity="0.0" prefHeight="79.0" prefWidth="51.0" />
          </children>
       </StackPane>
     </children>
