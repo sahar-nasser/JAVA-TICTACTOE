@@ -262,7 +262,7 @@ public class BoardController extends Thread implements Initializable {
 
             case GameType.REPLAYED_GAME:
                 System.out.println("this is game");
-                disableALL();
+                //disableALL();
                 new Thread(()->{
                     GameReplayer gameReplayer = new GameReplayer();
                     while (!gameReplayer.gameEnded()) {
@@ -277,8 +277,6 @@ public class BoardController extends Thread implements Initializable {
                         }
                     }
                 }).start();
-
-               break;
 
             default:
                 scoreOfPlayerOne.setVisible(false);
