@@ -32,6 +32,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mediumlevel.MediumLevel;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
 import replayrecord.GameReplayer;
@@ -44,10 +45,15 @@ import static java.lang.Thread.sleep;
  *
  * @author ammar
  */
-public class BoardController implements Initializable {
+public class BoardController extends Thread implements Initializable {
+    private Thread thread;
+    private MediumLevel mediumLevel;
     private static MediaPlayer MEDIA_PLAYER;
-   public static int TYPE;
+    public static int TYPE;
     private static int STATUS_OF_GAME;
+
+    private boolean isFirstMove = false;
+
     public static int PLAYER_TWO_SCORE;
     public static String PLAYER_TWO;
    private  static Stage STAGE_OF_VIEW_VIDEO;
@@ -113,16 +119,20 @@ public class BoardController implements Initializable {
             record.setText("Recording");
             isRecording=true;
         }
+
     }
+
     @FXML
     public void closeGame(ActionEvent event){
 
         if (IS_VIEW_VIDEO){
             STAGE_OF_VIEW_VIDEO.close();
             MEDIA_PLAYER.stop();
+
         }
-         switch (TYPE) {
+        switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
+
                 try{
                     if (!IS_VIEW_VIDEO)online.sendCloseGame(PLAYER_TWO);
                     IS_VIEW_VIDEO=false;
@@ -152,51 +162,43 @@ public class BoardController implements Initializable {
     }
 
     @FXML
-    public void clickPostionOne(ActionEvent event){
+    public void clickPositionOne(ActionEvent event){
         calcNextMove(0,0,1);
     }
 
-
-
     @FXML
-    public void clickPostionTwo(ActionEvent event){
+    public void clickPositionTwo(ActionEvent event){
         calcNextMove(0,1,2);
     }
     @FXML
-    public void clickPostionThree(ActionEvent event){
+    public void clickPositionThree(ActionEvent event){
         calcNextMove(0,2,3);
     }
     @FXML
-    public void clickPostionFour(ActionEvent event){
+    public void clickPositionFour(ActionEvent event){
         calcNextMove(1,0,4);
     }
     @FXML
-    public void clickPostionFive(ActionEvent event){
+    public void clickPositionFive(ActionEvent event){
         calcNextMove(1,1,5);
-
     }
     @FXML
-    public void clickPostionSix(ActionEvent event){
+    public void clickPositionSix(ActionEvent event){
         calcNextMove(1,2,6);
-
     }
+
     @FXML
-    public void clickPostionSeven(ActionEvent event){
+    public void clickPositionSeven(ActionEvent event){
         calcNextMove(2,0,7);
     }
     @FXML
-    public void clickPostionEight(ActionEvent event){
+    public void clickPositionEight(ActionEvent event){
         calcNextMove(2,1,8);
-
     }
     @FXML
-    public void clickPostionNine(ActionEvent event){
-        calcNextMove(2,2,9);
+    public void clickPositionNine(ActionEvent event) {
+        calcNextMove(2, 2, 9);
     }
-
-    /**
-     * Initializes the controller class.
-     */
 
     private void viewVideo(){
         IS_VIEW_VIDEO=true;
@@ -208,14 +210,15 @@ public class BoardController implements Initializable {
             Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        Scene scene=new Scene(root);
+        Scene scene = new Scene(root);
         STAGE_OF_VIEW_VIDEO.setScene(scene);
         STAGE_OF_VIEW_VIDEO.showAndWait();
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         isRecording=false;
         if (!IS_VIEW_VIDEO){
             arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
@@ -245,9 +248,11 @@ public class BoardController implements Initializable {
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
-            case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
+                case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
+                    mediumLevel = new MediumLevel();
+                    nameOfPlayerTwo.setText("COMPUTER");
+                    nameOfPlayerOne.setText("ME");
+
 
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
@@ -308,9 +313,8 @@ public class BoardController implements Initializable {
         mediaView.setMediaPlayer(MEDIA_PLAYER);
         }
     }
-
-
     //call this function to send indices to (easy-medium-hard - etc...) class
+
     public void calcNextMove(int row , int col, int position){
         switch (TYPE){// The return type for any method should be the new position and
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
@@ -340,7 +344,53 @@ public class BoardController implements Initializable {
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                //call medium method and pass row and column
+                upgradeUi(position, mediumLevel.human);
+                mediumLevel.addPlayerMove(row, col, mediumLevel.human);//add it in the array
+                //check if X could win
+                char winnerResult = mediumLevel.checkWinner();
+                if (winnerResult == 'n') {
+                    int computerMove;
+                    if (!isFirstMove) {
+                        computerMove = mediumLevel.decideFirstMove(mediumLevel.ai);
+                        isFirstMove = true;//I want to enter here only once
+                    } else {
+                        /*
+                         * I want computer to win, so I'm the winning side 'O' and i want to check if could win
+                         * and if i can , I don't want the losingSymbol to be 'X' i want it to be me 'O'
+                         * */
+                        computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.ai);
+                        if (computerMove == -1) {//-1 means I can't win
+                            computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.human, mediumLevel.ai);//check blocking the X move
+                            if (computerMove == -1) {//then I will generate random number to my move
+                                computerMove = mediumLevel.generateRandomMove(mediumLevel.ai);
+                            }
+                        }
+                        //1.check if I could win
+                        //2.if not then check if x could win and don't let him
+                        //3.if not then decide my next move which will be random I guess or not
+                    }
+                    int finalComputerMove = computerMove;
+                    System.out.println("hasIn");
+                    new Thread(()->{
+                        try {
+                            sleep(400);
+                            System.out.println("======");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println();
+                                    upgradeUi(finalComputerMove, mediumLevel.ai);
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                    }).start();
+
+                } else {
+                    viewVideo();
+                }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
@@ -389,9 +439,9 @@ public class BoardController implements Initializable {
     // in its own classes
 
     //buttonNumber = (row+1)*(col+1)
-    private void upgradeUi(int buttonNumber, char playerChar){
+    private void upgradeUi(int buttonNumber, char playerChar) {
         Button tempButton;
-        switch (buttonNumber){
+        switch (buttonNumber) {
             case 1:
                 tempButton= positionOne;
                 break;
@@ -418,9 +468,8 @@ public class BoardController implements Initializable {
                 break;
             default:
                 tempButton= positionNine;
-
         }
-        tempButton.setText(playerChar+"");
+        tempButton.setText(playerChar + "");
         tempButton.setDisable(true);
         tempButton.setOpacity(1);
     }
