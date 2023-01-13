@@ -161,8 +161,6 @@ public class BoardController extends Thread implements Initializable {
         calcNextMove(0,0,1);
     }
 
-
-
     @FXML
     public void clickPositionTwo(ActionEvent event){
         calcNextMove(0,1,2);
