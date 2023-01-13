@@ -1,21 +1,19 @@
 package replayrecord;
-import javafx.application.Platform;
 import models.Player;
 import java.util.Arrays;
 
 
-public class GameReplayer extends Thread {
+public class GameReplayer  {
  //awel 7aga agrab l ta2te3 wl donia
    String game;
    Record rec;
    Player player;
    boolean hasPlayed;
    boolean gameDone;
- //  Thread playMoveOnScreen = new Thread();
    int moves[];
    char playerChar;
-   int index;
-    Thread playGame ;
+  public int index;
+  int btn_pos;
 
 
     ///check if array <9
@@ -27,58 +25,50 @@ public class GameReplayer extends Thread {
         gameDone=false;
         playerChar=' ';
         index=0;
-        playGame= new Thread();
+        btn_pos =0;
     }
 
     public void setCurrentChar(char playerChar){
         this.playerChar=playerChar;
     }
 
-    public void setPosition(int index){
-        this.index=index;
+    public void setPosition(int i){
+            btn_pos=i;
     }
     public int[] createArrayMove() {
-           moves = Arrays.stream(game.split(","))
+           return Arrays.stream(game.split(","))
                     .mapToInt(Integer::parseInt)
                     .toArray();
-           return moves;
     }
 
     public int  getPosition(){
-        return index;
+        return btn_pos;
     }
 
     public char currentChar(){
-        return playerChar;
+
+       return playerChar;
     }
 
-      @Override
-      public void run() {
-        start();
-        Platform.runLater(() -> {
-            int gameMove[] = createArrayMove();
-            //play move
-            try {
-                for (int i : gameMove) {
-                    if (hasPlayed == false || i == 0) {
-                        setCurrentChar('X');
-                        setPosition(gameMove[i]);
-                        sleep(5000);
-                        hasPlayed = true;
-                    } else {
-                        setCurrentChar('O');
-                        setPosition(gameMove[i]);
-                        sleep(5000);
-                        hasPlayed = false;
-                    }
-                }
-                gameDone = true;
-            } catch (InterruptedException e) {
-                System.out.println(e.getMessage());
-            }
-        });
+    public void createMove(){
+        if(hasPlayed){
+            playerChar='O';
+            hasPlayed=false;
+        }else{
+            playerChar='X';
+            hasPlayed=true;
+        }
+        setCurrentChar(playerChar);
+        setPosition(createArrayMove()[index]);
+        index++;
+    }
 
-            }
-
+    public boolean gameEnded(){
+        if(index == createArrayMove().length){
+            System.out.println(createArrayMove().length+ ""+ index);
+             gameDone=true;
+        }
+        return gameDone;
+    }
 
 }

@@ -18,6 +18,7 @@ import helper.GameType;
 import helper.MsgType;
 import helper.PlayerData;
 import helper.StatusGame;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -34,6 +35,8 @@ import javafx.stage.Stage;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
 import replayrecord.GameReplayer;
+
+import static java.lang.Thread.sleep;
 
 
 /**
@@ -59,7 +62,7 @@ public class BoardController implements Initializable {
     Multiplayer mp = new Multiplayer();
     HardLevel hl = new HardLevel();
 
-    GameReplayer gameReplayer = new GameReplayer();
+
 
    @FXML
    private Button record;
@@ -218,25 +221,24 @@ public class BoardController implements Initializable {
             arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
-                online=new OnlineGame(IS_FIRST,PLAYER_TWO);
-                if (IS_FIRST){
+                online = new OnlineGame(IS_FIRST, PLAYER_TWO);
+                if (IS_FIRST) {
                     scoreOfPlayerOne.setText(PlayerData.USERNAME);
                     scoreOfPlayerTwo.setText(PLAYER_TWO);
-                    scoreOne.setText(PlayerData.SCORE+"");
-                    scoreTwo.setText(PLAYER_TWO_SCORE+"");
-                }
-                else {
+                    scoreOne.setText(PlayerData.SCORE + "");
+                    scoreTwo.setText(PLAYER_TWO_SCORE + "");
+                } else {
 
                     scoreOfPlayerTwo.setText(PlayerData.USERNAME);
                     scoreOfPlayerOne.setText(PLAYER_TWO);
-                    scoreTwo.setText(PlayerData.SCORE+"");
-                    scoreOne.setText(PLAYER_TWO_SCORE+"");
+                    scoreTwo.setText(PlayerData.SCORE + "");
+                    scoreOne.setText(PLAYER_TWO_SCORE + "");
                     disableALL();
                     calcMovePlayer();
 
                 }
 
-            break;
+                break;
 
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 easy = new EasyLogic();
@@ -251,10 +253,31 @@ public class BoardController implements Initializable {
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
-            break;
+                break;
 
             case GameType.REPLAYED_GAME:
-                upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                System.out.println("this is game");
+//                disableALL();
+
+                GameReplayer gameReplayer = new GameReplayer();
+
+                while (!gameReplayer.gameEnded()) {
+                    gameReplayer.createMove();
+
+                    Platform.runLater(() -> {
+                        try {
+                            sleep(500);
+                            upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    });
+
+                }
+
+                System.out.println("move created");
+
+               break;
 
             default:
                 scoreOfPlayerOne.setVisible(false);
@@ -359,7 +382,6 @@ public class BoardController implements Initializable {
                     else if(c=='n')
                         upgradeUi(x,online.getChar());
                     online.sendMoveMsg(x);
-
 
         }
     }
