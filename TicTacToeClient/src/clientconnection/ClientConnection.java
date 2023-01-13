@@ -19,7 +19,6 @@ public class ClientConnection {
             mySocket= new Socket("127.0.0.1", 5000);
 
             ps = new PrintStream(mySocket.getOutputStream());
-            ps.println(PlayerData.USERNAME);
             dis = new DataInputStream(mySocket.getInputStream());
 
     }

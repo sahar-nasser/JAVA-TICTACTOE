@@ -32,6 +32,8 @@ import javafx.stage.Stage;
  * @author CST
  */
 public class LoginController implements Initializable {
+    private String errorMsgOne = "Please check your username or password was incorrect!" ,
+    errorMsgTwo = "Invalid username. please remove and ,";
     @FXML
     private Label errorMsgLabel;
     @FXML
@@ -68,32 +70,26 @@ public class LoginController implements Initializable {
     public void handleLoginButtonAction(ActionEvent event) throws IOException{
              //start connection + send data for authentication through client handler
           PlayerData.USERNAME = usernameTextField.getText();
-            if(checkUserData(passwordTextField.getText())){
-                //load the nextScreen and return the label visibility to false and setVisibile(false)
+          if(PlayerData.USERNAME.isEmpty() || passwordTextField.getText().isEmpty()){
 
-                if(labelVisibility){//if user return back to login, error label should be invisible
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            errorMsgLabel.setVisible(labelVisibility = false);
-                        }
-                    });
-                }
-                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-                Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
-                Scene scene=new Scene(root);
-                stage.setScene(scene);
-                stage.show();
-            }else{
-               if(!labelVisibility){
-                   Platform.runLater(new Runnable() {
-                       @Override
-                       public void run() {
-                           errorMsgLabel.setVisible(labelVisibility = true);
-                       }
-                   });
-               }
-            }
+          }else{
+              if(checkUserData(passwordTextField.getText())){
+                  //load the nextScreen and return the label visibility to false and setVisibile(false)
+
+                  if(labelVisibility){//if user return back to login, error label should be invisible
+                      errorMsgLabel.setVisible(labelVisibility = false);
+                  }
+//                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+//                Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
+//                Scene scene=new Scene(root);
+//                stage.setScene(scene);
+//                stage.show();
+              }else{
+                  if(!labelVisibility){
+                      errorMsgLabel.setVisible(labelVisibility = true);
+                  }
+              }
+          }
     }
 
     public boolean checkUserData(String password){
@@ -109,7 +105,7 @@ public class LoginController implements Initializable {
                     returnValue = false;
                 }
             }else{
-                returnValue = false;
+                returnValue = false;//problem in the server
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
