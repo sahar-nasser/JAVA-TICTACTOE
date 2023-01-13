@@ -3,8 +3,12 @@ package dataaccesslayer;
 public class Player {
     private String username , password;
     private int score;
-    private char playingSymbol;
 
+    public Player(String name, String password, int score){
+        setPassword(password);
+        setScore(score);
+        setUsername(name);
+    }
     //setters and getters
 
     public void setUsername(String username){
@@ -19,9 +23,7 @@ public class Player {
         this.score = score;
     }
 
-    public void setPlayingSymbol(char playingSymbol){
-        this.playingSymbol = playingSymbol;
-    }
+
     public String getUsername(){
         return username;
     }
@@ -34,7 +36,4 @@ public class Player {
         return score;
     }
 
-    public char getPlayingSymbol(){
-        return playingSymbol;
-    }
 }

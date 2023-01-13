@@ -1,6 +1,8 @@
 package connection;
 
 
+import dataaccesslayer.DataAccessLayer;
+import dataaccesslayer.Player;
 import helper.MsgType;
 import helper.QueryType;
 
@@ -34,11 +36,18 @@ public class ClientHandler extends Thread {
             try {
                 str = dis.readLine();
                 str.isEmpty();
+                System.out.println(str);
                 checkMsgType(str);
-            } catch (IOException e) {
-                System.out.println("Client disconnected!"+username);
+            }catch (NullPointerException e)
+            {
+                System.out.println(e.getMessage());
                 ClientHandler.clientsVector.remove(this);
+                System.out.println("Client disconnected!"+username);
                 this.stop();
+
+            }
+            catch (IOException e) {
+                System.out.println(e.getMessage());
             }
 
         }
@@ -60,6 +69,14 @@ public class ClientHandler extends Thread {
     }
 
     private void checkQeryType(String str) {
+        switch (QueryType.checkQueryMsg(str)){
+            case QueryType.SIGNUP:
+                this.username=QueryType.getUsername(str);
+                int x=DataAccessLayer.addPlayer(new Player(QueryType.getUsername(str), QueryType.getPassword(str),0));
+                fowradMsgToClient(QueryType.getUsername(str),x+"");
+                break;
+
+        }
 
     }
 
