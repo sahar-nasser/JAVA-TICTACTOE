@@ -11,9 +11,14 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 import easylevel.EasyLogic;
+import hardlevel.HardLevel;
 import helper.GameType;
+import helper.MsgType;
+import helper.PlayerData;
 import helper.StatusGame;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -27,48 +32,62 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import mediumlevel.MediumLevel;
+import level.OnlineGame;
+import localmultiplayer.Multiplayer;
+
 
 /**
  * FXML Controller class
  *
  * @author ammar
  */
-public class BoardController implements Initializable {
+public class BoardController extends Thread implements Initializable {
+    private Thread thread;
+    private MediumLevel mediumLevel;
     private static MediaPlayer MEDIA_PLAYER;
-   public static int TYPE;
+    public static int TYPE;
     private static int STATUS_OF_GAME;
 
+    private boolean isFirstMove = false;
 
+    public static int PLAYER_TWO_SCORE;
+    public static String PLAYER_TWO;
    private  static Stage STAGE_OF_VIEW_VIDEO;
 
-    public static Stage STAGE_OF_BORAD;
+    public static Stage STAGE_OF_BOARD;
    private  static boolean IS_VIEW_VIDEO;
-
+   private  static boolean IS_FIRST;
+    boolean isRecording;
    EasyLogic easy;
+
+    OnlineGame online;
+    Multiplayer mp = new Multiplayer();
+    HardLevel hl = new HardLevel();
 
    @FXML
    private Button record;
    @FXML
    private Button close;
    @FXML
-   private Button postionOne;
+   private Button positionOne;
    @FXML
-   private Button postionTwo;
+   private Button positionTwo;
    @FXML
-   private Button postionThree;
+   private Button positionThree;
    @FXML
-   private Button postionFour;
+   private Button positionFour;
    @FXML
-   private Button postionFive;
+   private Button positionFive;
    @FXML
-   private Button postionSix;
+   private Button positionSix;
    @FXML
-   private Button postionSeven;
+   private Button positionSeven;
    @FXML
-   private Button postionEight;
+   private Button positionEight;
    @FXML
-   private Button postionNine;
-   
+   private Button positionNine;
+
    @FXML
    private Text scoreOfPlayerOne;
    @FXML
@@ -82,149 +101,159 @@ public class BoardController implements Initializable {
    private Text nameOfPlayerOne;
    @FXML
    private Text nameOfPlayerTwo;
-  
+
     @FXML
     private MediaView mediaView;
-      
-    
+
+    private Button[] arr;
 
     @FXML
     public void recordGame(ActionEvent event){
-        record.setStyle("-fx-background-color:#ff0000");
-        record.setText("Recording");
-        viewVideo();
-//        record.setEffect(value);
-      
+        if(!isRecording){
+            record.setStyle("-fx-background-color:#ff0000");
+            record.setText("Recording");
+            isRecording=true;
+        }
+
     }
+
     @FXML
     public void closeGame(ActionEvent event){
+
         if (IS_VIEW_VIDEO){
             STAGE_OF_VIEW_VIDEO.close();
             MEDIA_PLAYER.stop();
-            IS_VIEW_VIDEO=false;
+
         }
-         switch (TYPE) {
+        switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
+
                 try{
-                Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
-                Scene scene=new Scene(root);
-                STAGE_OF_BORAD.setScene(scene);
-                STAGE_OF_BORAD.show();
+                    if (!IS_VIEW_VIDEO)online.sendCloseGame(PLAYER_TWO);
+                    IS_VIEW_VIDEO=false;
+                    if (isRecording)online.sendRecording();
+                    online.closeConnection();
+                    Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
+                    Scene scene=new Scene(root);
+                    STAGE_OF_BOARD.setScene(scene);
+                    STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
                     Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
                  }
             break;
             default:
                 try{
-                Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
-                Scene scene=new Scene(root);
-                STAGE_OF_BORAD.setScene(scene);
-                STAGE_OF_BORAD.show();
+                    Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
+                    Scene scene=new Scene(root);
+                    STAGE_OF_BOARD.setScene(scene);
+                    STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
                     Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
                  }
                 break;
-                
+
         }
-      
-    }
-    
-    @FXML
-    public void clickPostionOne(ActionEvent event){
-        upgradeUi(1,'X');
-        calcNextMove(0,0);
-    }
-
-
-
-    @FXML
-    public void clickPostionTwo(ActionEvent event){
-        upgradeUi(2,'X');
-        calcNextMove(0,1);
-    }
-    @FXML
-    public void clickPostionThree(ActionEvent event){
-        upgradeUi(3,'X');
-        calcNextMove(0,2);
-    }
-    @FXML
-    public void clickPostionFour(ActionEvent event){
-        upgradeUi(4,'X');
-        calcNextMove(1,0);
-    }
-    @FXML
-    public void clickPostionFive(ActionEvent event){
-        upgradeUi(5,'X');
-        calcNextMove(1,1);
 
     }
-    @FXML
-    public void clickPostionSix(ActionEvent event){
-        upgradeUi(6,'X');
-        calcNextMove(1,2);
 
-    }
     @FXML
-    public void clickPostionSeven(ActionEvent event){
-        upgradeUi(7,'X');
-        calcNextMove(2,0);
+    public void clickPositionOne(ActionEvent event){
+        calcNextMove(0,0,1);
     }
-    @FXML
-    public void clickPostionEight(ActionEvent event){
-        upgradeUi(8,'X');
-        calcNextMove(2,1);
 
+    @FXML
+    public void clickPositionTwo(ActionEvent event){
+        calcNextMove(0,1,2);
     }
     @FXML
-    public void clickPostionNine(ActionEvent event){
-        upgradeUi(9,'X');
-        calcNextMove(2,2);
+    public void clickPositionThree(ActionEvent event){
+        calcNextMove(0,2,3);
     }
-    
-    /**
-     * Initializes the controller class.
-     */
+    @FXML
+    public void clickPositionFour(ActionEvent event){
+        calcNextMove(1,0,4);
+    }
+    @FXML
+    public void clickPositionFive(ActionEvent event){
+        calcNextMove(1,1,5);
+    }
+    @FXML
+    public void clickPositionSix(ActionEvent event){
+        calcNextMove(1,2,6);
+    }
+
+    @FXML
+    public void clickPositionSeven(ActionEvent event){
+        calcNextMove(2,0,7);
+    }
+    @FXML
+    public void clickPositionEight(ActionEvent event){
+        calcNextMove(2,1,8);
+    }
+    @FXML
+    public void clickPositionNine(ActionEvent event) {
+        calcNextMove(2, 2, 9);
+    }
 
     private void viewVideo(){
-        STATUS_OF_GAME=StatusGame.WIN;
         IS_VIEW_VIDEO=true;
         STAGE_OF_VIEW_VIDEO= new Stage();
         Parent root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/boardscreen/ViewVideo.fxml"));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        Scene scene=new Scene(root);
+        Scene scene = new Scene(root);
         STAGE_OF_VIEW_VIDEO.setScene(scene);
         STAGE_OF_VIEW_VIDEO.showAndWait();
 
-
-
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        easy = new EasyLogic();
+        
+        isRecording=false;
         if (!IS_VIEW_VIDEO){
+            arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
-                
+                online=new OnlineGame(IS_FIRST,PLAYER_TWO);
+                if (IS_FIRST){
+                    scoreOfPlayerOne.setText(PlayerData.USERNAME);
+                    scoreOfPlayerTwo.setText(PLAYER_TWO);
+                    scoreOne.setText(PlayerData.SCORE+"");
+                    scoreTwo.setText(PLAYER_TWO_SCORE+"");
+                }
+                else {
+
+                    scoreOfPlayerTwo.setText(PlayerData.USERNAME);
+                    scoreOfPlayerOne.setText(PLAYER_TWO);
+                    scoreTwo.setText(PlayerData.SCORE+"");
+                    scoreOne.setText(PLAYER_TWO_SCORE+"");
+                    disableALL();
+                    calcMovePlayer();
+
+                }
+
             break;
 
-
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
+                easy = new EasyLogic();
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
 
-            case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
+                case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
+                    mediumLevel = new MediumLevel();
+                    nameOfPlayerTwo.setText("COMPUTER");
+                    nameOfPlayerOne.setText("ME");
+
 
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
-                
+
             default:
                 scoreOfPlayerOne.setVisible(false);
                 scoreOfPlayerTwo.setVisible(false);
@@ -232,33 +261,35 @@ public class BoardController implements Initializable {
                 scoreTwo.setVisible(false);
                 record.setVisible(false);
                 break;
-                
+
         }
     }
         else{
-        Media media;
-        switch (STATUS_OF_GAME) {
-            case StatusGame.WIN:
-                STAGE_OF_VIEW_VIDEO.setTitle("WIN");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-                break;
-            case StatusGame.DRAW:
-                STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-                break;
-            default:
-                STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
-                media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
-        }
+            Media media;
+            switch (STATUS_OF_GAME) {
+                case StatusGame.WIN:
+                    STAGE_OF_VIEW_VIDEO.setTitle("WIN");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(10);
+                    break;
+                case StatusGame.DRAW:
+                    STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    break;
+                default:
+                    STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(-5);
+            }
         MEDIA_PLAYER =new MediaPlayer(media);
         MEDIA_PLAYER.setAutoPlay(true);
         MEDIA_PLAYER.setOnReady(()->STAGE_OF_VIEW_VIDEO.sizeToScene());
         mediaView.setMediaPlayer(MEDIA_PLAYER);
+        }
     }
-    }
-
     //call this function to send indices to (easy-medium-hard - etc...) class
-    public void calcNextMove(int row , int col){
+
+    public void calcNextMove(int row , int col, int position){
         switch (TYPE){// The return type for any method should be the new position and
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 //call easy method and pass row and column
@@ -281,24 +312,91 @@ public class BoardController implements Initializable {
                        viewVideo();
                    }
 
-
                }
                 //example: upgradeUi(MediumLevel.calcNextMove() , MediumLevel.playerSymbol());
                 //calcMove() should return the position (1 - 9)
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                //call medium method and pass row and column
+                thread = new Thread();
+                thread.start();
+                upgradeUi(position, mediumLevel.human);
+                mediumLevel.addPlayerMove(row, col, mediumLevel.human);//add it in the array
+                //check if X could win
+                char winnerResult = mediumLevel.checkWinner();
+                if (winnerResult == 'n') {
+                    int computerMove;
+                    if (!isFirstMove) {
+                        computerMove = mediumLevel.decideFirstMove(mediumLevel.ai);
+                        isFirstMove = true;//I want to enter here only once
+                    } else {
+                        /*
+                         * I want computer to win, so I'm the winning side 'O' and i want to check if could win
+                         * and if i can , I don't want the losingSymbol to be 'X' i want it to be me 'O'
+                         * */
+                        computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.ai);
+                        if (computerMove == -1) {//-1 means I can't win
+                            computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.human, mediumLevel.ai);//check blocking the X move
+                            if (computerMove == -1) {//then I will generate random number to my move
+                                computerMove = mediumLevel.generateRandomMove(mediumLevel.ai);
+                            }
+                        }
+                        //1.check if I could win
+                        //2.if not then check if x could win and don't let him
+                        //3.if not then decide my next move which will be random I guess or not
+                    }
+                    int finalComputerMove = computerMove;
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(400);
+                            } catch (InterruptedException e) {
+                                throw new RuntimeException(e);
+                            }
+                            upgradeUi(finalComputerMove, mediumLevel.ai);
+                        }
+                    });
+                } else {
+                    viewVideo();
+                }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
+                if(hl.humanPlayed){
+                    hl.AiTurn();
+                    upgradeUi(hl.forwardMove(),'O');
+                }
+                else if(hl.aiPlayed){
+                    hl.getIndex(row,col);
+                    hl.userTurn();
+                    upgradeUi(position, 'X');
+                }
+
                 break;
             case GameType.TWO_PLAYER_GAME:
+                 mp.getIndex(row,col);
+                if(mp.onePlayed){
+                    mp.playerTwoTurn();
+                    upgradeUi(position,'O');
+                }
+                else if(mp.twoPlayed){
+                    mp.playerOneTurn();
+                    upgradeUi(position,'X');
+                }
                 //local game
                 break;
             case GameType.ONLINE_GAME:
-                //for online game
-                break;
+
+                    int x=online.setMove(row,col);
+                    char c= online.checkWinner();
+                    if(c==online.getChar()){viewVideo();STATUS_OF_GAME=StatusGame.WIN;}
+                    else if(c=='t'){viewVideo();STATUS_OF_GAME=StatusGame.DRAW;}
+                    else if(c=='n')
+                        upgradeUi(x,online.getChar());
+                    online.sendMoveMsg(x);
+
+
         }
     }
 
@@ -307,39 +405,90 @@ public class BoardController implements Initializable {
     // in its own classes
 
     //buttonNumber = (row+1)*(col+1)
-    private void upgradeUi(int buttonNumber, char playerChar){
+    private void upgradeUi(int buttonNumber, char playerChar) {
+        try {
+            Thread.sleep(300);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Button tempButton;
-        switch (buttonNumber){
+        switch (buttonNumber) {
             case 1:
-                tempButton= postionOne;
+                tempButton= positionOne;
                 break;
             case 2:
-                tempButton= postionTwo;
+                tempButton= positionTwo;
                 break;
             case 3:
-                tempButton= postionThree;
+                tempButton= positionThree;
                 break;
             case 4:
-                tempButton= postionFour;
+                tempButton= positionFour;
                 break;
             case 5:
-                tempButton= postionFive;
+                tempButton= positionFive;
                 break;
             case 6:
-                tempButton= postionSix;
+                tempButton= positionSix;
                 break;
             case 7:
-                tempButton= postionSeven;
+                tempButton= positionSeven;
                 break;
             case 8:
-                tempButton= postionEight;
+                tempButton= positionEight;
                 break;
             default:
-                tempButton= postionNine;
-
+                tempButton= positionNine;
         }
-        tempButton.setText(playerChar+"");
+        tempButton.setText(playerChar + "");
         tempButton.setDisable(true);
         tempButton.setOpacity(1);
     }
+
+    void calcMovePlayer(){
+        String msg=online.getMsg();
+        switch (MsgType.getMsgType(msg)){
+            case MsgType.SEND_MOVE:
+                int move= MsgType.getMove(msg);
+                online.setMove((move/3)-1,move%3);
+                char c=online.checkWinner();
+                if(c==online.getCharOfPlayerTwo()){viewVideo();STATUS_OF_GAME=StatusGame.LOSE;}
+                else if(c=='t'){viewVideo();STATUS_OF_GAME=StatusGame.DRAW;}
+                else if(c=='n'){
+                    upgradeUi(move,online.getCharOfPlayerTwo());
+                    enableButton();
+                }
+                break;
+            case MsgType.QUIT_GAME:
+                viewVideo();
+                STATUS_OF_GAME=StatusGame.WIN;
+                break;
+            case MsgType.SERVER_CLOSE:
+                online.closeConnection();
+                TYPE=GameType.SINGLE_PLAYER_EASY_LEVEL;
+                closeGame(new ActionEvent());
+        }
+    }
+
+    private void enableButton() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (online.board[i][j] == (char)0) {
+                    int x=(3*i)+(j+1);
+                    arr[x].setDisable(false);
+                }
+            }
+        }
+    }
+    private void disableALL() {
+           for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (online.board[i][j] == (char)0) {
+                    int x=(3*i)+(j+1);
+                    arr[x].setDisable(true);
+                }
+            }
+        }
+    }
+
 }

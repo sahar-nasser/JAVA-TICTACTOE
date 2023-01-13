@@ -18,7 +18,6 @@ public class ServerConnection {
                     Socket s;
                     try {
                         s = serverSocket.accept();
-
                         new ClientHandler(s);
                     } catch (IOException e) {
                         System.out.println(e.getMessage());

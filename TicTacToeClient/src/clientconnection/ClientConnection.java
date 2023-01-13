@@ -1,5 +1,7 @@
 package clientconnection;
 
+import helper.PlayerData;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,15 +14,15 @@ public class ClientConnection {
     static private DataInputStream dis;
     static private PrintStream ps;
 
-    public static int establishConnection() throws IOException {
-        int res=0;
-            mySocket= new Socket("127.0.0.1", 5005);
+
+    public static void establishConnection() throws IOException {
+
+            mySocket= new Socket("127.0.0.1", 5000);
 
             ps = new PrintStream(mySocket.getOutputStream());
+            ps.println(PlayerData.USERNAME);
             dis = new DataInputStream(mySocket.getInputStream());
-            res=1;
 
-        return res;
     }
 
     public static int forwardMsg(String msg){
@@ -33,8 +35,12 @@ public class ClientConnection {
     }
 
     public static String  getServerResponsible() throws IOException {
+
         return dis.readLine();
     }
 
+    public static void closeConnection() throws IOException {
+        mySocket.close();
+    }
 }
 
