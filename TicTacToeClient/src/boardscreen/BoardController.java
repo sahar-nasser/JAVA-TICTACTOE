@@ -35,6 +35,9 @@ import javafx.stage.Stage;
 import mediumlevel.MediumLevel;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
+import replayrecord.GameReplayer;
+
+import static java.lang.Thread.sleep;
 
 
 /**
@@ -64,6 +67,8 @@ public class BoardController extends Thread implements Initializable {
     OnlineGame online;
     Multiplayer mp = new Multiplayer();
     HardLevel hl = new HardLevel();
+
+
 
    @FXML
    private Button record;
@@ -219,25 +224,24 @@ public class BoardController extends Thread implements Initializable {
             arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
-                online=new OnlineGame(IS_FIRST,PLAYER_TWO);
-                if (IS_FIRST){
+                online = new OnlineGame(IS_FIRST, PLAYER_TWO);
+                if (IS_FIRST) {
                     scoreOfPlayerOne.setText(PlayerData.USERNAME);
                     scoreOfPlayerTwo.setText(PLAYER_TWO);
-                    scoreOne.setText(PlayerData.SCORE+"");
-                    scoreTwo.setText(PLAYER_TWO_SCORE+"");
-                }
-                else {
+                    scoreOne.setText(PlayerData.SCORE + "");
+                    scoreTwo.setText(PLAYER_TWO_SCORE + "");
+                } else {
 
                     scoreOfPlayerTwo.setText(PlayerData.USERNAME);
                     scoreOfPlayerOne.setText(PLAYER_TWO);
-                    scoreTwo.setText(PlayerData.SCORE+"");
-                    scoreOne.setText(PLAYER_TWO_SCORE+"");
+                    scoreTwo.setText(PlayerData.SCORE + "");
+                    scoreOne.setText(PLAYER_TWO_SCORE + "");
                     disableALL();
                     calcMovePlayer();
 
                 }
 
-            break;
+                break;
 
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 easy = new EasyLogic();
@@ -253,6 +257,28 @@ public class BoardController extends Thread implements Initializable {
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
+
+                break;
+
+            case GameType.REPLAYED_GAME:
+                System.out.println("this is game");
+                disableALL();
+                new Thread(()->{
+                    GameReplayer gameReplayer = new GameReplayer();
+                    while (!gameReplayer.gameEnded()) {
+                        try {
+                            sleep(500);
+                            gameReplayer.createMove();
+                            Platform.runLater(() -> {
+                                upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                            });
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }).start();
+
+               break;
 
             default:
                 scoreOfPlayerOne.setVisible(false);
@@ -318,8 +344,6 @@ public class BoardController extends Thread implements Initializable {
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                thread = new Thread();
-                thread.start();
                 upgradeUi(position, mediumLevel.human);
                 mediumLevel.addPlayerMove(row, col, mediumLevel.human);//add it in the array
                 //check if X could win
@@ -346,17 +370,24 @@ public class BoardController extends Thread implements Initializable {
                         //3.if not then decide my next move which will be random I guess or not
                     }
                     int finalComputerMove = computerMove;
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(400);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            upgradeUi(finalComputerMove, mediumLevel.ai);
+                    System.out.println("hasIn");
+                    new Thread(()->{
+                        try {
+                            sleep(400);
+                            System.out.println("======");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println();
+                                    upgradeUi(finalComputerMove, mediumLevel.ai);
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            System.out.println(e.getMessage());
                         }
-                    });
+
+                    }).start();
+
                 } else {
                     viewVideo();
                 }
@@ -385,7 +416,9 @@ public class BoardController extends Thread implements Initializable {
                     upgradeUi(position,'X');
                 }
                 //local game
+
                 break;
+
             case GameType.ONLINE_GAME:
 
                     int x=online.setMove(row,col);
@@ -396,21 +429,17 @@ public class BoardController extends Thread implements Initializable {
                         upgradeUi(x,online.getChar());
                     online.sendMoveMsg(x);
 
-
         }
     }
 
-
+   /** public void setDataFromRecord(int buttonNumber, char playerChar){
+            upgradeUi(buttonNumber, playerChar);
+    }**/
     //setNextMove() will be called when we need to update UI after calculating the next move in (easy-medium-hard)level
     // in its own classes
 
     //buttonNumber = (row+1)*(col+1)
     private void upgradeUi(int buttonNumber, char playerChar) {
-        try {
-            Thread.sleep(300);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
         Button tempButton;
         switch (buttonNumber) {
             case 1:
@@ -485,6 +514,7 @@ public class BoardController extends Thread implements Initializable {
             for (int j = 0; j < 3; j++) {
                 if (online.board[i][j] == (char)0) {
                     int x=(3*i)+(j+1);
+                    System.out.println(x);
                     arr[x].setDisable(true);
                 }
             }
