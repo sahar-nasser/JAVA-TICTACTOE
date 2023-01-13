@@ -318,8 +318,6 @@ public class BoardController extends Thread implements Initializable {
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                thread = new Thread();
-                thread.start();
                 upgradeUi(position, mediumLevel.human);
                 mediumLevel.addPlayerMove(row, col, mediumLevel.human);//add it in the array
                 //check if X could win
@@ -346,17 +344,24 @@ public class BoardController extends Thread implements Initializable {
                         //3.if not then decide my next move which will be random I guess or not
                     }
                     int finalComputerMove = computerMove;
-                    Platform.runLater(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(400);
-                            } catch (InterruptedException e) {
-                                throw new RuntimeException(e);
-                            }
-                            upgradeUi(finalComputerMove, mediumLevel.ai);
+                    System.out.println("hasIn");
+                    new Thread(()->{
+                        try {
+                            sleep(400);
+                            System.out.println("======");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println();
+                                    upgradeUi(finalComputerMove, mediumLevel.ai);
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            System.out.println(e.getMessage());
                         }
-                    });
+
+                    }).start();
+
                 } else {
                     viewVideo();
                 }
