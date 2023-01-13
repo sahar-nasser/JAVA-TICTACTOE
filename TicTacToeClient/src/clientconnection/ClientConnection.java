@@ -14,6 +14,7 @@ public class ClientConnection {
     static private DataInputStream dis;
     static private PrintStream ps;
 
+
     public static void establishConnection() throws IOException {
 
             mySocket= new Socket("127.0.0.1", 5000);
