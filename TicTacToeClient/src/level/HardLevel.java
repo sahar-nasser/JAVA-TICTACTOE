@@ -41,7 +41,7 @@ public class HardLevel extends GameLogic {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 // Is the spot available?
-                if (board[i][j] == (char) 0) {
+                if (board[i][j] == (char) 0 ) {
                     board[i][j] = 'O';
                     int score = minimax(board, 0, false);
                     board[i][j] = (char) 0;

@@ -80,4 +80,19 @@ public class DataAccessLayer {
         return i;
     }
 
+    public static int getRecords(String userName){
+            int res=0;
+            connect();
+        try {
+            PreparedStatement preparedStatement = con.prepareStatement("select * from RECORD where USERNAME= ?");
+            preparedStatement.setString(1,userName);
+            ResultSet rs = preparedStatement.executeQuery();
+            System.out.println(rs);
+            res=1;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return res;
+    }
+
 }
