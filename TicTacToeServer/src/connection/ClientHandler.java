@@ -42,10 +42,12 @@ public class ClientHandler extends Thread {
                 ClientHandler.clientsVector.remove(this);
                 System.out.println("Client disconnected!"+username);
                 this.stop();
-
             }
             catch (IOException e) {
-                System.out.println(e.getMessage());
+                ClientHandler.clientsVector.remove(this);
+                System.out.println("Client disconnected!"+username);
+                this.stop();
+
             }
 
         }
