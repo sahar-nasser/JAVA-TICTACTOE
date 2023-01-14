@@ -24,7 +24,7 @@ public class ClientHandler extends Thread {
             dis = new DataInputStream(cs.getInputStream());
             ps = new PrintStream(cs.getOutputStream());
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.fillInStackTrace());
         }
         ClientHandler.clientsVector.add(this);
         start();
@@ -36,11 +36,9 @@ public class ClientHandler extends Thread {
             try {
                 str = dis.readLine();
                 str.isEmpty();
-                System.out.println(str);
                 checkMsgType(str);
             }catch (NullPointerException e)
             {
-                System.out.println(e.getMessage());
                 ClientHandler.clientsVector.remove(this);
                 System.out.println("Client disconnected!"+username);
                 this.stop();
@@ -61,6 +59,7 @@ public class ClientHandler extends Thread {
                 break;
             case MsgType.DATABASECONNECTION:
                 checkQueryType(str);
+                break;
 
 
 
@@ -71,16 +70,25 @@ public class ClientHandler extends Thread {
     private void checkQueryType(String str) {
         switch (QueryType.checkQueryMsg(str)){
             case QueryType.SIGNUP:
-                this.username=QueryType.getUsername(str);
-                int x=DataAccessLayer.addPlayer(new Player(QueryType.getUsername(str), QueryType.getPassword(str),0));
-                fowradMsgToClient(QueryType.getUsername(str),x+"");
+                if (isNameUse(QueryType.getUsername(str)))fowradMsgToClientObject(this,"-1");
+                else {
+                    this.username = QueryType.getUsername(str);
+                    int x = DataAccessLayer.addPlayer(new Player(QueryType.getUsername(str), QueryType.getPassword(str), 0));
+                    fowradMsgToClient(QueryType.getUsername(str), x + "");
+                }
                 break;
             case QueryType.LOGIN:
-                this.username=QueryType.getUsername(str);
-                int res=DataAccessLayer.checkLoginCredintials(QueryType.getUsername(str), QueryType.getPassword(str));
-                String msg=res+",";
-                if(res>0)msg+=DataAccessLayer.getScore(QueryType.getUsername(str));
-                fowradMsgToClient(QueryType.getUsername(str),msg);
+                System.out.println("-------------------");
+                if (isNameUse(QueryType.getUsername(str)))fowradMsgToClientObject(this,"-1,");
+                else{
+
+                    this.username=QueryType.getUsername(str);
+                    int res=DataAccessLayer.checkLoginCredintials(QueryType.getUsername(str), QueryType.getPassword(str));
+                    String msg=res+",";
+                    if(res>0)msg+=DataAccessLayer.getScore(QueryType.getUsername(str));
+                    System.out.println(msg+"-----");
+                    fowradMsgToClient(QueryType.getUsername(str),msg);
+                }
                 break;
 
         }
@@ -88,14 +96,26 @@ public class ClientHandler extends Thread {
     }
 
     public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
-
+    public static boolean isNameUse(String str){
+        boolean res=false;
+        for (ClientHandler clientHandler : clientsVector) {
+            if ((clientHandler.username!=null&&clientHandler.username.equals(str)))
+                res=true;
+        }
+        return res;
+    }
     public static int fowradMsgToClient(String username, String msg){
         int res=0;
         for (ClientHandler clientHandler : clientsVector) {
-            if (clientHandler.username!=null&&clientHandler.username.equals(username))
+            if (clientHandler.username!=null&&clientHandler.username.equals(username)) {
                 clientHandler.ps.println(msg);
-            res=1;
+                res = 1;
+            }
         }
         return res;
+    }
+    public static void fowradMsgToClientObject(ClientHandler client, String msg){
+        client.ps.println(msg);
+        ClientHandler.clientsVector.remove(client);
     }
 }

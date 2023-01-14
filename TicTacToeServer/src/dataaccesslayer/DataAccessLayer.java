@@ -49,17 +49,14 @@ public class DataAccessLayer {
         int result = -1;
         connect();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?");
             preparedStatement.setString(1,userName);
             preparedStatement.setString(2,password);
-            if(preparedStatement.execute())
-                result = 1;
-
+            ResultSet re=preparedStatement.executeQuery();
+            if(re.next())result=1;
             con.close();
-
-
         } catch (SQLException e) {
-            System.out.println("helooo");
+
             e.printStackTrace();
         }
         return result;

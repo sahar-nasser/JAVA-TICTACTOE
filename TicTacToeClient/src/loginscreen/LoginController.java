@@ -79,39 +79,35 @@ public class LoginController implements Initializable {
               new Thread(()->{
                   try {
                       String msg=ClientConnection.getServerResponsible();
+                      System.out.println(msg+" ----------");
                       if ((MsgType.getMsgType(msg)+"").equals("1")){
                           PlayerData.USERNAME = usernameTextField.getText();
                           PlayerData.password = usernameTextField.getText();
                           PlayerData.SCORE = MsgType.getScore(msg);
                           Platform.runLater( ()->{
-                              try {
-                                  ClientConnection.closeConnection();
                                   navigateToOnlinePlayers(event);
-                              } catch (IOException e) {
-                                  System.out.println(e.getMessage());
-                              }
-
                           });
                       }
                       else {
                           Platform.runLater(()->{
                               if(labelVisibility){
-                                  errorMsgLabel.setVisible(labelVisibility = false);
+                                  errorMsgLabel.setText("username or password is incorrect");
+
                               }
                               try {
                                   ClientConnection.closeConnection();
                               } catch (IOException e) {
-                                  System.out.println(e.getMessage());
+                                  System.out.println(e.fillInStackTrace());
                               }
                           });
                       }
 
                   } catch (IOException e) {
-                      System.out.println(e.getMessage());
+                      System.out.println(e.fillInStackTrace());
                       try {
                           ClientConnection.closeConnection();
                       } catch (IOException ex) {
-                          System.out.println(ex.getMessage());
+                          System.out.println(ex.fillInStackTrace());
                       }
                   }
               }).start();
@@ -135,7 +131,7 @@ public class LoginController implements Initializable {
             ClientConnection.establishConnection();
             ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+username+","+password);
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            System.out.println(e.fillInStackTrace());
         }
     }
     
