@@ -40,9 +40,11 @@ public class ClientHandler extends Thread {
                 ClientHandler.clientsVector.remove(this);
                 System.out.println("Client disconnected!" + username);
                 this.stop();
-
-            } catch (IOException e) {
-                System.out.println(e.getMessage());
+            }
+            catch (IOException e) {
+                ClientHandler.clientsVector.remove(this);
+                System.out.println("Client disconnected!"+username);
+                this.stop();
             }
 
         }
@@ -52,21 +54,18 @@ public class ClientHandler extends Thread {
 
         switch (MsgType.getMsgType(str)) {
             case MsgType.SEND_MOVE:
-
                 fowradMsgToClient(MsgType.getUsername(str), MsgType.SEND_MOVE + "," + "," + MsgType.getMove(str));
                 break;
             case MsgType.DATABASECONNECTION:
-                checkQueryType(str);
-                break;
-
-                break;
-
-            case MsgType.DATABASECONNECTION:
-                switch (QueryType.getQueryType(str)) {
+            switch (QueryType.getQueryType(str)) {
                     case QueryType.GET_RECORD:
                         System.out.println("i got a request to grab rec list");
                 }
-
+                checkQueryType(str);
+                break;
+            case MsgType.lIST_AVAILABLE:
+                fowradMsgToClient(MsgType.getUsername(str),getAvailablePlayers(this.username));
+                break;
         }
 
     }
@@ -104,8 +103,14 @@ public class ClientHandler extends Thread {
 
     }
 
-    public static int getAvailablePlayers() {
-        return ClientHandler.clientsVector.size();
+    public static String getAvailablePlayers(String username){
+        String msg = MsgType.lIST_AVAILABLE+"";
+        for(ClientHandler clientHandler : clientsVector){
+            if(!clientHandler.isInGame && !clientHandler.username.equals(username)){
+                msg += "," + clientHandler.username;
+            }
+        }
+        return msg;
     }
 
     public static boolean isNameUse(String str) {

@@ -12,7 +12,6 @@
       <change beforePath="$PROJECT_DIR$/src/helper/MsgType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/MsgType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/helper/QueryType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/QueryType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/level/OnlineGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/level/OnlineGame.java" afterDir="false" />
-
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="development" />
+        <entry key="$PROJECT_DIR$/.." value="medium-level" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />

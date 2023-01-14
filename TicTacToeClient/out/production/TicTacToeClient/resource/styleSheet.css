@@ -73,3 +73,10 @@ and open the template in the editor.
      -fx-font-family: 'Action Jackson';
      -fx-font-size: 20;
  }
+
+ #listView .list-cell{
+    -fx-alignment: center;
+ }
+ .list-view {
+
+ }
