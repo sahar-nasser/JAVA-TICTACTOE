@@ -24,4 +24,8 @@ public class QueryType {
         return Integer.valueOf(str.split(",")[1]);
     }
 
+    public static String getUserRecords(String str) {
+        return str.split(",")[4];
+    }
+
 }

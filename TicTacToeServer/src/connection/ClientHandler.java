@@ -59,7 +59,8 @@ public class ClientHandler extends Thread {
             case MsgType.DATABASECONNECTION:
             switch (QueryType.getQueryType(str)) {
                     case QueryType.GET_RECORD:
-                        System.out.println("i got a request to grab rec list");
+                        System.out.println("i got a request");
+
                 }
                 checkQueryType(str);
                 break;
@@ -99,6 +100,11 @@ public class ClientHandler extends Thread {
                 }
                 break;
 
+            case QueryType.GET_RECORD:
+                System.out.println("i got a request to grab list");
+                this.username = QueryType.getUserRecords(str);
+                int queryState = DataAccessLayer.getRecords(QueryType.getUserRecords(str));
+                System.out.println(queryState);
         }
 
     }
