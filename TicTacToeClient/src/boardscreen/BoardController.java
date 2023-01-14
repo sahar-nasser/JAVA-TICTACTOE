@@ -320,14 +320,20 @@ public class BoardController extends Thread implements Initializable {
                 upgradeUi( easy.setPlayerMove(row , col),'X');
                 if (easy.checkWinner()== 'X'){
 
-                   viewVideo();
+                    STATUS_OF_GAME = StatusGame.WIN;
 
-               }else {
+                   viewVideo();}
+             else if (easy.checkWinner() == 't'){
+                    STATUS_OF_GAME = StatusGame.DRAW;
+                    viewVideo();
+                }
+               else {
 
                    int move = easy.addInRandomPosition();
                    System.out.println(easy.checkWinner());
                     upgradeUi(move,'O');
                    if (easy.checkWinner() == 'O') {
+                       STATUS_OF_GAME = StatusGame.WIN;
 
                        viewVideo();
                    }
