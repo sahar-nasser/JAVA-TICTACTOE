@@ -15,7 +15,7 @@ public class ServerConnection {
     public ServerConnection() {
         try {
             new QueryType();
-            serverSocket = new ServerSocket(5000);
+            serverSocket = new ServerSocket(5005);
             new Thread(() -> {
                 while (true) {
                     Socket s;
