@@ -35,7 +35,6 @@ public class DataAccessLayer {
             preparedStatement.setString(2, player.getPassword());
             preparedStatement.setInt(3, player.getScore());
 
-            System.out.println(preparedStatement);
             // Step 3: Execute the query or update query
             result = preparedStatement.executeUpdate();
 
@@ -62,6 +61,21 @@ public class DataAccessLayer {
             System.out.println(e.getMessage());
         }
         return result;
+    }
+    public static int getScore(String str) {
+        int i=0;
+        PreparedStatement ps = null;
+        try {
+            ps = con.prepareStatement
+                    ("select * from player where username='" + str + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = ps.executeQuery();
+            rs.first();
+            i= rs.getInt(2);
+
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return i;
     }
 
 }

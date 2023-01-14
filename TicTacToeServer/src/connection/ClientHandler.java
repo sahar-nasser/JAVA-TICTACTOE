@@ -78,7 +78,9 @@ public class ClientHandler extends Thread {
             case QueryType.LOGIN:
                 this.username=QueryType.getUsername(str);
                 int res=DataAccessLayer.checkLoginCredintials(QueryType.getUsername(str), QueryType.getPassword(str));
-                fowradMsgToClient(QueryType.getUsername(str),res+"");
+                String msg=res+",";
+                if(res>0)msg+=DataAccessLayer.getScore(QueryType.getUsername(str));
+                fowradMsgToClient(QueryType.getUsername(str),msg);
                 break;
 
         }
