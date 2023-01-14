@@ -48,12 +48,8 @@ public class SignUpController implements Initializable {
     @FXML
     public void register(ActionEvent event) throws IOException{
 
-        System.out.println(name.getText());
-        System.out.println(password.getText());
-        System.out.println(checkpassword.getText());
-
         if (name.getText().isEmpty()||password.getText().isEmpty()||checkpassword.getText().isEmpty()) {
-            System.out.println("empty");
+
             if (msg == false){ errorMsg.setText("Please make sure to fill your data");
               errorMsg.setTextFill(Color.RED);
                 errorMsg.setVisible(true);
@@ -61,32 +57,43 @@ public class SignUpController implements Initializable {
             }
         }
         else {
-            System.out.println("---");
+
             errorMsg.setVisible(false);
             msg = false;
         }
         if (checkpassword.equals(password)){
-            System.out.println("password incoreect");
+
             errorMsg.setText("please make sure that your password is correct");
         }
         else {
-            System.out.println("in send");
+
             sendPlayerData();
             new Thread(()->{
                 try {
                     String msg=ClientConnection.getServerResponsible();
-                    System.out.println(msg);
+
                     if (msg.equals("1")){
                         Platform.runLater( ()->{
-                            navigateToLogin(event);
+                            try {
+                                ClientConnection.closeConnection();
+                                navigateToLogin(event);
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
+                            }
+
                         });
                       
                     }
                     else {
                         Platform.runLater(()->{
-                            System.out.println("-----");
+
                             errorMsg.setVisible(true);
                             errorMsg.setText("username is already exists!!!");
+                            try {
+                                ClientConnection.closeConnection();
+                            } catch (IOException e) {
+                                System.out.println(e.getMessage());
+                            }
 
                         });
                     }
@@ -106,7 +113,8 @@ public class SignUpController implements Initializable {
         }
 
     }
-    void navigateToLogin(ActionEvent event){
+    @FXML
+    public void navigateToLogin(ActionEvent event){
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         Parent root = null;
         try {

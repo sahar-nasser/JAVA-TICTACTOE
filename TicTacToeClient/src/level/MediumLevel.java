@@ -1,4 +1,4 @@
-package mediumlevel;
+package level;
 
 import models.GameLogic;
 

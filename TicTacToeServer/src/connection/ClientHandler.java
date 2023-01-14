@@ -2,7 +2,7 @@ package connection;
 
 
 import dataaccesslayer.DataAccessLayer;
-import dataaccesslayer.Player;
+import Model.Player;
 import helper.MsgType;
 import helper.QueryType;
 

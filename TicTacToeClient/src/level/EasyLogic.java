@@ -1,4 +1,4 @@
-package easylevel;
+package level;
 import models.GameLogic;
 import java.util.Random;
 public class EasyLogic extends GameLogic{

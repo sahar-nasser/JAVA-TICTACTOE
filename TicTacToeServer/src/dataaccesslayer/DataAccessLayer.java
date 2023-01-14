@@ -1,6 +1,6 @@
 package dataaccesslayer;
 
-import helper.QueryType;
+import Model.Player;
 
 import java.sql.*;
 
@@ -27,11 +27,10 @@ public class DataAccessLayer {
 
         // Step 1: Establishing a Connection
         int result=-1;
-        try (Connection connection = DriverManager
-                .getConnection("jdbc:derby://localhost:1527/TicTacToe", "root", "root");
 
+         try {
              // Step 2:Create a statement using connection object
-             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_CONTACT_SQL)) {
+             PreparedStatement preparedStatement = con.prepareStatement(INSERT_CONTACT_SQL);
             preparedStatement.setString(1, player.getUsername());
             preparedStatement.setString(2, player.getPassword());
             preparedStatement.setInt(3, player.getScore());
@@ -40,12 +39,6 @@ public class DataAccessLayer {
             // Step 3: Execute the query or update query
             result = preparedStatement.executeUpdate();
 
-
-        } catch (SQLException e) {
-            // print SQL exception information
-            System.out.println(e.getMessage()   );
-        }
-        try {
             con.close();
         } catch (SQLException e) {
             System.out.println(e.getMessage());

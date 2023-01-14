@@ -1,4 +1,4 @@
-package hardlevel;
+package level;
 
 import models.GameLogic;
 
