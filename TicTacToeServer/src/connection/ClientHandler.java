@@ -2,6 +2,7 @@ package connection;
 
 
 import helper.MsgType;
+import helper.QueryType;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -48,10 +49,13 @@ public class ClientHandler extends Thread {
 
         switch (MsgType.getMsgType(str)){
             case MsgType.SEND_MOVE:
+            break;
 
-
-
-
+            case MsgType.DATABASECONNECTION:
+                switch (QueryType.getQueryType(str)){
+                    case QueryType.GET_RECORD:
+                        System.out.println("i got a request to grab rec list");
+                }
         }
 
     }
