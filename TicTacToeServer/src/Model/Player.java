@@ -1,4 +1,4 @@
-package dataaccesslayer;
+package Model;
 
 public class Player {
     private String username , password;

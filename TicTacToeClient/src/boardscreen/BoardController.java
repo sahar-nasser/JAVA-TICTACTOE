@@ -12,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-import easylevel.EasyLogic;
-import hardlevel.HardLevel;
+import level.EasyLogic;
+import level.HardLevel;
 import helper.GameType;
 import helper.MsgType;
 import helper.PlayerData;
@@ -32,7 +32,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import mediumlevel.MediumLevel;
+import level.MediumLevel;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
 import replayrecord.GameReplayer;

@@ -100,7 +100,7 @@
                   <Image url="@../resource/backIcon.png" />
                </image>
             </ImageView>
-            <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#register" opacity="0.0" prefHeight="79.0" prefWidth="51.0" />
+            <Button layoutX="14.0" layoutY="28.0" mnemonicParsing="false" onAction="#navigateToLogin" opacity="0.0" prefHeight="79.0" prefWidth="51.0" />
          </children>
       </StackPane>
     </children>
