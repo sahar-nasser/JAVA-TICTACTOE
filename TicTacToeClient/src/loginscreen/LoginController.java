@@ -69,14 +69,13 @@ public class LoginController implements Initializable {
     }
     
       @FXML
-    public void handleLoginButtonAction(ActionEvent event) throws IOException{
-             //start connection + send data for authentication through client handler
+    public void handleLoginButtonAction(ActionEvent event) {
           if(usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()){
               if(!labelVisibility){//if user return back to login, error label should be invisible
                   errorMsgLabel.setVisible(labelVisibility = true);
               }
           }else{
-              openConnection(passwordTextField.getText());
+              openConnection(usernameTextField.getText(),passwordTextField.getText());
               new Thread(()->{
                   try {
                       String msg=ClientConnection.getServerResponsible();
@@ -115,16 +114,7 @@ public class LoginController implements Initializable {
                           System.out.println(ex.getMessage());
                       }
                   }
-
-
               }).start();
-              if(checkUserData(passwordTextField.getText())){
-                  //load the nextScreen and return the label visibility to false and setVisibile(false)
-              }else{
-                  if(!labelVisibility){
-                      errorMsgLabel.setVisible(labelVisibility = true);
-                  }
-              }
           }
     }
 
@@ -140,10 +130,10 @@ public class LoginController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void openConnection(String password){
+    public void openConnection(String username , String password){
         try {
             ClientConnection.establishConnection();
-            ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+PlayerData.USERNAME+","+password);
+            ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+username+","+password);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }

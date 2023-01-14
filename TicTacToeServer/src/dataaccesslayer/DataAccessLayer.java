@@ -50,7 +50,7 @@ public class DataAccessLayer {
         int result = -1;
         connect();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?;");
+            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?");
             preparedStatement.setString(1,userName);
             preparedStatement.setString(2,password);
             result = preparedStatement.executeUpdate();
