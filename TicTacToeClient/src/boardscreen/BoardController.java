@@ -143,7 +143,7 @@ public class BoardController extends Thread implements Initializable {
                     STAGE_OF_BOARD.setScene(scene);
                     STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
-                    Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
                  }
             break;
             default:
@@ -153,7 +153,7 @@ public class BoardController extends Thread implements Initializable {
                     STAGE_OF_BOARD.setScene(scene);
                     STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
-                    Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
                  }
                 break;
 
@@ -242,25 +242,12 @@ public class BoardController extends Thread implements Initializable {
                 }
 
                 break;
-
-            case GameType.SINGLE_PLAYER_EASY_LEVEL:
-                easy = new EasyLogic();
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
-
-                case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                    mediumLevel = new MediumLevel();
-                    nameOfPlayerTwo.setText("COMPUTER");
-                    nameOfPlayerOne.setText("ME");
-
-
-            case GameType.SINGLE_PLAYER_HARD_LEVEL:
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
-
-                break;
-
             case GameType.REPLAYED_GAME:
+                scoreOfPlayerOne.setVisible(false);
+                scoreOfPlayerTwo.setVisible(false);
+                scoreOne.setVisible(false);
+                scoreTwo.setVisible(false);
+                record.setVisible(false);
                 System.out.println("this is game");
                 //disableALL();
                 new Thread(()->{
@@ -277,7 +264,15 @@ public class BoardController extends Thread implements Initializable {
                         }
                     }
                 }).start();
+                break;
 
+            case GameType.SINGLE_PLAYER_EASY_LEVEL:
+                easy = new EasyLogic();
+            case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
+                mediumLevel = new MediumLevel();
+            case GameType.SINGLE_PLAYER_HARD_LEVEL:
+                nameOfPlayerTwo.setText("COMPUTER");
+                nameOfPlayerOne.setText("ME");
             default:
                 scoreOfPlayerOne.setVisible(false);
                 scoreOfPlayerTwo.setVisible(false);
