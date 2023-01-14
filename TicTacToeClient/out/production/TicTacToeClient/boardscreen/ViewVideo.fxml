@@ -6,14 +6,14 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.text.Font?>
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boardscreen.BoardController">
+<AnchorPane prefHeight="480.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="boardscreen.BoardController">
     <MediaView fx:id="mediaView" fitHeight="400" fitWidth="800" layoutX="0" layoutY="0" />
-   <ImageView fitHeight="100.0" fitWidth="800.0"  layoutX="0" layoutY="400.0" >
+   <ImageView fitHeight="100.0" fitWidth="800.0"  layoutX="0" layoutY="380.0" >
        <image>
            <Image url="@../resource/BGVideo.png" />
        </image>
    </ImageView>
-    <Button id="button" fx:id="close" layoutX="300.0" layoutY="430.0" mnemonicParsing="false" onAction="#closeGame" prefWidth="200.0" style="-fx-background-color: #ffb100" text="close" textFill="#2c0153">
+    <Button id="button" fx:id="close" layoutX="300.0" layoutY="410.0" mnemonicParsing="false" onAction="#closeGame" prefWidth="200.0" style="-fx-background-color: #ffb100" text="close" textFill="#2c0153">
         <font>
             <Font name="Action Jackson" size="24.0" />
         </font></Button>

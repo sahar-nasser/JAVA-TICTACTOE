@@ -5,8 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/onlineplayerscreen/ListScreenController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/boardscreen/board.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/board.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/MsgType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/MsgType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/helper/QueryType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/helper/QueryType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/level/OnlineGame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/level/OnlineGame.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,20 +42,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;last_opened_file_path&quot;: &quot;D:/ITI/Java-SE/SceneBuilder-8.5.0.exe&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settings.ide.settings.notifications&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "last_opened_file_path": "/home/ammar/iti/JAVA-TICTACTOE",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "preferences.JavaFX"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="models" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration name="WelcomeScreen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="welcomescreen.WelcomeScreen" />
+    <configuration name="SplashScreen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="splashscreen.SplashScreen" />
       <module name="TicTacToeClient" />
       <extension name="coverage">
         <pattern>
@@ -64,7 +74,7 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.WelcomeScreen" />
+        <item itemvalue="Application.SplashScreen" />
       </list>
     </recent_temporary>
   </component>

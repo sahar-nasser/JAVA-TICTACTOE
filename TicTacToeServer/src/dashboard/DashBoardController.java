@@ -6,6 +6,9 @@ package dashboard;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import connection.ClientHandler;
+import connection.ServerConnection;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +27,7 @@ public class DashBoardController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
+        new ServerConnection();
     }  
     
      @FXML
@@ -36,6 +40,7 @@ public class DashBoardController implements Initializable {
     @FXML
     private void openConnection(ActionEvent event) {
         System.out.println("opeeeeeeen-----------------");
+
     }
     @FXML
     private void closeConnection(ActionEvent event) {
