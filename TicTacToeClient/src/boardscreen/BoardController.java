@@ -398,7 +398,9 @@ public class BoardController extends Thread implements Initializable {
                     }
                     viewVideo();
                 }
+
                 if((mediumLevel.checkWinner() == 'n' && mediumLevel.availableCells() == 0)){//tie
+
                     STATUS_OF_GAME = StatusGame.DRAW;
                     viewVideo();
                 }else if(mediumLevel.checkWinner()=='O'){
@@ -408,15 +410,35 @@ public class BoardController extends Thread implements Initializable {
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
-                if(hl.humanPlayed){
-                    hl.AiTurn();
-                    upgradeUi(hl.forwardMove(),'O');
-                }
-                else if(hl.aiPlayed){
-                    hl.getIndex(row,col);
+                  if (hl.humanPlayed){
                     hl.userTurn();
                     upgradeUi(position, 'X');
+                    if (hl.checkWinner() == 'X') {//player won
+                        STATUS_OF_GAME = StatusGame.WIN;
+                        viewVideo();
+                    } else if (hl.checkWinner() == 'O') {//player lost
+                        STATUS_OF_GAME = StatusGame.LOSE;
+                        viewVideo();
+                    } else if (hl.checkWinner() == 't') {
+                        STATUS_OF_GAME = StatusGame.DRAW;
+                        viewVideo();
+                    }
                 }
+                  if(hl.aiPlayed) {
+                       hl.AiTurn();
+                       upgradeUi(hl.forwardMove(), 'O');
+                       if (hl.checkWinner() == 'X') {//player won
+                           STATUS_OF_GAME = StatusGame.WIN;
+                           viewVideo();
+                       } else if (hl.checkWinner() == 'O') {//player lost
+                           STATUS_OF_GAME = StatusGame.LOSE;
+                           viewVideo();
+                       } else if (hl.checkWinner() == 't') {
+                           STATUS_OF_GAME = StatusGame.DRAW;
+                           viewVideo();
+                       }
+                   }
+
 
                 break;
             case GameType.TWO_PLAYER_GAME:
@@ -424,10 +446,24 @@ public class BoardController extends Thread implements Initializable {
                 if(mp.onePlayed){
                     mp.playerTwoTurn();
                     upgradeUi(position,'O');
+                    if(mp.checkWinner() == 'X' || mp.checkWinner() == 'O'){//player won
+                        STATUS_OF_GAME=StatusGame.WIN;
+                        viewVideo();
+                    }else if(hl.checkWinner()=='t'){
+                        STATUS_OF_GAME = StatusGame.DRAW;
+                        viewVideo();
+                    }
                 }
                 else if(mp.twoPlayed){
                     mp.playerOneTurn();
                     upgradeUi(position,'X');
+                    if(mp.checkWinner() == 'X' || mp.checkWinner() == 'O'){//player won
+                        STATUS_OF_GAME=StatusGame.WIN;
+                        viewVideo();
+                    }else if(mp.checkWinner()=='t'){
+                        STATUS_OF_GAME = StatusGame.DRAW;
+                        viewVideo();
+                    }
                 }
                 //local game
 
