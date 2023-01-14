@@ -87,6 +87,11 @@ public class ListScreenController implements Initializable {
            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
         try {
+            try {
+                ClientConnection.closeConnection();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
             Scene scene=new Scene(root);
             stage.setScene(scene);
@@ -119,16 +124,23 @@ public class ListScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-        openConnection();
+        System.out.println("hi");
         new Thread(()->{
             while (true){
+                Platform.runLater(()->{
+                    playersList.getItems().clear();
+                });
+                openConnection();
+                System.out.println("whilee");
                 try {
                     String serverResponse = ClientConnection.getServerResponsible();
+                    System.out.println(serverResponse);
                     switch (MsgType.getMsgType(serverResponse)){
                         case MsgType.LIST_AVAILABLE:
+                            System.out.println("entered");
                             String[] playerNames = serverResponse.split(",");
                             Platform.runLater(() -> {
+                                System.out.println("in plat");
                                 fillPlayersList(playerNames);
                             });
                             break;
@@ -140,10 +152,10 @@ public class ListScreenController implements Initializable {
                     try {
                         Thread.sleep(2000);
                     } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
+                        e.printStackTrace();
                     }
                 } catch (IOException e) {
-                    System.out.println(e.getStackTrace());
+                    e.printStackTrace();
                 }
             }
         }).start();
@@ -164,11 +176,6 @@ public class ListScreenController implements Initializable {
     }
 
     public void openConnection(){
-        try {
-            ClientConnection.establishConnection();
-            ClientConnection.forwardMsg(MsgType.LIST_AVAILABLE+","+ PlayerData.USERNAME);
-        } catch (IOException e) {
-            System.out.println(e.getMessage());
-        }
+        ClientConnection.forwardMsg(MsgType.LIST_AVAILABLE+","+ PlayerData.USERNAME);
     }
 }
