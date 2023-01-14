@@ -4,14 +4,12 @@
  * and open the template in the editor.
  */
 package onlineplayerscreen;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import clientconnection.ClientConnection;
 import helper.MsgType;
 import helper.PlayerData;
@@ -26,15 +24,11 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import models.Player;
 import request.FormRequest;
 
-/**
- *
- * @author Sahar
- */
 public class ListScreenController implements Initializable {
     @FXML
     private Button homeBtn;
@@ -104,21 +98,13 @@ public class ListScreenController implements Initializable {
      @FXML
     private void handleClickOnPlayerAction(ActionEvent event) {
          System.out.println("player clicked!");
-        
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root;
-         FormRequest request = new FormRequest();
-         request.setName("sahar");
-         request.sendPlayerRequest();
-        try {
-            root = FXMLLoader.load(getClass().getResource("/waitingconfirmation/FXMLWaiting.fxml"));
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            stage.sizeToScene();
-            stage.show();
-        } catch (IOException ex) {
-            Logger.getLogger(ListScreenController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+         Alert alert = new Alert(Alert.AlertType.INFORMATION, "WAITING FOR RESPONSE...", ButtonType.CANCEL);
+         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+         alert.show();
+         DialogPane dialogPane = alert.getDialogPane();
+         dialogPane.getStylesheets().add(
+                 getClass().getResource("Dialog.css").toExternalForm());
+
 
     }
     
