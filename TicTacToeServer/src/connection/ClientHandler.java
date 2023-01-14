@@ -60,15 +60,18 @@ public class ClientHandler extends Thread {
                 fowradMsgToClient(MsgType.getUsername(str),MsgType.SEND_MOVE+","+","+MsgType.getMove(str));
                 break;
             case MsgType.DATABASECONNECTION:
-                checkQeryType(str);
-
+                checkQueryType(str);
+                break;
+            case MsgType.lIST_AVAILABLE:
+                fowradMsgToClient(MsgType.getUsername(str),getAvailablePlayers());
+                break;
 
 
         }
 
     }
 
-    private void checkQeryType(String str) {
+    private void checkQueryType(String str) {
         switch (QueryType.checkQueryMsg(str)){
             case QueryType.SIGNUP:
                 this.username=QueryType.getUsername(str);
@@ -80,7 +83,15 @@ public class ClientHandler extends Thread {
 
     }
 
-    public static int getAvailablePlayers(){return ClientHandler.clientsVector.size();}
+    public static String getAvailablePlayers(){
+        String msg = MsgType.lIST_AVAILABLE+"";
+        for(ClientHandler clientHandler : clientsVector){
+            if(!clientHandler.isInGame){
+                msg += "," + clientHandler.username;
+            }
+        }
+        return msg;
+    }
 
     public static int fowradMsgToClient(String username, String msg){
         int res=0;

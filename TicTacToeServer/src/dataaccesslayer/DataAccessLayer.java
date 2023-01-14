@@ -46,4 +46,10 @@ public class DataAccessLayer {
         return result;
     }
 
+
+    public static void getOnlinePlayers(){
+//            connect();
+            int result = -1;
+
+    }
 }

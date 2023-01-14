@@ -11,7 +11,13 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import clientconnection.ClientConnection;
+import helper.MsgType;
+import helper.PlayerData;
+import helper.QueryType;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -112,18 +118,44 @@ public class ListScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
+        openConnection();
+        new Thread(()->{
+            try {
+                String serverResponse = ClientConnection.getServerResponsible();
+                switch (MsgType.getMsgType(serverResponse)){
+                    case MsgType.LIST_AVAILABLE:
+                        String[] playerNames = serverResponse.split(",");
+                        fillPlayersList(playerNames);
+                        break;
+                }
+            } catch (IOException e) {
+                System.out.println(e.getStackTrace());
+            }
+
+        }).start();
         //call method to talk to the server the pass the return which should be ArrayList<Player>
         //to the fillPlayerList method then we will have 
     }
 
     //call the method to receive the list of players in initialize
-    private void fillPlayersList(ArrayList<Player> onlinePlayers){
-        for(Player player : onlinePlayers){
-            Button tempButton = new Button(player.getUsername());
+    private void fillPlayersList(String[] onlinePlayers){
+        for(int i = 1 ; i < onlinePlayers.length ; ++i){
+            Button tempButton = new Button(onlinePlayers[i]);
+            tempButton.setOnAction(event -> System.out.println("clicked"));
             tempButton.setPrefHeight(74);
             tempButton.setPrefWidth(300);
             tempButton.setStyle("-fx-background-color: #ffb100;-fx-font-family: 'Action Jackson'; -fx-font-size: 32;");
             playersList.getItems().add(tempButton);
+        }
+    }
+
+    public void openConnection(){
+        try {
+            ClientConnection.establishConnection();
+            ClientConnection.forwardMsg(MsgType.LIST_AVAILABLE+","+ PlayerData.USERNAME);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
         }
     }
 }
