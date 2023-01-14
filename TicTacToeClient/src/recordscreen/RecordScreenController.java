@@ -99,6 +99,6 @@ public class RecordScreenController implements Initializable {
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-    }    
-    
+    }
+
 }
