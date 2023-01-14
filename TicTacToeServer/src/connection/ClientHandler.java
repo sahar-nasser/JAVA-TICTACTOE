@@ -54,7 +54,7 @@ public class ClientHandler extends Thread {
 
         switch (MsgType.getMsgType(str)) {
             case MsgType.SEND_MOVE:
-                fowradMsgToClient(MsgType.getUsername(str), MsgType.SEND_MOVE + "," + "," + MsgType.getMove(str));
+                fowradMsgToClient(MsgType.getUsername(str), MsgType.SEND_MOVE + "," + MsgType.getMove(str));
                 break;
             case MsgType.DATABASECONNECTION:
             switch (QueryType.getQueryType(str)) {
@@ -65,6 +65,12 @@ public class ClientHandler extends Thread {
                 break;
             case MsgType.lIST_AVAILABLE:
                 fowradMsgToClient(MsgType.getUsername(str),getAvailablePlayers(this.username));
+                break;
+            case MsgType.SEND_REQUEST:
+                fowradMsgToClient(MsgType.getUsername(str),str);
+                break;
+            case MsgType.CONFIRM_REQ:
+                fowradMsgToClient(MsgType.getUsername(str),str);
                 break;
         }
 
@@ -83,7 +89,7 @@ public class ClientHandler extends Thread {
                 }
                 break;
             case QueryType.LOGIN:
-                System.out.println("-------------------");
+
                 if (isNameUse(QueryType.getUsername(str)))
                     fowradMsgToClientObject(this, "-1,");
                 else {
@@ -94,7 +100,7 @@ public class ClientHandler extends Thread {
                     String msg = res + ",";
                     if (res > 0)
                         msg += DataAccessLayer.getScore(QueryType.getUsername(str));
-                    System.out.println(msg + "-----");
+                    System.out.println(msg );
                     fowradMsgToClient(QueryType.getUsername(str), msg);
                 }
                 break;

@@ -19,4 +19,7 @@ public static int getMove(String str){
 public static int getScore(String str) { return Integer.parseInt(str.split(",")[1]);}
     public static String getUsername(String str) {return str.split(",")[1];}
 
+    public static String getUsernameOfReq(String str){
+        return str.split(",")[2];
+    }
 }

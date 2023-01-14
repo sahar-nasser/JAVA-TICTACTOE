@@ -6,17 +6,18 @@
 package onlineplayerscreen;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import boardscreen.BoardController;
 import clientconnection.ClientConnection;
+import com.sun.javaws.IconUtil;
+import helper.GameType;
 import helper.MsgType;
 import helper.PlayerData;
-import helper.QueryType;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -24,12 +25,10 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import models.Player;
-import request.FormRequest;
 
 public class ListScreenController implements Initializable {
+    public static Stage STAGE;
     @FXML
     private Button homeBtn;
      @FXML
@@ -39,10 +38,12 @@ public class ListScreenController implements Initializable {
 
     @FXML
     private ListView<Button> playersList;
+    Alert alert;
+    private ActionEvent event;
 
     @FXML
     private void handleHistoryAction(ActionEvent event) {
-        System.out.println("history clicked!");
+
         
      Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
@@ -76,7 +77,7 @@ public class ListScreenController implements Initializable {
     
      @FXML
     private void handleLogoutAction(ActionEvent event) {
-         System.out.println("logout clicked!");
+
            //end connection
            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
             Parent root;
@@ -96,14 +97,20 @@ public class ListScreenController implements Initializable {
     }
     
      @FXML
-    private void handleClickOnPlayerAction() {
-         System.out.println("player clicked!");
-         Alert alert = new Alert(Alert.AlertType.INFORMATION, "WAITING FOR RESPONSE...", ButtonType.CANCEL);
-         alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
-         alert.show();
-         DialogPane dialogPane = alert.getDialogPane();
-         dialogPane.getStylesheets().add(
-                 getClass().getResource("Dialog.css").toExternalForm());
+    private void handleClickOnPlayerAction(String s) {
+        alert = new Alert(Alert.AlertType.CONFIRMATION);
+         alert.setTitle("waiting");
+         alert.setContentText("waiting for another player");
+         ButtonType okButton = new ButtonType("cancel", ButtonBar.ButtonData.YES);
+         alert.getButtonTypes().setAll(okButton);
+         alert.showAndWait().ifPresent(type -> {
+             if (type == ButtonType.OK) {
+                 ClientConnection.forwardMsg(MsgType.CANCEL_REQ+","+s);
+                 alert.close();
+             }
+
+
+         });
 
 
     }
@@ -113,52 +120,76 @@ public class ListScreenController implements Initializable {
         alert.setContentText(username+"wants to play with you");
         ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
         ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
-
         alert.getButtonTypes().setAll(okButton, noButton);
         alert.showAndWait().ifPresent(type -> {
-            if (type == ButtonType.OK) {
+            if (type.getButtonData() ==ButtonBar.ButtonData.YES) {
+                System.out.println("------------ok------------");
                 ClientConnection.forwardMsg(MsgType.CONFIRM_REQ+" , "+username);
+                BoardController.TYPE= GameType.ONLINE_GAME;
+                BoardController.PLAYER_TWO=username;
+                try {
+                    Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                    BoardController.STAGE_OF_BOARD = stage;
+                    Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
+                    Scene scene=new Scene(root);
+                    stage.setScene(scene);
+                    stage.show();
+                } catch (IOException e) {
+                    System.out.println(e.fillInStackTrace());
+                }
 
             } else if (type == ButtonType.NO) {
+                System.out.println("------------no-----------------");
                 ClientConnection.forwardMsg(MsgType.CANCEL_REQ+" , "+username);
-
+                alert.close();
             }
         });
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        System.out.println("hi");
+
         new Thread(()->{
             while (true){
                 Platform.runLater(()->{
                     playersList.getItems().clear();
                 });
                 openConnection();
-                System.out.println("whilee");
+
                 try {
                     String serverResponse = ClientConnection.getServerResponsible();
-                    System.out.println(serverResponse);
+
                     switch (MsgType.getMsgType(serverResponse)){
                         case MsgType.LIST_AVAILABLE:
-                            System.out.println("entered");
+
                             String[] playerNames = serverResponse.split(",");
                             Platform.runLater(() -> {
-                                System.out.println("in plat");
                                 fillPlayersList(playerNames);
                             });
                             break;
                         case MsgType.SEND_REQUEST:
                             Platform.runLater(()->{
-                                makeAlert(MsgType.getUsername(serverResponse));
+                                makeAlert(MsgType.getUsernameOfReq(serverResponse));
                             });
                             break;
                         case MsgType.CANCEL_REQ:
-
-
+                            alert.close();
                             break;
+                        case MsgType.CONFIRM_REQ:
+                            BoardController.TYPE= GameType.ONLINE_GAME;
+                            BoardController.PLAYER_TWO=MsgType.getUsername(serverResponse);
+                            try {
+                                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+                                BoardController.STAGE_OF_BOARD = stage;
+                                Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
+                                Scene scene=new Scene(root);
+                                stage.setScene(scene);
+                                stage.show();
+                            } catch (IOException e) {
+                                System.out.println(e.fillInStackTrace());
+                            }
                     }
                     try {
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
@@ -176,9 +207,10 @@ public class ListScreenController implements Initializable {
         for(int i = 1 ; i < onlinePlayers.length ; ++i){
             Button tempButton = new Button(onlinePlayers[i]);
             tempButton.setOnAction(event -> {
-                ClientConnection.forwardMsg(MsgType.SEND_REQUEST+","+ tempButton.getText());
+                this.event=event;
+                ClientConnection.forwardMsg(MsgType.SEND_REQUEST+","+ tempButton.getText().toString()+","+PlayerData.USERNAME);
                 Platform.runLater(()->{
-                    handleClickOnPlayerAction();
+                    handleClickOnPlayerAction(tempButton.getText().toString());
                 });
             });
             tempButton.setPrefHeight(74);
