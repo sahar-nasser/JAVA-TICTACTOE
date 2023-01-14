@@ -27,6 +27,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
+import javax.swing.*;
+
 /**
  *
  * @author CST
@@ -69,24 +71,55 @@ public class LoginController implements Initializable {
       @FXML
     public void handleLoginButtonAction(ActionEvent event) throws IOException{
              //start connection + send data for authentication through client handler
-          PlayerData.USERNAME = usernameTextField.getText();
-          if(PlayerData.USERNAME.isEmpty() || passwordTextField.getText().isEmpty()){
+          if(usernameTextField.getText().isEmpty() || passwordTextField.getText().isEmpty()){
               if(!labelVisibility){//if user return back to login, error label should be invisible
                   errorMsgLabel.setVisible(labelVisibility = true);
               }
           }else{
+              openConnection(passwordTextField.getText());
+              new Thread(()->{
+                  try {
+                      String msg=ClientConnection.getServerResponsible();
+                      if ((MsgType.getMsgType(msg)+"").equals("1")){
+                          PlayerData.USERNAME = usernameTextField.getText();
+                          PlayerData.password = usernameTextField.getText();
+                          PlayerData.SCORE = MsgType.getScore(msg);
+                          Platform.runLater( ()->{
+                              try {
+                                  ClientConnection.closeConnection();
+                                  navigateToOnlinePlayers(event);
+                              } catch (IOException e) {
+                                  System.out.println(e.getMessage());
+                              }
+
+                          });
+                      }
+                      else {
+                          Platform.runLater(()->{
+                              if(labelVisibility){
+                                  errorMsgLabel.setVisible(labelVisibility = false);
+                              }
+                              try {
+                                  ClientConnection.closeConnection();
+                              } catch (IOException e) {
+                                  System.out.println(e.getMessage());
+                              }
+                          });
+                      }
+
+                  } catch (IOException e) {
+                      System.out.println(e.getMessage());
+                      try {
+                          ClientConnection.closeConnection();
+                      } catch (IOException ex) {
+                          System.out.println(ex.getMessage());
+                      }
+                  }
+
+
+              }).start();
               if(checkUserData(passwordTextField.getText())){
                   //load the nextScreen and return the label visibility to false and setVisibile(false)
-
-                  if(labelVisibility){
-                      errorMsgLabel.setVisible(labelVisibility = false);
-                  }
-//                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-//                Parent root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
-//                Scene scene=new Scene(root);
-//                stage.setScene(scene);
-//                stage.show();
-
               }else{
                   if(!labelVisibility){
                       errorMsgLabel.setVisible(labelVisibility = true);
@@ -95,25 +128,25 @@ public class LoginController implements Initializable {
           }
     }
 
-    public boolean checkUserData(String password){
-        boolean returnValue;
+    public void navigateToOnlinePlayers(ActionEvent event){
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("/onlineplayerscreen/FXMLPlayerList.fxml"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        Scene scene=new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public void openConnection(String password){
         try {
             ClientConnection.establishConnection();
-            int msgStatus = ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+PlayerData.USERNAME+","+password);
-            if(msgStatus == 1){
-                if(ClientConnection.getServerResponsible().equals("yes")){
-
-                    returnValue = true;
-                }else{
-                    returnValue = false;
-                }
-            }else{
-                returnValue = false;//problem in the server
-            }
+            ClientConnection.forwardMsg(MsgType.DATABASE_CONNECTION+","+ QueryType.LOGIN+","+PlayerData.USERNAME+","+password);
         } catch (IOException e) {
             System.out.println(e.getMessage());
         }
-        return returnValue;
     }
     
     @Override

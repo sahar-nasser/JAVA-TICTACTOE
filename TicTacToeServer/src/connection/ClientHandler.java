@@ -75,6 +75,11 @@ public class ClientHandler extends Thread {
                 int x=DataAccessLayer.addPlayer(new Player(QueryType.getUsername(str), QueryType.getPassword(str),0));
                 fowradMsgToClient(QueryType.getUsername(str),x+"");
                 break;
+            case QueryType.LOGIN:
+                this.username=QueryType.getUsername(str);
+                int res=DataAccessLayer.checkLoginCredintials(QueryType.getUsername(str), QueryType.getPassword(str));
+                fowradMsgToClient(QueryType.getUsername(str),res+"");
+                break;
 
         }
 
