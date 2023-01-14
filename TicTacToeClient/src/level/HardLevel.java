@@ -12,7 +12,7 @@ public class HardLevel extends GameLogic {
     public int btnPosition;
 
     public HardLevel() {
-      humanPlayed=false;
+      humanPlayed=true;
       aiPlayed=true;
       curr_r=0;
       curr_c=0;
@@ -30,7 +30,7 @@ public class HardLevel extends GameLogic {
         return btnPosition;
     }
     public  void userTurn() {
-        board[curr_r][curr_c]='X';
+        super.board[curr_r][curr_c]='X';
         won = checkWinner();
         if (won=='X'){
             //call playvid
@@ -56,30 +56,21 @@ public class HardLevel extends GameLogic {
                 if (board[i][j] == (char) 0) {
                     board[i][j] = 'O';
                     int score = minimax(board, 0, false);
-                    board[i][j] = (char) 0;
+                    super.board[i][j] = (char) 0;
                     if (score > bestScore) {
                         bestScore = score;
+                        board[i][j]='O';
                         move[0] = i;
                         move[1] = j;
                     }
                 }
             }
         }
-        board[move[0]][move[1]] = 'O';
+       // board[move[0]][move[1]] = 'O';
         setPosition(move[0], move[1]);
         won = checkWinner();
-        if (won=='X'){
-            //call playvid
-            System.out.println("X won");
-        } else if (won=='O'){
-            System.out.println("O won");
-        } else if (won=='t') {
-            System.out.println("tie");
-        } else {
-            System.out.println("not yet");
-        }
-        humanPlayed=false;
-        aiPlayed=true;
+        humanPlayed=true;
+        aiPlayed=false;
     }
 
 
