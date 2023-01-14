@@ -96,7 +96,7 @@ public class ListScreenController implements Initializable {
     }
     
      @FXML
-    private void handleClickOnPlayerAction(ActionEvent event) {
+    private void handleClickOnPlayerAction() {
          System.out.println("player clicked!");
          Alert alert = new Alert(Alert.AlertType.INFORMATION, "WAITING FOR RESPONSE...", ButtonType.CANCEL);
          alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
@@ -107,7 +107,24 @@ public class ListScreenController implements Initializable {
 
 
     }
-    
+    private void makeAlert(String username) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("request");
+        alert.setContentText(username+"wants to play with you");
+        ButtonType okButton = new ButtonType("Yes", ButtonBar.ButtonData.YES);
+        ButtonType noButton = new ButtonType("No", ButtonBar.ButtonData.NO);
+
+        alert.getButtonTypes().setAll(okButton, noButton);
+        alert.showAndWait().ifPresent(type -> {
+            if (type == ButtonType.OK) {
+                ClientConnection.forwardMsg(MsgType.CONFIRM_REQ+" , "+username);
+
+            } else if (type == ButtonType.NO) {
+                ClientConnection.forwardMsg(MsgType.CANCEL_REQ+" , "+username);
+
+            }
+        });
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         System.out.println("hi");
@@ -131,8 +148,13 @@ public class ListScreenController implements Initializable {
                             });
                             break;
                         case MsgType.SEND_REQUEST:
+                            Platform.runLater(()->{
+                                makeAlert(MsgType.getUsername(serverResponse));
+                            });
                             break;
                         case MsgType.CANCEL_REQ:
+
+
                             break;
                     }
                     try {
@@ -153,7 +175,12 @@ public class ListScreenController implements Initializable {
     private void fillPlayersList(String[] onlinePlayers){
         for(int i = 1 ; i < onlinePlayers.length ; ++i){
             Button tempButton = new Button(onlinePlayers[i]);
-            tempButton.setOnAction(event -> System.out.println("clicked"));
+            tempButton.setOnAction(event -> {
+                ClientConnection.forwardMsg(MsgType.SEND_REQUEST+","+ tempButton.getText());
+                Platform.runLater(()->{
+                    handleClickOnPlayerAction();
+                });
+            });
             tempButton.setPrefHeight(74);
             tempButton.setPrefWidth(300);
             tempButton.setStyle("-fx-background-color: #ffb100;-fx-font-family: 'Action Jackson'; -fx-font-size: 32;");
