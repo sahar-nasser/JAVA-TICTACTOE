@@ -1,33 +1,44 @@
 package replayrecord;
 import models.Player;
 import java.util.Arrays;
+import java.util.List;
 
 
 public class GameReplayer  {
- //awel 7aga agrab l ta2te3 wl donia
-   String game;
-   Record rec;
-   Player player;
-   boolean hasPlayed;
-   boolean gameDone;
-   int moves[];
-   char playerChar;
-  public int index;
-  int btn_pos;
+       private String game;
+       RecordsCreator currentRec;
+       Record rec;
+       Player player;
+       boolean hasPlayed;
+       boolean gameDone;
+       char playerChar;
+       public int index;
+       int btn_pos;
+       int recIndex;
+       List<String> myRecord;
 
-
-    ///check if array <9
     public GameReplayer(){
         rec = new Record();
         player =new Player();
-        game = "1,4,5,8,9";
+        currentRec=new RecordsCreator();
+        game=" ";
         hasPlayed=false;
         gameDone=false;
         playerChar=' ';
         index=0;
         btn_pos =0;
+        recIndex=0;
     }
 
+//set index based on which record the user picked in list view
+   public void setRecIndex(int recIndex){
+        this.recIndex=recIndex;
+   }
+   public String getGameFromRec(){
+       myRecord= currentRec.getRecord(recIndex);
+       game=myRecord.get(4);
+       return game;
+   }
     public void setCurrentChar(char playerChar){
         this.playerChar=playerChar;
     }
