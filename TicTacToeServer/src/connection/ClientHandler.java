@@ -107,8 +107,6 @@ public class ClientHandler extends Thread {
         return msg;
     }
 
-    public static int fowradMsgToClient(String username, String msg){
-        int res=0;
     public static boolean isNameUse(String str){
         boolean res=false;
         for (ClientHandler clientHandler : clientsVector) {

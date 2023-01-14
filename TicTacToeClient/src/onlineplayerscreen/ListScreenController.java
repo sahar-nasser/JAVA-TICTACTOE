@@ -16,6 +16,7 @@ import clientconnection.ClientConnection;
 import helper.MsgType;
 import helper.PlayerData;
 import helper.QueryType;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -121,18 +122,30 @@ public class ListScreenController implements Initializable {
 
         openConnection();
         new Thread(()->{
-            try {
-                String serverResponse = ClientConnection.getServerResponsible();
-                switch (MsgType.getMsgType(serverResponse)){
-                    case MsgType.LIST_AVAILABLE:
-                        String[] playerNames = serverResponse.split(",");
-                        fillPlayersList(playerNames);
-                        break;
+            while (true){
+                try {
+                    String serverResponse = ClientConnection.getServerResponsible();
+                    switch (MsgType.getMsgType(serverResponse)){
+                        case MsgType.LIST_AVAILABLE:
+                            String[] playerNames = serverResponse.split(",");
+                            Platform.runLater(() -> {
+                                fillPlayersList(playerNames);
+                            });
+                            break;
+                        case MsgType.SEND_REQUEST:
+                            break;
+                        case MsgType.CANCEL_REQ:
+                            break;
+                    }
+                    try {
+                        Thread.sleep(2000);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getStackTrace());
                 }
-            } catch (IOException e) {
-                System.out.println(e.getStackTrace());
             }
-
         }).start();
         //call method to talk to the server the pass the return which should be ArrayList<Player>
         //to the fillPlayerList method then we will have 
