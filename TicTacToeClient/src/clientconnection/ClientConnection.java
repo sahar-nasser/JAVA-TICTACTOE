@@ -19,8 +19,7 @@ public class ClientConnection {
     }
     public static void establishConnection() throws IOException {
 
-            mySocket= new Socket("127.0.0.1", 5005);
-
+            mySocket= new Socket("127.0.0.1", 5000);
             ps = new PrintStream(mySocket.getOutputStream());
             dis = new DataInputStream(mySocket.getInputStream());
 

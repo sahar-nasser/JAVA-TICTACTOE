@@ -431,8 +431,7 @@ public class BoardController extends Thread implements Initializable {
     //setNextMove() will be called when we need to update UI after calculating the next move in (easy-medium-hard)level
     // in its own classes
 
-    //buttonNumber = (row+1)*(col+1)
-    private void upgradeUi(int buttonNumber, char playerChar) {
+    private void upgradeUi(int buttonNumber, char playerChar){
         Button tempButton;
         switch (buttonNumber) {
             case 1:
