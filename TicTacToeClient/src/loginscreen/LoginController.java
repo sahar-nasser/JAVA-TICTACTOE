@@ -71,12 +71,14 @@ public class LoginController implements Initializable {
              //start connection + send data for authentication through client handler
           PlayerData.USERNAME = usernameTextField.getText();
           if(PlayerData.USERNAME.isEmpty() || passwordTextField.getText().isEmpty()){
-
+              if(!labelVisibility){//if user return back to login, error label should be invisible
+                  errorMsgLabel.setVisible(labelVisibility = true);
+              }
           }else{
               if(checkUserData(passwordTextField.getText())){
                   //load the nextScreen and return the label visibility to false and setVisibile(false)
 
-                  if(labelVisibility){//if user return back to login, error label should be invisible
+                  if(labelVisibility){
                       errorMsgLabel.setVisible(labelVisibility = false);
                   }
 //                Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -84,6 +86,7 @@ public class LoginController implements Initializable {
 //                Scene scene=new Scene(root);
 //                stage.setScene(scene);
 //                stage.show();
+
               }else{
                   if(!labelVisibility){
                       errorMsgLabel.setVisible(labelVisibility = true);
@@ -108,7 +111,7 @@ public class LoginController implements Initializable {
                 returnValue = false;//problem in the server
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.out.println(e.getMessage());
         }
         return returnValue;
     }

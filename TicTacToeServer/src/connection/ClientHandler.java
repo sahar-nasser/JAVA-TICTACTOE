@@ -60,7 +60,7 @@ public class ClientHandler extends Thread {
                 fowradMsgToClient(MsgType.getUsername(str),MsgType.SEND_MOVE+","+","+MsgType.getMove(str));
                 break;
             case MsgType.DATABASECONNECTION:
-                checkQeryType(str);
+                checkQueryType(str);
 
 
 
@@ -68,7 +68,7 @@ public class ClientHandler extends Thread {
 
     }
 
-    private void checkQeryType(String str) {
+    private void checkQueryType(String str) {
         switch (QueryType.checkQueryMsg(str)){
             case QueryType.SIGNUP:
                 this.username=QueryType.getUsername(str);

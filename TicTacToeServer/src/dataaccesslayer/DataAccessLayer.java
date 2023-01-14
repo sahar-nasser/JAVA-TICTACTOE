@@ -53,4 +53,22 @@ public class DataAccessLayer {
         return result;
     }
 
+    public static int checkLoginCredintials(String userName , String password){
+        connect();
+        try {
+            int result  = -1;
+            Connection connection = DriverManager.getConnection("jdbc:derby://localhost:1527/TicTacToe", "root", "root");
+            PreparedStatement preparedStatement = connection.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?;");
+            preparedStatement.setString(1,userName);
+            preparedStatement.setString(2,password);
+            result = preparedStatement.executeUpdate();
+
+            connection.close();
+
+            return result;
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }
