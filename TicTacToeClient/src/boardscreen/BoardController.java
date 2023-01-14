@@ -392,43 +392,41 @@ public class BoardController extends Thread implements Initializable {
                     }
                     viewVideo();
                 }
-                if(winnerResult == 'n' && mediumLevel.availableCells() == 0){//tie
+                if(winnerResult == 'n' && mediumLevel.availableCells() == 0){ //tie
                     STATUS_OF_GAME = StatusGame.DRAW;
                     viewVideo();
                 }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
-              //  if(hl.humanPlayed){
+                  if (hl.humanPlayed){
                     hl.userTurn();
-                    upgradeUi(hl.forwardMove(),'X');
-
-                    if(hl.checkWinner() == 'X'){//player won
-                        STATUS_OF_GAME=StatusGame.WIN;
+                    upgradeUi(position, 'X');
+                    if (hl.checkWinner() == 'X') {//player won
+                        STATUS_OF_GAME = StatusGame.WIN;
                         viewVideo();
-                    }else if(hl.checkWinner() == 'O'){//player lost
-                        STATUS_OF_GAME=StatusGame.LOSE;
+                    } else if (hl.checkWinner() == 'O') {//player lost
+                        STATUS_OF_GAME = StatusGame.LOSE;
                         viewVideo();
-                    }else if(hl.checkWinner()=='t'){
+                    } else if (hl.checkWinner() == 't') {
                         STATUS_OF_GAME = StatusGame.DRAW;
                         viewVideo();
                     }
-               // }
-                //if(hl.aiPlayed){
-                    hl.getIndex(row,col);
-                    hl.AiTurn();
-                    upgradeUi(position, 'O');
-                    if(hl.checkWinner() == 'X'){//player won
-                        STATUS_OF_GAME=StatusGame.WIN;
-                        viewVideo();
-                    }else if(hl.checkWinner() == 'O'){//player lost
-                        STATUS_OF_GAME=StatusGame.LOSE;
-                        viewVideo();
-                    }else if(hl.checkWinner()=='t'){
-                        STATUS_OF_GAME = StatusGame.DRAW;
-                        viewVideo();
-                    }
-
+                }
+                  if(hl.aiPlayed) {
+                       hl.AiTurn();
+                       upgradeUi(hl.forwardMove(), 'O');
+                       if (hl.checkWinner() == 'X') {//player won
+                           STATUS_OF_GAME = StatusGame.WIN;
+                           viewVideo();
+                       } else if (hl.checkWinner() == 'O') {//player lost
+                           STATUS_OF_GAME = StatusGame.LOSE;
+                           viewVideo();
+                       } else if (hl.checkWinner() == 't') {
+                           STATUS_OF_GAME = StatusGame.DRAW;
+                           viewVideo();
+                       }
+                   }
 
 
                 break;

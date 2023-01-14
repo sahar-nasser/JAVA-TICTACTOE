@@ -8,15 +8,14 @@ public class HardLevel extends GameLogic {
     public boolean aiPlayed;
     int curr_r;
     int curr_c;
-    static char won;
     public int btnPosition;
 
     public HardLevel() {
       humanPlayed=true;
-      aiPlayed=true;
+      aiPlayed=false;
       curr_r=0;
       curr_c=0;
-      won='n';
+      setup();
     }
 
     public void getIndex(int r, int c){
@@ -30,20 +29,9 @@ public class HardLevel extends GameLogic {
         return btnPosition;
     }
     public  void userTurn() {
-        super.board[curr_r][curr_c]='X';
-        won = checkWinner();
-        if (won=='X'){
-            //call playvid
-            System.out.println("X won");
-        } else if (won=='O'){
-            System.out.println("O won");
-        } else if (won=='t') {
-            System.out.println("tie");
-        } else {
-            System.out.println("not yet");
-        }
-        humanPlayed=true;
-        aiPlayed=false;
+        board[curr_r][curr_c]='X';
+        humanPlayed=false;
+        aiPlayed=true;
     }
 
     public void AiTurn() {
@@ -56,19 +44,17 @@ public class HardLevel extends GameLogic {
                 if (board[i][j] == (char) 0) {
                     board[i][j] = 'O';
                     int score = minimax(board, 0, false);
-                    super.board[i][j] = (char) 0;
+                    board[i][j] = (char) 0;
                     if (score > bestScore) {
                         bestScore = score;
-                        board[i][j]='O';
                         move[0] = i;
                         move[1] = j;
                     }
                 }
             }
         }
-       // board[move[0]][move[1]] = 'O';
+        board[move[0]][move[1]]='O';
         setPosition(move[0], move[1]);
-        won = checkWinner();
         humanPlayed=true;
         aiPlayed=false;
     }
@@ -91,7 +77,6 @@ public class HardLevel extends GameLogic {
                         if (bestScore>score){
                             bestScore=score;
                         }
-                        //bestScore = max(score, bestScore);
                     }
                 }
             }
@@ -108,7 +93,6 @@ public class HardLevel extends GameLogic {
                         if (bestScore<score){
                             bestScore=score;
                         }
-                        //bestScore = min(score, bestScore);
                     }
                 }
             }
