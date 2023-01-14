@@ -14,12 +14,13 @@ public class ClientConnection {
     static private DataInputStream dis;
     static private PrintStream ps;
 
+    public static boolean isConnect(){
+        return mySocket.isConnected();
+    }
     public static void establishConnection() throws IOException {
 
             mySocket= new Socket("127.0.0.1", 5000);
-
             ps = new PrintStream(mySocket.getOutputStream());
-            ps.println(PlayerData.USERNAME);
             dis = new DataInputStream(mySocket.getInputStream());
 
     }
@@ -28,6 +29,7 @@ public class ClientConnection {
         int res=0;
         if (msg!=null) {
             ps.println(msg);
+            System.out.println(msg);
             res = 1;
         }
         return res;

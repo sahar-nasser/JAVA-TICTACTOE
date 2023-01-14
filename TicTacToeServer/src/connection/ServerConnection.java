@@ -1,5 +1,7 @@
 package connection;
 
+import helper.QueryType;
+
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -12,21 +14,22 @@ public class ServerConnection {
 
     public ServerConnection() {
         try {
+            new QueryType();
             serverSocket = new ServerSocket(5000);
+            new Thread(() -> {
+                while (true) {
+                    Socket s;
+                    try {
+                        s = serverSocket.accept();
+                        new ClientHandler(s);
+                    } catch (IOException e) {
+                        System.out.println(e.getMessage());
+                    }
+                }}).start();
 
         } catch (IOException e) {
-
+            System.out.println(e.getMessage());
         }
-        new Thread(() -> {
-            while (true) {
-            Socket s;
-                try {
-                    s = serverSocket.accept();
-                    DataInputStream dis = new DataInputStream(s.getInputStream());//testing
-                    new ClientHandler(s,dis.readLine());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-        }}).start();
+
     }
 }

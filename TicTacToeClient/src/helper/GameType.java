@@ -6,4 +6,5 @@ public class GameType {
     public static final int SINGLE_PLAYER_HARD_LEVEL=2;
     public static final int TWO_PLAYER_GAME=3;
     public static final int ONLINE_GAME=4;
+    public static final int REPLAYED_GAME=5;
 }

@@ -10,6 +10,12 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import boardscreen.BoardController;
+import clientconnection.ClientConnection;
+import helper.GameType;
+import helper.MsgType;
+import helper.QueryType;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,6 +25,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+
+import static helper.MsgType.SEND_REQUEST;
 
 /**
  *
@@ -39,6 +47,17 @@ public class RecordScreenController implements Initializable {
     private void handleRecordAction(ActionEvent event) {
         //ask server to fetch record data to recreation
         System.out.println("record!");
+
+        try {
+            BoardController.TYPE = GameType.REPLAYED_GAME;
+            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+            Parent root = FXMLLoader.load(getClass().getResource("/boardscreen/board.fxml"));
+            Scene scene=new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
        
     }
     
@@ -71,7 +90,15 @@ public class RecordScreenController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        //send req to server
+        try {
+            ClientConnection.establishConnection();
+            String getListMsg =  new StringBuilder().append( MsgType.DATABASE_CONNECTION ).append(",")
+                    .append(QueryType.GET_RECORD).append(",").toString();
+            ClientConnection.forwardMsg(getListMsg);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
 }

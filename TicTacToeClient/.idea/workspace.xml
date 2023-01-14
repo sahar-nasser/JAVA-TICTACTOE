@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ab133b65-56f9-40ec-8ee0-feb099f93dd1" name="Changes" comment="">
+
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boardscreen/BoardController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/BoardController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/boardscreen/board.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/boardscreen/board.fxml" afterDir="false" />
@@ -27,7 +28,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$/.." value="development" />
+        <entry key="$PROJECT_DIR$/.." value="medium-level" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />

@@ -58,6 +58,7 @@ public class WelcomeScreenController implements Initializable {
         //to upgrade type in gameType
        if(((Button) event.getSource()).getText().equals("EASY")){
            BoardController.TYPE = GameType.SINGLE_PLAYER_EASY_LEVEL;
+           System.out.println("esay");
        }else if(((Button) event.getSource()).getText().equals("MEDIUM")){
            BoardController.TYPE = GameType.SINGLE_PLAYER_MEDIUM_LEVEL;
        }else{

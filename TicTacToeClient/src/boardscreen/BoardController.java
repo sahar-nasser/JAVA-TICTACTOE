@@ -12,12 +12,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-import easylevel.EasyLogic;
-import hardlevel.HardLevel;
+import level.EasyLogic;
+import level.HardLevel;
 import helper.GameType;
 import helper.MsgType;
 import helper.PlayerData;
 import helper.StatusGame;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -31,8 +32,12 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.media.MediaView;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import level.MediumLevel;
 import level.OnlineGame;
 import localmultiplayer.Multiplayer;
+import replayrecord.GameReplayer;
+
+import static java.lang.Thread.sleep;
 
 
 /**
@@ -40,10 +45,15 @@ import localmultiplayer.Multiplayer;
  *
  * @author ammar
  */
-public class BoardController implements Initializable {
+public class BoardController extends Thread implements Initializable {
+    private Thread thread;
+    private MediumLevel mediumLevel;
     private static MediaPlayer MEDIA_PLAYER;
-   public static int TYPE;
+    public static int TYPE;
     private static int STATUS_OF_GAME;
+
+    private boolean isFirstMove = false;
+
     public static int PLAYER_TWO_SCORE;
     public static String PLAYER_TWO;
    private  static Stage STAGE_OF_VIEW_VIDEO;
@@ -57,6 +67,8 @@ public class BoardController implements Initializable {
     OnlineGame online;
     Multiplayer mp = new Multiplayer();
     HardLevel hl = new HardLevel();
+
+
 
    @FXML
    private Button record;
@@ -107,16 +119,20 @@ public class BoardController implements Initializable {
             record.setText("Recording");
             isRecording=true;
         }
+
     }
+
     @FXML
     public void closeGame(ActionEvent event){
 
         if (IS_VIEW_VIDEO){
             STAGE_OF_VIEW_VIDEO.close();
             MEDIA_PLAYER.stop();
+
         }
-         switch (TYPE) {
+        switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
+
                 try{
                     if (!IS_VIEW_VIDEO)online.sendCloseGame(PLAYER_TWO);
                     IS_VIEW_VIDEO=false;
@@ -127,17 +143,18 @@ public class BoardController implements Initializable {
                     STAGE_OF_BOARD.setScene(scene);
                     STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
-                    Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
                  }
             break;
             default:
                 try{
                     Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
+                    IS_VIEW_VIDEO=false;
                     Scene scene=new Scene(root);
                     STAGE_OF_BOARD.setScene(scene);
                     STAGE_OF_BOARD.show();
                 }catch (IOException ex) {
-                    Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
                  }
                 break;
 
@@ -146,51 +163,43 @@ public class BoardController implements Initializable {
     }
 
     @FXML
-    public void clickPostionOne(ActionEvent event){
+    public void clickPositionOne(ActionEvent event){
         calcNextMove(0,0,1);
     }
 
-
-
     @FXML
-    public void clickPostionTwo(ActionEvent event){
+    public void clickPositionTwo(ActionEvent event){
         calcNextMove(0,1,2);
     }
     @FXML
-    public void clickPostionThree(ActionEvent event){
+    public void clickPositionThree(ActionEvent event){
         calcNextMove(0,2,3);
     }
     @FXML
-    public void clickPostionFour(ActionEvent event){
+    public void clickPositionFour(ActionEvent event){
         calcNextMove(1,0,4);
     }
     @FXML
-    public void clickPostionFive(ActionEvent event){
+    public void clickPositionFive(ActionEvent event){
         calcNextMove(1,1,5);
-
     }
     @FXML
-    public void clickPostionSix(ActionEvent event){
+    public void clickPositionSix(ActionEvent event){
         calcNextMove(1,2,6);
-
     }
+
     @FXML
-    public void clickPostionSeven(ActionEvent event){
+    public void clickPositionSeven(ActionEvent event){
         calcNextMove(2,0,7);
     }
     @FXML
-    public void clickPostionEight(ActionEvent event){
+    public void clickPositionEight(ActionEvent event){
         calcNextMove(2,1,8);
-
     }
     @FXML
-    public void clickPostionNine(ActionEvent event){
-        calcNextMove(2,2,9);
+    public void clickPositionNine(ActionEvent event) {
+        calcNextMove(2, 2, 9);
     }
-
-    /**
-     * Initializes the controller class.
-     */
 
     private void viewVideo(){
         IS_VIEW_VIDEO=true;
@@ -202,52 +211,69 @@ public class BoardController implements Initializable {
             Logger.getLogger(BoardController.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        Scene scene=new Scene(root);
+        Scene scene = new Scene(root);
         STAGE_OF_VIEW_VIDEO.setScene(scene);
         STAGE_OF_VIEW_VIDEO.showAndWait();
 
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
+        
         isRecording=false;
         if (!IS_VIEW_VIDEO){
             arr= new Button[]{positionOne, positionTwo, positionThree, positionFour, positionFive, positionSix, positionSeven, positionEight, positionNine};
         switch (TYPE) {
             case helper.GameType.ONLINE_GAME:
-                online=new OnlineGame(IS_FIRST,PLAYER_TWO);
-                if (IS_FIRST){
+                online = new OnlineGame(IS_FIRST, PLAYER_TWO);
+                if (IS_FIRST) {
                     scoreOfPlayerOne.setText(PlayerData.USERNAME);
                     scoreOfPlayerTwo.setText(PLAYER_TWO);
-                    scoreOne.setText(PlayerData.SCORE+"");
-                    scoreTwo.setText(PLAYER_TWO_SCORE+"");
-                }
-                else {
+                    scoreOne.setText(PlayerData.SCORE + "");
+                    scoreTwo.setText(PLAYER_TWO_SCORE + "");
+                } else {
 
                     scoreOfPlayerTwo.setText(PlayerData.USERNAME);
                     scoreOfPlayerOne.setText(PLAYER_TWO);
-                    scoreTwo.setText(PlayerData.SCORE+"");
-                    scoreOne.setText(PLAYER_TWO_SCORE+"");
+                    scoreTwo.setText(PlayerData.SCORE + "");
+                    scoreOne.setText(PLAYER_TWO_SCORE + "");
                     disableALL();
                     calcMovePlayer();
 
                 }
 
-            break;
+                break;
+            case GameType.REPLAYED_GAME:
+                scoreOfPlayerOne.setVisible(false);
+                scoreOfPlayerTwo.setVisible(false);
+                scoreOne.setVisible(false);
+                scoreTwo.setVisible(false);
+                record.setVisible(false);
+                System.out.println("this is game");
+                //disableALL();
+                new Thread(()->{
+                    GameReplayer gameReplayer = new GameReplayer();
+                    while (!gameReplayer.gameEnded()) {
+                        try {
+                            sleep(500);
+                            gameReplayer.createMove();
+                            Platform.runLater(() -> {
+                                upgradeUi(gameReplayer.getPosition(), gameReplayer.currentChar());
+                            });
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }).start();
+                break;
 
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
                 easy = new EasyLogic();
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
-
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                nameOfPlayerTwo.setText("COMPUTER");
-                nameOfPlayerOne.setText("ME");
-
+                mediumLevel = new MediumLevel();
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 nameOfPlayerTwo.setText("COMPUTER");
                 nameOfPlayerOne.setText("ME");
-
             default:
                 scoreOfPlayerOne.setVisible(false);
                 scoreOfPlayerTwo.setVisible(false);
@@ -263,16 +289,16 @@ public class BoardController implements Initializable {
             switch (STATUS_OF_GAME) {
                 case StatusGame.WIN:
                     STAGE_OF_VIEW_VIDEO.setTitle("WIN");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/win.mp4").toUri().toString());
                     if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(10);
                     break;
                 case StatusGame.DRAW:
                     STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/tie.mp4").toUri().toString());
                     break;
                 default:
                     STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/lose.mp4").toUri().toString());
                     if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(-5);
             }
         MEDIA_PLAYER =new MediaPlayer(media);
@@ -281,9 +307,8 @@ public class BoardController implements Initializable {
         mediaView.setMediaPlayer(MEDIA_PLAYER);
         }
     }
-
-
     //call this function to send indices to (easy-medium-hard - etc...) class
+
     public void calcNextMove(int row , int col, int position){
         switch (TYPE){// The return type for any method should be the new position and
             case GameType.SINGLE_PLAYER_EASY_LEVEL:
@@ -313,7 +338,67 @@ public class BoardController implements Initializable {
                 //playerSymbol() should return the 'X' or 'O'
                 break;
             case GameType.SINGLE_PLAYER_MEDIUM_LEVEL:
-                //call medium method and pass row and column
+                upgradeUi(position, mediumLevel.human);
+                mediumLevel.addPlayerMove(row, col, mediumLevel.human);//add it in the array
+                //check if X could win
+                char winnerResult = mediumLevel.checkWinner();
+                if (winnerResult == 'n') {
+                    int computerMove;
+                    if (!isFirstMove) {
+                        computerMove = mediumLevel.decideFirstMove(mediumLevel.ai);
+                        isFirstMove = true;//I want to enter here only once
+                    } else {
+                        /*
+                         * I want computer to win, so I'm the winning side 'O' and i want to check if could win
+                         * and if i can , I don't want the losingSymbol to be 'X' i want it to be me 'O'
+                         * */
+                        computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.ai, mediumLevel.ai);
+                        if (computerMove == -1) {//-1 means I can't win
+                            computerMove = mediumLevel.checkPlayerPossibleWinning(mediumLevel.human, mediumLevel.ai);//check blocking the X move
+                            if (computerMove == -1) {//then I will generate random number to my move
+                                computerMove = mediumLevel.generateRandomMove(mediumLevel.ai);
+                            }
+                        }
+                        //1.check if I could win
+                        //2.if not then check if x could win and don't let him
+                        //3.if not then decide my next move which will be random I guess or not
+                    }
+                    int finalComputerMove = computerMove;
+                    System.out.println("hasIn");
+                    new Thread(()->{
+                        try {
+                            sleep(400);
+                            System.out.println("======");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    System.out.println();
+                                    upgradeUi(finalComputerMove, mediumLevel.ai);
+                                }
+                            });
+                        } catch (InterruptedException e) {
+                            System.out.println(e.getMessage());
+                        }
+
+                    }).start();
+
+                } else {
+                    if(mediumLevel.checkWinner() == 'X'){//player won
+                        STATUS_OF_GAME=StatusGame.WIN;
+                    }else if(mediumLevel.checkWinner() == 'O'){//player lost
+                        STATUS_OF_GAME=StatusGame.LOSE;
+                    }else{
+                        STATUS_OF_GAME = StatusGame.DRAW;
+                    }
+                    viewVideo();
+                }
+                if((mediumLevel.checkWinner() == 'n' && mediumLevel.availableCells() == 0)){//tie
+                    STATUS_OF_GAME = StatusGame.DRAW;
+                    viewVideo();
+                }else if(mediumLevel.checkWinner()=='O'){
+                    STATUS_OF_GAME=StatusGame.LOSE;
+                    viewVideo();
+                }
                 break;
             case GameType.SINGLE_PLAYER_HARD_LEVEL:
                 //call hard method and pass row and column
@@ -339,7 +424,9 @@ public class BoardController implements Initializable {
                     upgradeUi(position,'X');
                 }
                 //local game
+
                 break;
+
             case GameType.ONLINE_GAME:
 
                     int x=online.setMove(row,col);
@@ -350,18 +437,18 @@ public class BoardController implements Initializable {
                         upgradeUi(x,online.getChar());
                     online.sendMoveMsg(x);
 
-
         }
     }
 
-
+   /** public void setDataFromRecord(int buttonNumber, char playerChar){
+            upgradeUi(buttonNumber, playerChar);
+    }**/
     //setNextMove() will be called when we need to update UI after calculating the next move in (easy-medium-hard)level
     // in its own classes
 
-    //buttonNumber = (row+1)*(col+1)
     private void upgradeUi(int buttonNumber, char playerChar){
         Button tempButton;
-        switch (buttonNumber){
+        switch (buttonNumber) {
             case 1:
                 tempButton= positionOne;
                 break;
@@ -388,9 +475,8 @@ public class BoardController implements Initializable {
                 break;
             default:
                 tempButton= positionNine;
-
         }
-        tempButton.setText(playerChar+"");
+        tempButton.setText(playerChar + "");
         tempButton.setDisable(true);
         tempButton.setOpacity(1);
     }
@@ -435,6 +521,7 @@ public class BoardController implements Initializable {
             for (int j = 0; j < 3; j++) {
                 if (online.board[i][j] == (char)0) {
                     int x=(3*i)+(j+1);
+                    System.out.println(x);
                     arr[x].setDisable(true);
                 }
             }
