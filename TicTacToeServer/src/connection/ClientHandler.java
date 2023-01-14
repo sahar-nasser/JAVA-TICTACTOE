@@ -63,7 +63,7 @@ public class ClientHandler extends Thread {
                 checkQueryType(str);
                 break;
             case MsgType.lIST_AVAILABLE:
-                fowradMsgToClient(MsgType.getUsername(str),getAvailablePlayers());
+                fowradMsgToClient(MsgType.getUsername(str),getAvailablePlayers(this.username));
                 break;
 
 
@@ -99,10 +99,10 @@ public class ClientHandler extends Thread {
 
     }
 
-    public static String getAvailablePlayers(){
+    public static String getAvailablePlayers(String username){
         String msg = MsgType.lIST_AVAILABLE+"";
         for(ClientHandler clientHandler : clientsVector){
-            if(!clientHandler.isInGame){
+            if(!clientHandler.isInGame && !clientHandler.username.equals(username)){
                 msg += "," + clientHandler.username;
             }
         }
