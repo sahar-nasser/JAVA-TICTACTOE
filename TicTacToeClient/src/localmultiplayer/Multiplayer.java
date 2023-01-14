@@ -22,7 +22,6 @@ public class Multiplayer extends GameLogic  {
         curr_c=c;
     }
     public void playerOneTurn(){
-        //if (availableCells()!=0){
         //set current in array in corresponding pos
         board[curr_r][curr_c]='X';
         won = checkWinner();
@@ -41,7 +40,6 @@ public class Multiplayer extends GameLogic  {
 
     }
     public void playerTwoTurn(){
-        // if (availableCells()!=0){
         //set current in array in corresponding pos
         board[curr_r][curr_c]='O';
         won = checkWinner();
@@ -60,18 +58,6 @@ public class Multiplayer extends GameLogic  {
         twoPlayed=true;
 
     }
-    /*  public void endGame(){
-          playvid();
-      }*/
-    void playvid(char w){
-        if (w =='t'){
-            //load tie video
-        }
-        if(w== 'X'){
-            //play x won stuff
-        }
-        if(w == 'O'){
-            //play x won stuff
-        }
-    }
+
+
 }
