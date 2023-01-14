@@ -392,8 +392,11 @@ public class BoardController extends Thread implements Initializable {
                     }
                     viewVideo();
                 }
-                if(winnerResult == 'n' && mediumLevel.availableCells() == 0){//tie
+                if((mediumLevel.checkWinner() == 'n' && mediumLevel.availableCells() == 0)){//tie
                     STATUS_OF_GAME = StatusGame.DRAW;
+                    viewVideo();
+                }else if(mediumLevel.checkWinner()=='O'){
+                    STATUS_OF_GAME=StatusGame.LOSE;
                     viewVideo();
                 }
                 break;
