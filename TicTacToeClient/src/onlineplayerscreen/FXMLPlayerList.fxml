@@ -66,11 +66,6 @@
          </font>
       </Text>
       <Circle fill="#a3bb98" layoutX="866.0" layoutY="245.0" radius="7.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
-      <ImageView fitHeight="56.0" fitWidth="49.0" layoutX="1194.0" layoutY="205.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../resource/logout.png" />
-         </image>
-      </ImageView>
       <ImageView fitHeight="58.0" fitWidth="54.0" layoutX="1186.0" layoutY="30.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../resource/historyIcon.png" />
@@ -82,7 +77,6 @@
          </image>
       </ImageView>
       <Button fx:id="historyBtn" layoutX="1181.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleHistoryAction" opacity="0.0" prefHeight="62.0" prefWidth="62.0" />
-      <Button fx:id="logoutBtn" layoutX="1185.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleLogoutAction" opacity="0.0" prefHeight="62.0" prefWidth="62.0" />
       <Button fx:id="homeBtn" layoutX="1187.0" layoutY="110.0" mnemonicParsing="false" onAction="#handleHomeAction" opacity="0.0" prefHeight="62.0" prefWidth="62.0" />
    </children>
 </AnchorPane>

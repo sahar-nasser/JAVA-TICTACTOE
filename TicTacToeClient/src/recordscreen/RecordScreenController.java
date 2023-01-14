@@ -38,8 +38,7 @@ public class RecordScreenController implements Initializable {
     private Button record;
     @FXML
     private Button homeBtn;
-    @FXML
-    private Button logoutBtn;
+
     @FXML
     private Button historyBtn;
     
@@ -75,18 +74,7 @@ public class RecordScreenController implements Initializable {
             stage.setScene(scene);
             stage.show();   
     }
-    
-     @FXML
-    private void handleLogoutAction(ActionEvent event) throws IOException {
-        //end connection
-         System.out.println("logout clicked!");
-              
-            Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
-            Scene scene=new Scene(root);
-            stage.setScene(scene);
-            stage.show();
-    }
+
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
