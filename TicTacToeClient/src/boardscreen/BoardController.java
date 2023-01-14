@@ -149,6 +149,7 @@ public class BoardController extends Thread implements Initializable {
             default:
                 try{
                     Parent root = FXMLLoader.load(getClass().getResource("/welcomescreen/WelcomeScreen.fxml"));
+                    IS_VIEW_VIDEO=false;
                     Scene scene=new Scene(root);
                     STAGE_OF_BOARD.setScene(scene);
                     STAGE_OF_BOARD.show();
@@ -288,16 +289,16 @@ public class BoardController extends Thread implements Initializable {
             switch (STATUS_OF_GAME) {
                 case StatusGame.WIN:
                     STAGE_OF_VIEW_VIDEO.setTitle("WIN");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/win.mp4").toUri().toString());
                     if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(10);
                     break;
                 case StatusGame.DRAW:
                     STAGE_OF_VIEW_VIDEO.setTitle("DRAW");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/tie.mp4").toUri().toString());
                     break;
                 default:
                     STAGE_OF_VIEW_VIDEO.setTitle("LOSE");
-                    media = new Media(Paths.get("TicTacToeClient/src/resource/WinningVideo.mp4").toUri().toString());
+                    media = new Media(Paths.get("TicTacToeClient/src/resource/lose.mp4").toUri().toString());
                     if (TYPE==GameType.ONLINE_GAME)online.sendScoreMsg(-5);
             }
         MEDIA_PLAYER =new MediaPlayer(media);
@@ -382,6 +383,17 @@ public class BoardController extends Thread implements Initializable {
                     }).start();
 
                 } else {
+                    if(mediumLevel.checkWinner() == 'X'){//player won
+                        STATUS_OF_GAME=StatusGame.WIN;
+                    }else if(mediumLevel.checkWinner() == 'O'){//player lost
+                        STATUS_OF_GAME=StatusGame.LOSE;
+                    }else{
+                        STATUS_OF_GAME = StatusGame.DRAW;
+                    }
+                    viewVideo();
+                }
+                if(winnerResult == 'n' && mediumLevel.availableCells() == 0){//tie
+                    STATUS_OF_GAME = StatusGame.DRAW;
                     viewVideo();
                 }
                 break;
