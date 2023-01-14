@@ -49,16 +49,18 @@ public class DataAccessLayer {
         int result = -1;
         connect();
         try {
-            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?");
+            PreparedStatement preparedStatement = con.prepareStatement("select USERNAME , PASSWORD from PLAYER where USERNAME= ? and PASSWORD = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
             preparedStatement.setString(1,userName);
             preparedStatement.setString(2,password);
-            result = preparedStatement.executeUpdate();
+            if(preparedStatement.execute())
+                result = 1;
 
             con.close();
 
 
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println("helooo");
+            e.printStackTrace();
         }
         return result;
     }
@@ -66,14 +68,17 @@ public class DataAccessLayer {
         int i=0;
         PreparedStatement ps = null;
         try {
+            connect();
             ps = con.prepareStatement
-                    ("select * from player where username='" + str + "'", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+                    ("select score from player where username= ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps.setString(1,str);
             ResultSet rs = ps.executeQuery();
-            rs.first();
-            i= rs.getInt(2);
-
+            if(rs.next())
+                i= rs.getInt("score");
+            con.close();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
+            System.out.println("from score");
         }
         return i;
     }
